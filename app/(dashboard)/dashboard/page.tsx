@@ -10,6 +10,7 @@ import {
   Landmark,
   ChevronDown
 } from 'lucide-react';
+import Link from 'next/link';
 
 const salesData = [
   { name: 'JAN', value: 100 },
@@ -62,6 +63,34 @@ export default function DashboardPage() {
           badge="+12.4%"
           badgeType="positive"
         />
+      </div>
+
+      {/* Quick Actions Row */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <Link href="/sales/new" className="flex items-center gap-3 bg-[#121c17] border border-[#1a231f] hover:border-[#00ea77]/50 rounded-xl p-4 transition-all group">
+          <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 group-hover:bg-blue-500 group-hover:text-black transition-colors">
+            <FileText className="w-5 h-5" />
+          </div>
+          <span className="font-bold text-sm text-slate-200 group-hover:text-white transition-colors">Create Invoice</span>
+        </Link>
+        <Link href="/purchases" className="flex items-center gap-3 bg-[#121c17] border border-[#1a231f] hover:border-[#00ea77]/50 rounded-xl p-4 transition-all group">
+          <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-500 group-hover:bg-purple-500 group-hover:text-black transition-colors">
+            <Wallet className="w-5 h-5" />
+          </div>
+          <span className="font-bold text-sm text-slate-200 group-hover:text-white transition-colors">Add Purchase</span>
+        </Link>
+        <Link href="/parties" className="flex items-center gap-3 bg-[#121c17] border border-[#1a231f] hover:border-[#00ea77]/50 rounded-xl p-4 transition-all group">
+          <div className="w-10 h-10 rounded-lg bg-[#00ea77]/10 flex items-center justify-center text-[#00ea77] group-hover:bg-[#00ea77] group-hover:text-black transition-colors">
+            <Users className="w-5 h-5" />
+          </div>
+          <span className="font-bold text-sm text-slate-200 group-hover:text-white transition-colors">Manage Parties</span>
+        </Link>
+        <Link href="/inventory" className="flex items-center gap-3 bg-[#121c17] border border-[#1a231f] hover:border-[#00ea77]/50 rounded-xl p-4 transition-all group">
+          <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-black transition-colors">
+            <AlertTriangle className="w-5 h-5" />
+          </div>
+          <span className="font-bold text-sm text-slate-200 group-hover:text-white transition-colors">Add Items</span>
+        </Link>
       </div>
 
       {/* Charts Row */}
