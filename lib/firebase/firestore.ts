@@ -9,8 +9,6 @@ import {
   updateDoc, 
   deleteDoc, 
   query, 
-  where, 
-  orderBy, 
   QueryConstraint,
   DocumentData,
   WithFieldValue

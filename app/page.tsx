@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Play, ArrowRight, CheckCircle2, FileText, PieChart, Bell, Zap, Bot, ArrowUpRight, Check } from 'lucide-react';
+import { Play, ArrowRight, CheckCircle2, FileText, PieChart, Bell, Zap, ArrowUpRight, Check } from 'lucide-react';
 
 export default function LandingPage() {
   return (
@@ -66,7 +66,7 @@ export default function LandingPage() {
                 <div className="flex -space-x-3">
                   {[1, 2, 3].map(i => (
                     <div key={i} className="w-10 h-10 rounded-full border-2 border-[#0a0a0a] bg-slate-800 flex items-center justify-center overflow-hidden">
-                      <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="Avatar" className="w-[40px] h-[40px] object-cover" />
+                      <Image src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="Avatar" width={40} height={40} className="w-[40px] h-[40px] object-cover" />
                     </div>
                   ))}
                 </div>
@@ -395,7 +395,7 @@ export default function LandingPage() {
               Ready to modernize your business?
             </h2>
             <p className="text-black/80 text-lg mb-10 max-w-2xl mx-auto relative z-10 font-medium">
-              Join 10,000+ businesses owners who're saving 15+ hours weekly with KhataX.
+              Join 10,000+ businesses owners who&apos;re saving 15+ hours weekly with KhataX.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 relative z-10">
               <Link href="/login" className="px-8 py-4 bg-black text-white rounded-full font-semibold hover:bg-slate-900 transition text-lg">
@@ -476,9 +476,10 @@ export default function LandingPage() {
   );
 }
 
-function Box(props: any) {
+    // Temporary icons for features that aren't imported previously
+function Box(props: React.SVGProps<SVGSVGElement>) {
   return <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>;
 }
-function ScanFace(props: any) {
+function ScanFace(props: React.SVGProps<SVGSVGElement>) {
   return <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>;
 }

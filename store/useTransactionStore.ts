@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { Transaction } from '@/types';
 import { getCollection, addDocument, updateDocument, deleteDocument } from '@/lib/firebase/firestore';
-import { orderBy } from 'firebase/firestore';
 
 interface TransactionState {
   transactions: Transaction[];

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useTransactionStore } from '@/store/useTransactionStore';
-import { Plus, Search, Eye, Download, ShoppingCart } from 'lucide-react';
+import { Plus, Search, Eye, ShoppingCart } from 'lucide-react';
 import { format } from 'date-fns';
 
 export default function PurchasesPage() {

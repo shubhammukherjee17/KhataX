@@ -18,7 +18,7 @@ export default function DashboardPage() {
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-bold tracking-tight text-slate-900">Dashboard</h1>
         <p className="text-sm text-slate-500">
-          Welcome back, {profile?.name || 'User'}. Here's what's happening with your business today.
+          Welcome back, {profile?.name || 'User'}. Here&apos;s what&apos;s happening with your business today.
         </p>
       </div>
 

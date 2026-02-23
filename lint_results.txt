@@ -1,0 +1,82 @@
+
+> khatax@0.1.0 lint
+> eslint
+
+
+C:\Users\Shubham Mukherjee\Desktop\Code\khatax\app\(auth)\login\page.tsx
+  25:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  40:19  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\Shubham Mukherjee\Desktop\Code\khatax\app\(dashboard)\dashboard\page.tsx
+  21:56  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  21:63  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\Shubham Mukherjee\Desktop\Code\khatax\app\(dashboard)\inventory\page.tsx
+  15:62  warning  'errors' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+  17:20  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+C:\Users\Shubham Mukherjee\Desktop\Code\khatax\app\(dashboard)\inventory\page.tsx:17:20
+  15 |   const { register, handleSubmit, reset, watch, formState: { errors } } = useForm<Omit<Item, 'id' | 'currentStock'>>();
+  16 |   
+> 17 |   const itemType = watch('type', 'product');
+     |                    ^^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  18 |
+  19 |   const filteredItems = items.filter(i => 
+  20 |     i.name.toLowerCase().includes(searchTerm.toLowerCase())  react-hooks/incompatible-library
+
+C:\Users\Shubham Mukherjee\Desktop\Code\khatax\app\(dashboard)\parties\page.tsx
+  15:55  warning  'errors' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Shubham Mukherjee\Desktop\Code\khatax\app\(dashboard)\purchases\new\page.tsx
+  44:22  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+C:\Users\Shubham Mukherjee\Desktop\Code\khatax\app\(dashboard)\purchases\new\page.tsx:44:22
+  42 |   });
+  43 |
+> 44 |   const watchItems = watch('items');
+     |                      ^^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  45 |   const watchAmountPaid = watch('amountPaid');
+  46 |
+  47 |   // Calculations  react-hooks/incompatible-library
+
+C:\Users\Shubham Mukherjee\Desktop\Code\khatax\app\(dashboard)\purchases\page.tsx
+  6:29  warning  'Download' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Shubham Mukherjee\Desktop\Code\khatax\app\(dashboard)\reports\page.tsx
+  6:63  warning  'Legend' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Shubham Mukherjee\Desktop\Code\khatax\app\(dashboard)\sales\new\page.tsx
+  45:22  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+C:\Users\Shubham Mukherjee\Desktop\Code\khatax\app\(dashboard)\sales\new\page.tsx:45:22
+  43 |   });
+  44 |
+> 45 |   const watchItems = watch('items');
+     |                      ^^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  46 |   const watchAmountPaid = watch('amountPaid');
+  47 |
+  48 |   // Calculations  react-hooks/incompatible-library
+
+C:\Users\Shubham Mukherjee\Desktop\Code\khatax\app\page.tsx
+    1:10  warning  'ReactNode' is defined but never used                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+    3:73  warning  'Bot' is defined but never used                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+   69:23  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  398:49  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  479:21  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  482:26  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+
+C:\Users\Shubham Mukherjee\Desktop\Code\khatax\lib\firebase\firestore.ts
+  12:3  warning  'where' is defined but never used    @typescript-eslint/no-unused-vars
+  13:3  warning  'orderBy' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Shubham Mukherjee\Desktop\Code\khatax\store\useTransactionStore.ts
+  4:10  warning  'orderBy' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 20 problems (7 errors, 13 warnings)
+

@@ -12,7 +12,7 @@ export default function InventoryPage() {
   const [editingItem, setEditingItem] = useState<Item | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const { register, handleSubmit, reset, watch, formState: { errors } } = useForm<Omit<Item, 'id' | 'currentStock'>>();
+  const { register, handleSubmit, reset, watch } = useForm<Omit<Item, 'id' | 'currentStock'>>();
   
   const itemType = watch('type', 'product');
 

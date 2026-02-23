@@ -12,7 +12,7 @@ export default function PartiesPage() {
   const [editingParty, setEditingParty] = useState<Party | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<Omit<Party, 'id' | 'currentBalance'>>();
+  const { register, handleSubmit, reset } = useForm<Omit<Party, 'id' | 'currentBalance'>>();
 
   const filteredParties = parties.filter(p => 
     p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

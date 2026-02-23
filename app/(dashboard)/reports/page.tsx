@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useTransactionStore } from '@/store/useTransactionStore';
 import { useMasterDataStore } from '@/store/useMasterDataStore';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Download, FileText, PieChart, TrendingUp } from 'lucide-react';
 import { format, parseISO, startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
 
