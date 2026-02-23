@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { Sidebar } from './Sidebar';
@@ -10,6 +10,7 @@ import { Loader2 } from 'lucide-react';
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -29,10 +30,10 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#0A0F0D] text-slate-200 font-sans">
-      <Sidebar />
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <TopNav />
-        <main className="flex-1 overflow-auto bg-[#0A0F0D] p-6 lg:p-8">
+      <Sidebar isOpen={isMobileMenuOpen} setIsOpen={setIsMobileMenuOpen} />
+      <div className="flex flex-1 flex-col justify-start w-full relative overflow-y-auto overflow-x-hidden">
+        <TopNav onMenuClick={() => setIsMobileMenuOpen(true)} />
+        <main className="flex-1 bg-[#0A0F0D] p-4 sm:p-6 lg:p-8 overflow-x-hidden">
           {children}
         </main>
       </div>

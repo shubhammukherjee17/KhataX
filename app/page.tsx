@@ -452,6 +452,7 @@ export default function LandingPage() {
               <form className="flex gap-2">
                 <input 
                   type="email" 
+                  suppressHydrationWarning
                   placeholder="Email address" 
                   className="bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm w-full focus:outline-none focus:border-[#00ea77]/50"
                 />

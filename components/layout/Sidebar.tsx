@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
@@ -13,6 +14,12 @@ import {
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/useAuth';
 
+interface SidebarProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+
 const navItems = [
   { name: 'Home', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Invoices', href: '/sales', icon: FileText },
@@ -22,12 +29,29 @@ const navItems = [
   { name: 'GST', href: '/settings', icon: Percent },
 ];
 
-export function Sidebar() {
+export function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   const pathname = usePathname();
   const { profile } = useAuth();
 
+  // Close sidebar on route change on mobile
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname, setIsOpen]);
+
   return (
-    <div className="flex h-full w-64 flex-col bg-[#0b110e] text-slate-300 border-r border-[#1a231f] shadow-2xl z-20">
+    <>
+      {/* Mobile Backdrop */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm lg:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+      
+      <div className={cn(
+        "fixed inset-y-0 left-0 z-50 flex h-full w-64 flex-col bg-[#0b110e] text-slate-300 border-r border-[#1a231f] shadow-2xl transition-transform duration-300 ease-in-out lg:static lg:translate-x-0",
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      )}>
       <div className="flex h-20 items-center px-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-[#00ea77] flex items-center justify-center shadow-[0_0_15px_rgba(0,234,119,0.3)]">
@@ -84,7 +108,8 @@ export function Sidebar() {
             <Settings className="w-4 h-4" />
           </button>
         </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
