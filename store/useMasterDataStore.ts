@@ -19,6 +19,8 @@ interface MasterDataState {
   addItem: (item: Omit<Item, 'id' | 'currentStock'>) => Promise<string>;
   updateItem: (id: string, updates: Partial<Item>) => Promise<void>;
   deleteItem: (id: string) => Promise<void>;
+  
+  adjustStock: (itemId: string, type: 'add' | 'reduce', quantity: number, reason: string, notes?: string) => Promise<void>;
 }
 
 export const useMasterDataStore = create<MasterDataState>((set, get) => ({
@@ -120,6 +122,36 @@ export const useMasterDataStore = create<MasterDataState>((set, get) => ({
     
     set({
       items: items.filter(i => i.id !== id)
+    });
+  },
+
+  adjustStock: async (itemId, type, quantity, reason, notes) => {
+    const { businessId, items } = get();
+    if (!businessId) throw new Error("No business selected");
+
+    const item = items.find(i => i.id === itemId);
+    if (!item) throw new Error("Item not found");
+
+    const newStock = type === 'add' ? item.currentStock + quantity : item.currentStock - quantity;
+
+    // 1. Update the item stock
+    await updateDocument(`businesses/${businessId}/items`, itemId, { currentStock: newStock });
+
+    // 2. Add the adjustment record
+    const adjRecord = {
+      date: new Date().toISOString(),
+      itemId,
+      itemName: item.name,
+      type,
+      quantity,
+      reason,
+      notes: notes || ''
+    };
+    await addDocument(`businesses/${businessId}/stock_adjustments`, adjRecord);
+
+    // 3. Update local state
+    set({
+      items: items.map(i => i.id === itemId ? { ...i, currentStock: newStock } : i)
     });
   }
 }));

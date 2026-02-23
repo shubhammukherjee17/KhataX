@@ -90,7 +90,7 @@ export default function LoginPage() {
         </div>
 
         <div className="mt-auto relative z-10 pt-12">
-           <p className="text-slate-500 text-sm italic">&quot;The most intuitive financial platform we&apos;ve ever used.&quot; — CEO, TechFlow</p>
+           <p className="text-slate-500 text-sm italic">&quot;The most intuitive financial platform we&apos;ve ever used.&quot; — CEO, KhataX</p>
         </div>
       </div>
 

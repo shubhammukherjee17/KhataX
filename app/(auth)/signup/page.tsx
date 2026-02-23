@@ -19,16 +19,12 @@ export default function SignUpPage() {
   });
 
   const [loading, setLoading] = useState(false);
-
-  // In a real app we would advance steps, but for this UI we will mock it
-  // or only handle the final step for Firebase Auth.
   const handleNext = () => setStep(step + 1);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      // Very basic implementation. Typically we'd also store the business details in Firestore.
       await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       router.push('/dashboard');
     } catch (error) {

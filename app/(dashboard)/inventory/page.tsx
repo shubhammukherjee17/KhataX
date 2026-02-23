@@ -3,14 +3,23 @@
 import { useState } from 'react';
 import { useMasterDataStore } from '@/store/useMasterDataStore';
 import { Item } from '@/types';
-import { Plus, Search, Edit, Trash2, X, AlertTriangle } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, X, AlertTriangle, ArrowRightLeft } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
 export default function InventoryPage() {
-  const { items, isLoading, addItem, updateItem, deleteItem } = useMasterDataStore();
+  const { items, isLoading, addItem, updateItem, deleteItem, adjustStock } = useMasterDataStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Item | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+
+  // Adjustment Modal State
+  const [isAdjModalOpen, setIsAdjModalOpen] = useState(false);
+  const [adjustingItem, setAdjustingItem] = useState<Item | null>(null);
+  const [adjType, setAdjType] = useState<'add'|'reduce'>('add');
+  const [adjQty, setAdjQty] = useState(1);
+  const [adjReason, setAdjReason] = useState('Stock Check');
+  const [adjNotes, setAdjNotes] = useState('');
+  const [isAdjusting, setIsAdjusting] = useState(false);
 
   const { register, handleSubmit, reset, watch } = useForm<Omit<Item, 'id' | 'currentStock'>>();
   
@@ -40,6 +49,31 @@ export default function InventoryPage() {
     setEditingItem(item);
     reset(item);
     setIsModalOpen(true);
+  };
+
+  const openAdjModal = (item: Item) => {
+    setAdjustingItem(item);
+    setAdjType('add');
+    setAdjQty(1);
+    setAdjReason('Stock Check');
+    setAdjNotes('');
+    setIsAdjModalOpen(true);
+  };
+
+  const handleAdjustStock = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!adjustingItem || adjQty <= 0) return;
+    
+    setIsAdjusting(true);
+    try {
+      await adjustStock(adjustingItem.id, adjType, adjQty, adjReason, adjNotes);
+      setIsAdjModalOpen(false);
+    } catch (error) {
+       console.error(error);
+       alert("Failed to adjust stock");
+    } finally {
+       setIsAdjusting(false);
+    }
   };
 
   const onSubmit = async (data: Omit<Item, 'id' | 'currentStock'>) => {
@@ -146,6 +180,11 @@ export default function InventoryPage() {
                       )}
                     </td>
                     <td className="px-6 py-4 text-right">
+                      {item.type === 'product' && (
+                        <button onClick={() => openAdjModal(item)} className="text-slate-600 hover:text-slate-800 p-1 mr-2" title="Adjust Stock">
+                          <ArrowRightLeft className="h-4 w-4" />
+                        </button>
+                      )}
                       <button onClick={() => openEditModal(item)} className="text-blue-600 hover:text-blue-800 p-1">
                         <Edit className="h-4 w-4" />
                       </button>
@@ -307,6 +346,106 @@ export default function InventoryPage() {
                 className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
               >
                 Save Item
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Stock Adjustment Modal */}
+      {isAdjModalOpen && adjustingItem && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-md overflow-hidden flex flex-col">
+            <div className="px-6 py-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+              <h2 className="text-lg font-semibold text-slate-900">Adjust Stock</h2>
+              <button disabled={isAdjusting} onClick={() => setIsAdjModalOpen(false)} className="text-slate-400 hover:text-slate-700">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            
+            <div className="p-6">
+              <div className="mb-6 flex gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100 items-center">
+                 <div className="flex-1">
+                   <p className="text-sm font-semibold text-slate-900">{adjustingItem.name}</p>
+                   <p className="text-xs text-slate-500">Current Stock: <span className="font-bold text-slate-900">{adjustingItem.currentStock} {adjustingItem.unit}</span></p>
+                 </div>
+              </div>
+
+              <form id="adj-form" onSubmit={handleAdjustStock} className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-slate-700">Type</label>
+                  <div className="flex gap-4">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="radio" checked={adjType === 'add'} onChange={() => setAdjType('add')} className="text-[#00ea77] focus:ring-[#00ea77]" />
+                      <span className="text-sm">Add (+)</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="radio" checked={adjType === 'reduce'} onChange={() => setAdjType('reduce')} className="text-red-500 focus:ring-red-500" />
+                      <span className="text-sm">Reduce (-)</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-slate-700">Quantity to Adjust</label>
+                  <input 
+                    type="number" 
+                    min="1" 
+                    step="1" 
+                    required 
+                    value={adjQty} 
+                    onChange={e => setAdjQty(parseInt(e.target.value) || 0)}
+                    className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  {adjType === 'reduce' && adjQty > adjustingItem.currentStock && (
+                     <p className="text-xs text-orange-500 mt-1">Warning: This will drop stock below zero.</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-slate-700">Reason</label>
+                  <select 
+                    value={adjReason}
+                    onChange={e => setAdjReason(e.target.value)}
+                    className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="Stock Check">Stock Check (Audit)</option>
+                    <option value="Damage">Damage/Spoilage</option>
+                    <option value="Lost">Lost or Stolen</option>
+                    <option value="Internal Use">Internal Use</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-slate-700">Notes (Optional)</label>
+                  <input 
+                    type="text" 
+                    value={adjNotes}
+                    onChange={e => setAdjNotes(e.target.value)}
+                    className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="E.g. Found extra box..."
+                  />
+                </div>
+              </form>
+            </div>
+            
+            <div className="px-6 py-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3">
+              <button 
+                type="button" 
+                disabled={isAdjusting}
+                onClick={() => setIsAdjModalOpen(false)}
+                className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-md hover:bg-slate-50"
+              >
+                Cancel
+              </button>
+              <button 
+                type="submit" 
+                form="adj-form"
+                disabled={isAdjusting || adjQty <= 0}
+                className="px-4 py-2 text-sm font-medium text-black bg-[#00ea77] rounded-md hover:bg-[#00c563] disabled:opacity-50"
+              >
+                {isAdjusting ? 'Saving...' : 'Confirm'}
               </button>
             </div>
           </div>

@@ -46,6 +46,17 @@ export interface Item {
   lowStockAlertLimit: number;
 }
 
+export interface StockAdjustment {
+  id: string;
+  date: string;
+  itemId: string;
+  itemName: string;
+  type: 'add' | 'reduce';
+  quantity: number;
+  reason: string;
+  notes: string;
+}
+
 export interface TransactionItem {
   itemId: string;
   name: string;
