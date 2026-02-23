@@ -28,11 +28,11 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   if (!user) return null; // Wait for redirect
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50">
+    <div className="flex h-screen overflow-hidden bg-[#0A0F0D] text-slate-200 font-sans">
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <TopNav />
-        <main className="flex-1 overflow-auto bg-slate-50/50 p-6">
+        <main className="flex-1 overflow-auto bg-[#0A0F0D] p-6 lg:p-8">
           {children}
         </main>
       </div>

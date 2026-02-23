@@ -3,56 +3,61 @@ import { usePathname } from 'next/navigation';
 import { 
   LayoutDashboard, 
   FileText, 
-  ShoppingCart, 
   Package, 
   Users, 
   BarChart2, 
-  Landmark,
-  Settings
+  Percent,
+  Settings,
+  Wallet
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/hooks/useAuth';
 
 const navItems = [
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Sales / Invoices', href: '/sales', icon: FileText },
-  { name: 'Purchases', href: '/purchases', icon: ShoppingCart },
-  { name: 'Inventory', href: '/inventory', icon: Package },
+  { name: 'Home', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'Invoices', href: '/sales', icon: FileText },
   { name: 'Parties', href: '/parties', icon: Users },
-  { name: 'Banking & Cash', href: '/banking', icon: Landmark },
+  { name: 'Items', href: '/inventory', icon: Package },
   { name: 'Reports', href: '/reports', icon: BarChart2 },
-  { name: 'Settings', href: '/settings', icon: Settings },
+  { name: 'GST', href: '/settings', icon: Percent },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { profile } = useAuth();
 
   return (
-    <div className="flex h-full w-64 flex-col bg-slate-900 text-white shadow-xl">
-      <div className="flex h-16 items-center px-6 border-b border-slate-800">
-        <div className="flex items-center gap-2 font-bold text-xl tracking-tight text-blue-400">
-          <Landmark className="h-6 w-6" />
-          <span>KhataX</span>
+    <div className="flex h-full w-64 flex-col bg-[#0b110e] text-slate-300 border-r border-[#1a231f] shadow-2xl z-20">
+      <div className="flex h-20 items-center px-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-[#00ea77] flex items-center justify-center shadow-[0_0_15px_rgba(0,234,119,0.3)]">
+            <Wallet className="w-6 h-6 text-[#0b110e]" />
+          </div>
+          <div className="flex flex-col">
+            <span className="font-bold text-lg tracking-tight text-white leading-tight">KhataX Pro</span>
+            <span className="text-[10px] uppercase tracking-wider text-[#00ea77] font-semibold">Enterprise Edition</span>
+          </div>
         </div>
       </div>
       
-      <div className="flex-1 overflow-y-auto py-4">
-        <nav className="space-y-1 px-3">
+      <div className="flex-1 overflow-y-auto py-6">
+        <nav className="space-y-2 px-4">
           {navItems.map((item) => {
-            const isActive = pathname.startsWith(item.href);
+            const isActive = pathname.startsWith(item.href) || (pathname === '/' && item.name === 'Home');
             return (
               <Link
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "group flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                  "group flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold transition-all duration-200",
                   isActive 
-                    ? "bg-blue-600 text-white" 
-                    : "text-slate-300 hover:bg-slate-800 hover:text-white"
+                    ? "bg-[#0b2217] text-[#00ea77] shadow-[inset_2px_0_0_0_#00ea77]" 
+                    : "text-slate-400 hover:bg-[#121c17] hover:text-slate-200"
                 )}
               >
                 <item.icon className={cn(
-                  "h-5 w-5 flex-shrink-0",
-                  isActive ? "text-white" : "text-slate-400 group-hover:text-white"
+                  "h-[18px] w-[18px] flex-shrink-0",
+                  isActive ? "text-[#00ea77]" : "text-slate-500 group-hover:text-slate-300"
                 )} />
                 {item.name}
               </Link>
@@ -61,9 +66,20 @@ export function Sidebar() {
         </nav>
       </div>
 
-      <div className="border-t border-slate-800 p-4">
-        <div className="rounded-lg bg-slate-800 p-3 text-xs text-slate-400 text-center">
-          KhataX v1.0 <br /> Business Manager
+      <div className="p-4">
+        <div className="flex items-center justify-between rounded-xl bg-[#121c17] p-3 border border-[#1a231f]">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-slate-800 border border-[#1a231f] flex items-center justify-center overflow-hidden">
+              <img src="https://i.pravatar.cc/150?img=11" alt="Profile" className="w-full h-full object-cover" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm font-bold text-white leading-none">{profile?.name || 'Aditya Sharma'}</span>
+              <span className="text-xs text-slate-500 mt-1">{profile?.businesses?.[0]?.role === 'owner' ? 'Admin' : 'User'}</span>
+            </div>
+          </div>
+          <button className="text-slate-500 hover:text-white transition-colors">
+            <Settings className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </div>
