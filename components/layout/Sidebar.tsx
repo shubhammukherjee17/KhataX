@@ -49,12 +49,15 @@ export function Sidebar() {
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "group flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold transition-all duration-200",
+                  "group relative flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold transition-all duration-200 overflow-hidden",
                   isActive 
-                    ? "bg-[#0b2217] text-[#00ea77] shadow-[inset_2px_0_0_0_#00ea77]" 
+                    ? "bg-[#0b2217] text-[#00ea77]" 
                     : "text-slate-400 hover:bg-[#121c17] hover:text-slate-200"
                 )}
               >
+                {isActive && (
+                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#00ea77] rounded-r-md"></div>
+                )}
                 <item.icon className={cn(
                   "h-[18px] w-[18px] flex-shrink-0",
                   isActive ? "text-[#00ea77]" : "text-slate-500 group-hover:text-slate-300"

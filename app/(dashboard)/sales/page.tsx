@@ -133,10 +133,18 @@ export default function SalesPage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <button className="text-blue-600 hover:text-blue-800 p-1" title="View details">
+                      <Link href={`/sales/${invoice.id}`} className="text-blue-600 hover:text-blue-800 p-1 inline-block" title="View details">
                         <Eye className="h-4 w-4" />
-                      </button>
-                      <button className="text-slate-600 hover:text-slate-800 p-1 ml-2" title="Download PDF">
+                      </Link>
+                      <button 
+                        onClick={() => {
+                          import('@/lib/pdf/generateInvoice').then((mod) => {
+                            // Quick download passing minimal business profile (ideally fetched via useAuth)
+                            mod.generateInvoicePDF(invoice, { name: 'My Business' });
+                          });
+                        }}
+                        className="text-slate-600 hover:text-slate-800 p-1 ml-2 inline-block" title="Download PDF"
+                      >
                         <Download className="h-4 w-4" />
                       </button>
                     </td>
