@@ -52,10 +52,12 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
     if (!businessId) throw new Error("No business selected");
     
     // Determine status from amount paid
-    let status: Transaction['status'] = 'draft';
-    if (data.amountPaid >= data.grandTotal && data.grandTotal > 0) status = 'paid';
-    else if (data.amountPaid > 0) status = 'partially_paid';
-    else status = 'unpaid';
+    let status: Transaction['status'] = data.status || 'draft';
+    if (data.type !== 'purchase_order' && data.type !== 'estimate') {
+      if (data.amountPaid >= data.grandTotal && data.grandTotal > 0) status = 'paid';
+      else if (data.amountPaid > 0) status = 'partially_paid';
+      else status = 'unpaid';
+    }
 
     const newTxData = { ...data, status };
     const docId = await addDocument(`businesses/${businessId}/transactions`, newTxData);

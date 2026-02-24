@@ -1,36 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Play, ArrowRight, CheckCircle2, FileText, PieChart, Bell, Zap, ArrowUpRight, Check } from 'lucide-react';
+import { LandingNavBar } from '@/components/layout/LandingNavBar';
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-[#00ea77] selection:text-black font-sans">
       
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b border-white/5 bg-[#0a0a0a]/80 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#00ea77] flex items-center justify-center">
-              <div className="w-3 h-3 bg-black rounded-sm"></div>
-            </div>
-            <span className="font-bold text-xl tracking-tight">KhataX</span>
-          </div>
-          
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-            <Link href="#features" className="hover:text-white transition">Product</Link>
-            <Link href="#features" className="hover:text-white transition">Features</Link>
-            <Link href="#pricing" className="hover:text-white transition">Pricing</Link>
-            <Link href="#demo" className="hover:text-white transition">Demo</Link>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <Link href="/login" className="text-sm font-medium hover:text-white text-slate-300 transition hidden sm:block">Log in</Link>
-            <Link href="/login" className="text-sm font-semibold bg-[#00ea77] text-black px-5 py-2.5 rounded-full hover:bg-[#00c563] transition">
-              Get Started
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <LandingNavBar />
 
       <main>
         {/* Hero Section */}

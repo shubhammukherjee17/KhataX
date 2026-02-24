@@ -9,7 +9,9 @@ import {
   BarChart2, 
   Percent,
   Settings,
-  Wallet
+  Wallet,
+  ShoppingCart,
+  ClipboardList
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/useAuth';
@@ -22,7 +24,9 @@ interface SidebarProps {
 
 const navItems = [
   { name: 'Home', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Invoices', href: '/sales', icon: FileText },
+  { name: 'Sales', href: '/sales', icon: FileText },
+  { name: 'Purchases', href: '/purchases', icon: ShoppingCart },
+  { name: 'Orders (PO)', href: '/purchases/orders', icon: ClipboardList },
   { name: 'Parties', href: '/parties', icon: Users },
   { name: 'Items', href: '/inventory', icon: Package },
   { name: 'Reports', href: '/reports', icon: BarChart2 },

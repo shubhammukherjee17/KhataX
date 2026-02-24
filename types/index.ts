@@ -70,7 +70,7 @@ export interface TransactionItem {
 
 export interface Transaction {
   id: string;
-  type: 'sale_invoice' | 'purchase_invoice' | 'estimate' | 'payment_in' | 'payment_out';
+  type: 'sale_invoice' | 'purchase_invoice' | 'estimate' | 'payment_in' | 'payment_out' | 'purchase_order';
   number: string;
   date: string; // ISO String 
   dueDate?: string;
@@ -82,6 +82,7 @@ export interface Transaction {
   discountTotal: number;
   grandTotal: number;
   amountPaid: number;
-  status: 'paid' | 'unpaid' | 'partially_paid' | 'draft';
+  status: 'paid' | 'unpaid' | 'partially_paid' | 'draft' | 'sent' | 'partially_billed' | 'fully_billed' | 'cancelled';
   bankAccountId?: string | null;
+  linkedPurchaseBillId?: string | null;
 }

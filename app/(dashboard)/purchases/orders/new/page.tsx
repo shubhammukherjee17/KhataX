@@ -1,62 +1,47 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useMasterDataStore } from '@/store/useMasterDataStore';
 import { useTransactionStore } from '@/store/useTransactionStore';
 import { Transaction, TransactionItem } from '@/types';
-import { ArrowLeft, Plus, Trash2, Save } from 'lucide-react';
+import { ArrowLeft, Plus, Trash2, Save, Send } from 'lucide-react';
 import { format } from 'date-fns';
 
-type InvoiceFormData = {
+type POFormData = {
   partyId: string;
   number: string;
   date: string;
+  dueDate: string;
   items: TransactionItem[];
-  amountPaid: number;
 };
 
-export default function NewPurchasePage() {
+export default function NewPurchaseOrderPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const fromPoId = searchParams.get('fromPo');
-
   const { parties, items: inventoryItems } = useMasterDataStore();
-  const { transactions, addTransaction, updateTransaction } = useTransactionStore();
+  const { addTransaction } = useTransactionStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // We show vendors for purchases
+  // We show vendors for purchase orders
   const vendors = parties.filter(p => p.type === 'vendor');
 
-  const { register, control, handleSubmit, watch, setValue } = useForm<InvoiceFormData>({
+  const { register, control, handleSubmit, watch, setValue } = useForm<POFormData>({
     defaultValues: {
       partyId: '',
-      number: `BILL-${Date.now().toString().slice(-6)}`,
+      number: `PO-${Date.now().toString().slice(-6)}`,
       date: format(new Date(), 'yyyy-MM-dd'),
+      dueDate: format(new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd'),
       items: [{ itemId: '', name: '', quantity: 1, rate: 0, discount: 0, taxRate: 18, taxAmount: 0, totalAmount: 0 }],
-      amountPaid: 0
     }
   });
 
-  const { fields, append, remove, replace } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
     name: 'items'
   });
 
-  // Pre-fill if coming from a PO
-  useEffect(() => {
-    if (fromPoId) {
-      const sourcePo = transactions.find(t => t.id === fromPoId);
-      if (sourcePo) {
-        setValue('partyId', sourcePo.partyId);
-        replace(sourcePo.items);
-      }
-    }
-  }, [fromPoId, transactions, setValue, replace]);
-
   const watchItems = watch('items');
-  const watchAmountPaid = watch('amountPaid');
 
   // Calculations
   const subTotal = watchItems.reduce((sum, item) => sum + ((item.quantity || 0) * (item.rate || 0)), 0);
@@ -92,7 +77,7 @@ export default function NewPurchasePage() {
     }
   };
 
-  const onSubmit = async (data: InvoiceFormData) => {
+  const onSubmit = async (data: POFormData) => {
     if (data.items.length === 0 || !data.items[0].itemId) {
       alert("Please add at least one item");
       return;
@@ -103,9 +88,10 @@ export default function NewPurchasePage() {
       const selectedParty = parties.find(p => p.id === data.partyId);
       
       const transactionData: Omit<Transaction, 'id'> = {
-        type: 'purchase_invoice',
+        type: 'purchase_order',
         number: data.number,
         date: new Date(data.date).toISOString(),
+        dueDate: data.dueDate ? new Date(data.dueDate).toISOString() : undefined,
         partyId: data.partyId,
         partyName: selectedParty?.name || 'Unknown Vendor',
         items: data.items.filter(i => i.itemId),
@@ -113,26 +99,17 @@ export default function NewPurchasePage() {
         taxAmountTotal,
         discountTotal,
         grandTotal,
-        amountPaid: data.amountPaid || 0,
-        status: 'draft',
-        linkedPurchaseBillId: fromPoId || null
+        amountPaid: 0, // POs don't involve immediate payment
+        status: 'sent' // Creating standardizes it as sent to vendor
       };
 
-      const newBillId = await addTransaction(transactionData);
+      await addTransaction(transactionData);
       
-      // If we converted from a PO, update the original PO status
-      if (fromPoId) {
-         try {
-           await updateTransaction(fromPoId, { status: 'fully_billed', linkedPurchaseBillId: newBillId });
-         } catch(e) { console.error("Could not update PO status", e); }
-      }
-
-      // OPTIONAL TODO: trigger stock updates here using a Firebase Edge function or batch writes.
-      router.push('/purchases');
+      router.push('/purchases/orders');
     } catch (error) {
-      console.error("Error saving bill:", error);
-      alert("Failed to save purchase bill.");
-      setIsSubmitting(false);
+       console.error("Error saving PO:", error);
+       alert("Failed to save Purchase Order.");
+       setIsSubmitting(false);
     }
   };
 
@@ -146,14 +123,14 @@ export default function NewPurchasePage() {
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Record Purchase Bill</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Create Purchase Order</h1>
         </div>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="space-y-2 col-span-1 md:col-span-2">
               <label className="text-sm font-medium text-slate-700 text-red-600">Vendor *</label>
               <select 
                 {...register("partyId", { required: true })}
@@ -167,15 +144,15 @@ export default function NewPurchasePage() {
             </div>
             
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700 text-red-600">Bill No *</label>
+              <label className="text-sm font-medium text-slate-700 text-red-600">PO No *</label>
               <input 
                 {...register("number", { required: true })}
-                className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700 text-red-600">Bill Date *</label>
+              <label className="text-sm font-medium text-slate-700 text-red-600">Issue Date *</label>
               <input 
                 type="date"
                 {...register("date", { required: true })}
@@ -188,7 +165,7 @@ export default function NewPurchasePage() {
         {/* Line Items */}
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
           <div className="p-4 border-b border-slate-200 bg-slate-50">
-            <h2 className="font-semibold text-slate-800">Items</h2>
+            <h2 className="font-semibold text-slate-800">Order Items</h2>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
@@ -293,27 +270,11 @@ export default function NewPurchasePage() {
 
         {/* Footer Totals */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-4 h-fit">
-            <h3 className="font-semibold text-slate-800 border-b pb-2">Payment Setup</h3>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700">Amount Paid (₹)</label>
-              <input 
-                type="number" step="0.01"
-                {...register("amountPaid", { valueAsNumber: true })}
-                className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg border-green-500 bg-green-50 focus:ring-green-500"
-              />
-            </div>
-            {watchAmountPaid > 0 && (
-              <p className="text-xs text-slate-500">
-                To be Paid later: ₹{Math.max(0, grandTotal - (watchAmountPaid || 0)).toFixed(2)}
-              </p>
-            )}
-          </div>
-
+          <div className="hidden md:block"></div>
           <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
             <div className="space-y-3 text-sm">
               <div className="flex justify-between text-slate-600">
-                <span>Subtotal</span>
+                <span>Total Value</span>
                 <span>₹{subTotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-slate-600">
@@ -321,11 +282,11 @@ export default function NewPurchasePage() {
                 <span>- ₹{discountTotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-slate-600">
-                <span>Total Tax (GST)</span>
+                <span>Tax Estimated (GST)</span>
                 <span>+ ₹{taxAmountTotal.toFixed(2)}</span>
               </div>
               <div className="pt-3 border-t border-slate-200 flex justify-between font-bold text-lg text-slate-900">
-                <span>Grand Total</span>
+                <span>Order Total</span>
                 <span>₹{grandTotal.toFixed(2)}</span>
               </div>
             </div>
@@ -347,8 +308,8 @@ export default function NewPurchasePage() {
               disabled={isSubmitting}
               className="px-6 py-2.5 flex items-center gap-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50"
             >
-              <Save className="h-4 w-4" /> 
-              {isSubmitting ? 'Saving...' : 'Save Purchase Bill'}
+              <Send className="h-4 w-4" /> 
+              {isSubmitting ? 'Saving...' : 'Send PO'}
             </button>
           </div>
         </div>
