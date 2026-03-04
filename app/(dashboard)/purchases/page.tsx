@@ -177,9 +177,9 @@ export default function PurchasesPage() {
                   <tr key={idx} className="hover:bg-[#16221c] transition-colors group cursor-pointer">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-400 border border-slate-700">
-                          {tx.avatar}
-                          <FileText className="absolute opacity-10 w-6 h-6" />
+                        <div className="relative overflow-hidden w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-400 border border-slate-700">
+                          <span className="relative z-10">{tx.avatar}</span>
+                          <FileText className="absolute opacity-10 w-6 h-6 z-0" />
                         </div>
                         <div>
                           <p className="font-bold text-slate-200 group-hover:text-white transition-colors">{tx.vendor}</p>
