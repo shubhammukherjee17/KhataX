@@ -29,11 +29,11 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   if (!user) return null; // Wait for redirect
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#0A0F0D] text-slate-200 font-sans">
+    <div className="flex h-screen overflow-hidden bg-[#0a0a0a] text-white font-sans">
       <Sidebar isOpen={isMobileMenuOpen} setIsOpen={setIsMobileMenuOpen} />
       <div className="flex flex-1 flex-col justify-start w-full relative overflow-y-auto overflow-x-hidden">
         <TopNav onMenuClick={() => setIsMobileMenuOpen(true)} />
-        <main className="flex-1 bg-[#0A0F0D] p-4 sm:p-6 lg:p-8 overflow-x-hidden">
+        <main className="flex-1 bg-[#0a0a0a] p-4 sm:p-6 lg:p-8 overflow-x-hidden">
           {children}
         </main>
       </div>

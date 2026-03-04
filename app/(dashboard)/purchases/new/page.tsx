@@ -1,5 +1,4 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm, useFieldArray } from 'react-hook-form';
@@ -141,23 +140,29 @@ export default function NewPurchasePage() {
       <div className="flex items-center gap-4">
         <button
           onClick={() => router.back()}
-          className="p-2 hover:bg-slate-200 rounded-full transition"
+          className="p-2 text-slate-400 hover:text-white hover:bg-white/5 rounded-full transition"
         >
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Record Purchase Bill</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-3">
+            <span className="w-8 h-8 rounded-lg bg-[#00ea77]/10 flex items-center justify-center">
+              <span className="w-3 h-3 bg-[#00ea77] rounded-sm"></span>
+            </span>
+            Record Purchase Bill
+          </h1>
         </div>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-[#111] p-6 rounded-2xl shadow-sm border border-white/10 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-[#00ea77]/5 rounded-full blur-[40px] pointer-events-none"></div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700 text-red-600">Vendor *</label>
+              <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Vendor *</label>
               <select
                 {...register("partyId", { required: true })}
-                className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
               >
                 <option value="">Select Vendor</option>
                 {vendors.map(c => (
@@ -167,54 +172,54 @@ export default function NewPurchasePage() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700 text-red-600">Bill No *</label>
+              <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Bill No *</label>
               <input
                 {...register("number", { required: true })}
-                className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700 text-red-600">Bill Date *</label>
+              <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Bill Date *</label>
               <input
                 type="date"
                 {...register("date", { required: true })}
-                className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium [color-scheme:dark]"
               />
             </div>
           </div>
         </div>
 
         {/* Line Items */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-          <div className="p-4 border-b border-slate-200 bg-slate-50">
-            <h2 className="font-semibold text-slate-800">Items</h2>
+        <div className="bg-[#111] rounded-2xl shadow-sm border border-white/10 overflow-hidden">
+          <div className="p-5 border-b border-white/5">
+            <h2 className="font-semibold text-white">Items</h2>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-slate-100/50 text-slate-600 font-medium">
+          <div className="overflow-x-auto px-5 pb-5 pt-2">
+            <table className="w-full text-left font-medium">
+              <thead className="text-xs uppercase tracking-wider text-slate-500 font-bold">
                 <tr>
-                  <th className="px-4 py-3 w-1/3">Item</th>
-                  <th className="px-4 py-3 w-24">Qty</th>
-                  <th className="px-4 py-3 w-32">Purch. Rate (₹)</th>
-                  <th className="px-4 py-3 w-28">Disc (₹)</th>
-                  <th className="px-4 py-3 w-28">GST (%)</th>
-                  <th className="px-4 py-3 w-32">Tax (₹)</th>
-                  <th className="px-4 py-3 text-right">Amount (₹)</th>
-                  <th className="px-4 py-3 w-12"></th>
+                  <th className="py-4 w-1/3">Item</th>
+                  <th className="px-4 py-4 w-24">Qty</th>
+                  <th className="px-4 py-4 w-32">Purch. Rate (₹)</th>
+                  <th className="px-4 py-4 w-28">Disc (₹)</th>
+                  <th className="px-4 py-4 w-28">GST (%)</th>
+                  <th className="px-4 py-4 w-32">Tax (₹)</th>
+                  <th className="px-4 py-4 text-center">Amount (₹)</th>
+                  <th className="px-4 py-4 w-12"></th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-white/5">
                 {fields.map((field, index) => (
-                  <tr key={field.id} className="hover:bg-slate-50/50">
-                    <td className="px-4 py-3">
+                  <tr key={field.id} className="group">
+                    <td className="py-3 pr-4">
                       <select
                         {...register(`items.${index}.itemId`, { required: true })}
                         onChange={(e) => {
                           register(`items.${index}.itemId`).onChange(e); // Trigger RHF
                           handleItemSelect(index, e.target.value);
                         }}
-                        className="w-full px-2 py-1.5 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="w-full px-4 py-2 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
                       >
                         <option value="">Select Item</option>
                         {inventoryItems.map(item => (
@@ -227,27 +232,27 @@ export default function NewPurchasePage() {
                       <input
                         type="number" step="0.01" min="1"
                         {...register(`items.${index}.quantity`, { valueAsNumber: true })}
-                        className="w-full px-2 py-1.5 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="w-full px-4 py-2 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
                       />
                     </td>
                     <td className="px-4 py-3">
                       <input
                         type="number" step="0.01"
                         {...register(`items.${index}.rate`, { valueAsNumber: true })}
-                        className="w-full px-2 py-1.5 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="w-full px-4 py-2 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
                       />
                     </td>
                     <td className="px-4 py-3">
                       <input
                         type="number" step="0.01"
                         {...register(`items.${index}.discount`, { valueAsNumber: true })}
-                        className="w-full px-2 py-1.5 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="w-full px-4 py-2 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
                       />
                     </td>
                     <td className="px-4 py-3">
                       <select
                         {...register(`items.${index}.taxRate`, { valueAsNumber: true })}
-                        className="w-full px-2 py-1.5 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="w-full px-4 py-2 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
                       >
                         <option value={0}>0%</option>
                         <option value={5}>5%</option>
@@ -257,12 +262,12 @@ export default function NewPurchasePage() {
                       </select>
                     </td>
                     <td className="px-4 py-3">
-                      <div className="w-full px-2 py-1.5 bg-slate-100 rounded text-slate-500 text-sm">
+                      <div className="w-full px-4 py-2 bg-white/5 rounded-xl text-slate-400 border border-transparent font-medium">
                         {watchItems[index]?.taxAmount?.toFixed(2) || '0.00'}
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-right">
-                      <div className="font-medium text-slate-800">
+                    <td className="px-4 py-3 text-center">
+                      <div className="font-bold text-white text-lg">
                         {watchItems[index]?.totalAmount?.toFixed(2) || '0.00'}
                       </div>
                     </td>
@@ -270,7 +275,7 @@ export default function NewPurchasePage() {
                       <button
                         type="button"
                         onClick={() => remove(index)}
-                        className="text-red-500 hover:text-red-700 p-1"
+                        className="text-slate-500 hover:text-red-500 p-2 transition-colors rounded-lg hover:bg-red-500/10"
                       >
                         <Trash2 className="h-4 w-4" />
                       </button>
@@ -280,72 +285,76 @@ export default function NewPurchasePage() {
               </tbody>
             </table>
           </div>
-          <div className="p-4 border-t border-slate-200">
+          <div className="p-5 border-t border-white/5 bg-[#0a0a0a]">
             <button
               type="button"
               onClick={() => append({ itemId: '', name: '', quantity: 1, rate: 0, discount: 0, taxRate: 18, taxAmount: 0, totalAmount: 0, netAmount: 0 })}
-              className="flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-800"
+              className="flex items-center gap-2 text-sm font-bold text-[#00ea77] hover:text-[#00c563] bg-[#00ea77]/10 px-4 py-2 rounded-lg transition-colors border border-[#00ea77]/20"
             >
-              <Plus className="h-4 w-4" /> Add Row
+              <Plus className="h-4 w-4" /> Add Line Item
             </button>
           </div>
         </div>
 
         {/* Footer Totals */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 space-y-4 h-fit">
-            <h3 className="font-semibold text-slate-800 border-b pb-2">Payment Setup</h3>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700">Amount Paid (₹)</label>
-              <input
-                type="number" step="0.01"
-                {...register("amountPaid", { valueAsNumber: true })}
-                className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg border-green-500 bg-green-50 focus:ring-green-500"
-              />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-20">
+          <div className="bg-[#111] p-6 rounded-2xl shadow-sm border border-white/10 space-y-4 h-fit relative">
+            <h3 className="font-semibold text-white border-b border-white/5 pb-3 uppercase tracking-wider text-xs">Payment Collection</h3>
+            <div className="space-y-3 pt-2">
+              <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Amount Paid (₹)</label>
+              <div className="relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₹</span>
+                <input
+                  type="number" step="0.01"
+                  {...register("amountPaid", { valueAsNumber: true })}
+                  className="w-full px-4 py-4 pl-8 bg-[#0a0a0a] border border-[#00ea77]/50 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77] focus:border-[#00ea77] text-2xl font-bold text-[#00ea77]"
+                />
+              </div>
             </div>
             {watchAmountPaid > 0 && (
-              <p className="text-xs text-slate-500">
-                To be Paid later: ₹{Math.max(0, grandTotal - (watchAmountPaid || 0)).toFixed(2)}
+              <p className="text-xs font-bold text-slate-400 flex justify-between bg-white/5 p-3 rounded-lg border border-white/5">
+                <span>To be Paid later</span>
+                <span className="text-white">₹{Math.max(0, grandTotal - (watchAmountPaid || 0)).toFixed(2)}</span>
               </p>
             )}
           </div>
 
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-            <div className="space-y-3 text-sm">
-              <div className="flex justify-between text-slate-600">
+          <div className="bg-[#111] p-6 rounded-2xl shadow-sm border border-white/10 relative overflow-hidden">
+            <div className="space-y-4 text-sm font-medium relative z-10">
+              <div className="flex justify-between text-slate-400">
                 <span>Subtotal</span>
-                <span>₹{subTotal.toFixed(2)}</span>
+                <span className="text-white">₹{subTotal.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-slate-600">
+              <div className="flex justify-between text-slate-400">
                 <span>Total Discount</span>
-                <span>- ₹{discountTotal.toFixed(2)}</span>
+                <span className="text-red-400">- ₹{discountTotal.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-slate-600">
+              <div className="flex justify-between text-slate-400">
                 <span>Total Tax (GST)</span>
-                <span>+ ₹{taxAmountTotal.toFixed(2)}</span>
+                <span className="text-yellow-400">+ ₹{taxAmountTotal.toFixed(2)}</span>
               </div>
-              <div className="pt-3 border-t border-slate-200 flex justify-between font-bold text-lg text-slate-900">
-                <span>Grand Total</span>
-                <span>₹{grandTotal.toFixed(2)}</span>
+              <div className="pt-4 mt-2 border-t border-white/10 flex justify-between items-center">
+                <span className="font-bold text-slate-300 uppercase tracking-wider text-xs">Grand Total</span>
+                <span className="font-bold text-3xl text-white">₹{grandTotal.toFixed(2)}</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Action Bar */}
-        <div className="fixed bottom-0 left-0 right-0 md:pl-64 bg-white border-t border-slate-200 p-4 flex justify-end shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-10">
-          <div className="flex gap-4">
+        <div className="fixed bottom-0 left-0 right-0 lg:left-64 bg-[#0a0a0a] border-t border-white/10 p-4 flex justify-end shadow-[0_-10px_40px_rgba(0,0,0,0.5)] z-40">
+          <div className="flex gap-4 w-full md:w-auto max-w-7xl mx-auto md:mx-0 px-6">
             <button
               type="button"
               onClick={() => router.back()}
-              className="px-6 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-md hover:bg-slate-50"
+              className="flex-1 md:flex-none px-6 py-3 text-sm font-bold text-slate-300 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2.5 flex items-center gap-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50"
+              className="flex-1 md:flex-none px-8 py-3 flex items-center justify-center gap-2 text-sm font-bold text-black bg-[#00ea77] rounded-xl hover:bg-[#00c563] disabled:opacity-50 transition-all shadow-[0_0_20px_rgba(0,234,119,0.2)] hover:shadow-[0_0_25px_rgba(0,234,119,0.4)]"
             >
               <Save className="h-4 w-4" />
               {isSubmitting ? 'Saving...' : 'Save Purchase Bill'}

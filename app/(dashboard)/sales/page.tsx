@@ -11,8 +11,8 @@ export default function SalesPage() {
   const [searchTerm, setSearchTerm] = useState('');
 
   const salesInvoices = transactions.filter(t => t.type === 'sale_invoice');
-  
-  const filteredSales = salesInvoices.filter(t => 
+
+  const filteredSales = salesInvoices.filter(t =>
     t.partyName.toLowerCase().includes(searchTerm.toLowerCase()) ||
     t.number.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -21,129 +21,128 @@ export default function SalesPage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Sales Invoices</h1>
-          <p className="text-sm text-slate-500">Create, manage, and track your customer invoices.</p>
+          <h1 className="text-2xl font-bold tracking-tight text-white">Sales Invoices</h1>
+          <p className="text-sm font-semibold text-slate-400">Create, manage, and track your customer invoices.</p>
         </div>
-        <Link 
+        <Link
           href="/sales/new"
-          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+          className="flex items-center gap-2 bg-[#00ea77] text-black font-bold px-4 py-2 rounded-xl hover:bg-[#00c563] transition shadow-[0_0_15px_rgba(0,234,119,0.2)]"
         >
-          <Plus className="h-4 w-4" /> Create Invoice
+          <Plus className="h-4 w-4 stroke-[3]" /> Create Invoice
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white rounded-xl shadow-sm border p-4 flex items-center gap-4">
-          <div className="p-3 bg-blue-50 text-blue-600 rounded-lg">
-            <IndianRupee className="h-6 w-6" />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="bg-[#111] border border-white/10 rounded-2xl p-5 relative overflow-hidden group hover:border-[#00ea77]/30 transition-all flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center">
+            <IndianRupee className="h-6 w-6 stroke-[2]" />
           </div>
           <div>
-            <p className="text-sm font-medium text-slate-500">Total Sales (MTD)</p>
-            <p className="text-xl font-bold text-slate-900">
+            <p className="text-[10px] font-bold tracking-wider text-slate-500 uppercase">Total Sales (MTD)</p>
+            <p className="text-2xl font-extrabold text-white">
               ₹{salesInvoices.reduce((sum, t) => sum + t.grandTotal, 0).toFixed(2)}
             </p>
           </div>
         </div>
-        <div className="bg-white rounded-xl shadow-sm border p-4 flex items-center gap-4">
-          <div className="p-3 bg-green-50 text-green-600 rounded-lg">
-            <IndianRupee className="h-6 w-6" />
+        <div className="bg-[#111] border border-white/10 rounded-2xl p-5 relative overflow-hidden group hover:border-[#00ea77]/30 transition-all flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-[#00ea77]/10 text-[#00ea77] flex items-center justify-center">
+            <IndianRupee className="h-6 w-6 stroke-[2]" />
           </div>
           <div>
-            <p className="text-sm font-medium text-slate-500">Total Received</p>
-            <p className="text-xl font-bold text-slate-900">
+            <p className="text-[10px] font-bold tracking-wider text-slate-500 uppercase">Total Received</p>
+            <p className="text-2xl font-extrabold text-white">
               ₹{salesInvoices.reduce((sum, t) => sum + t.amountPaid, 0).toFixed(2)}
             </p>
           </div>
         </div>
-        <div className="bg-white rounded-xl shadow-sm border p-4 flex items-center gap-4">
-          <div className="p-3 bg-orange-50 text-orange-600 rounded-lg">
-            <IndianRupee className="h-6 w-6" />
+        <div className="bg-[#111] border border-white/10 rounded-2xl p-5 relative overflow-hidden group hover:border-[#00ea77]/30 transition-all flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-500 flex items-center justify-center">
+            <IndianRupee className="h-6 w-6 stroke-[2]" />
           </div>
           <div>
-            <p className="text-sm font-medium text-slate-500">Total Pending</p>
-            <p className="text-xl font-bold text-slate-900">
+            <p className="text-[10px] font-bold tracking-wider text-slate-500 uppercase">Total Pending</p>
+            <p className="text-2xl font-extrabold text-white">
               ₹{salesInvoices.reduce((sum, t) => sum + (t.grandTotal - t.amountPaid), 0).toFixed(2)}
             </p>
           </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="p-4 border-b border-slate-200 flex items-center gap-4">
+      <div className="bg-[#111] rounded-2xl shadow-sm border border-white/10 overflow-hidden">
+        <div className="p-5 border-b border-white/5 flex items-center gap-4">
           <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-4 w-4" />
-            <input 
-              type="text" 
-              placeholder="Search by Invoice # or Customer Name..." 
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 h-4 w-4" />
+            <input
+              type="text"
+              placeholder="Search by Invoice # or Customer Name..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-11 pr-4 py-2.5 bg-[#0a0a0a] border border-white/5 rounded-full text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 font-medium"
             />
           </div>
         </div>
 
         {isLoading ? (
-          <div className="p-8 text-center text-slate-500">Loading sales...</div>
+          <div className="p-8 text-center text-slate-500 font-medium">Loading sales...</div>
         ) : filteredSales.length === 0 ? (
-          <div className="p-12 text-center text-slate-500">
-            <p>No invoices found.</p>
-            <Link href="/sales/new" className="text-blue-600 font-medium hover:underline mt-2 inline-block">
+          <div className="p-16 text-center text-slate-500">
+            <p className="font-medium">No invoices found.</p>
+            <Link href="/sales/new" className="text-[#00ea77] font-bold hover:text-[#00c563] mt-2 inline-block">
               Create your first invoice
             </Link>
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm whitespace-nowrap">
-              <thead className="bg-slate-50 text-slate-600 font-medium border-b border-slate-200">
+            <table className="w-full text-left font-medium">
+              <thead className="bg-[#0a0a0a]/50 text-[10px] uppercase font-bold tracking-wider text-slate-500 border-b border-white/5">
                 <tr>
-                  <th className="px-6 py-3">Date</th>
-                  <th className="px-6 py-3">Invoice No</th>
-                  <th className="px-6 py-3">Party Name</th>
-                  <th className="px-6 py-3 text-right">Amount</th>
-                  <th className="px-6 py-3 text-center">Status</th>
-                  <th className="px-6 py-3 text-right">Actions</th>
+                  <th className="px-6 py-4">Date</th>
+                  <th className="px-6 py-4">Invoice No</th>
+                  <th className="px-6 py-4">Party Name</th>
+                  <th className="px-6 py-4 text-right">Amount</th>
+                  <th className="px-6 py-4 text-center">Status</th>
+                  <th className="px-6 py-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200">
+              <tbody className="divide-y divide-white/5">
                 {filteredSales.map((invoice) => (
-                  <tr key={invoice.id} className="hover:bg-slate-50 transition">
-                    <td className="px-6 py-4">
+                  <tr key={invoice.id} className="hover:bg-white/5 transition-colors group">
+                    <td className="px-6 py-4 text-slate-300 text-sm">
                       {format(new Date(invoice.date), 'dd MMM yyyy')}
                     </td>
-                    <td className="px-6 py-4 font-medium text-slate-900">
+                    <td className="px-6 py-4 text-white font-bold text-sm">
                       {invoice.number}
                     </td>
-                    <td className="px-6 py-4 font-medium">
+                    <td className="px-6 py-4 text-white font-bold text-sm">
                       {invoice.partyName}
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <div className="font-medium text-slate-900">₹{invoice.grandTotal.toFixed(2)}</div>
+                      <div className="text-white font-bold text-sm">₹{invoice.grandTotal.toFixed(2)}</div>
                       {invoice.amountPaid > 0 && invoice.status !== 'paid' && (
-                        <div className="text-xs text-slate-500">Received: ₹{invoice.amountPaid.toFixed(2)}</div>
+                        <div className="text-[10px] font-bold text-[#00ea77] uppercase tracking-wider mt-1">Recv: ₹{invoice.amountPaid.toFixed(2)}</div>
                       )}
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <span className={`inline-flex py-1 px-2 rounded-full text-xs font-medium uppercase tracking-wider
-                        ${invoice.status === 'paid' ? 'bg-green-100 text-green-700' : 
-                          invoice.status === 'partially_paid' ? 'bg-orange-100 text-orange-700' : 
-                          invoice.status === 'unpaid' ? 'bg-red-100 text-red-700' : 
-                          'bg-slate-100 text-slate-700'}
+                      <span className={`inline-flex py-1 px-2.5 rounded text-[10px] font-bold uppercase tracking-wider
+                        ${invoice.status === 'paid' ? 'bg-[#00ea77]/10 text-[#00ea77]' :
+                          invoice.status === 'partially_paid' ? 'bg-orange-500/10 text-orange-500' :
+                            invoice.status === 'unpaid' ? 'bg-red-500/10 text-red-500' :
+                              'bg-white/5 text-slate-400'}
                       `}>
                         {invoice.status.replace('_', ' ')}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <Link href={`/sales/${invoice.id}`} className="text-blue-600 hover:text-blue-800 p-1 inline-block" title="View details">
+                      <Link href={`/sales/${invoice.id}`} className="text-slate-500 hover:text-[#00ea77] p-2 inline-block transition-colors rounded-lg hover:bg-[#00ea77]/10" title="View details">
                         <Eye className="h-4 w-4" />
                       </Link>
-                      <button 
+                      <button
                         onClick={() => {
                           import('@/lib/pdf/generateInvoice').then((mod) => {
-                            // Quick download passing minimal business profile (ideally fetched via useAuth)
                             mod.generateInvoicePDF(invoice, { name: 'My Business' });
                           });
                         }}
-                        className="text-slate-600 hover:text-slate-800 p-1 ml-2 inline-block" title="Download PDF"
+                        className="text-slate-500 hover:text-[#00ea77] p-2 ml-1 inline-block transition-colors rounded-lg hover:bg-[#00ea77]/10" title="Download PDF"
                       >
                         <Download className="h-4 w-4" />
                       </button>

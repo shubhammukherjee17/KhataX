@@ -55,7 +55,7 @@ export function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
       )}
 
       <div className={cn(
-        "fixed inset-y-0 left-0 z-50 flex h-full w-64 flex-col bg-[#0b110e] text-slate-300 border-r border-[#1a231f] shadow-2xl transition-transform duration-300 ease-in-out lg:static lg:translate-x-0",
+        "fixed inset-y-0 left-0 z-50 flex h-full w-64 flex-col bg-[#111] text-slate-300 border-r border-white/10 shadow-2xl transition-transform duration-300 ease-in-out lg:static lg:translate-x-0",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         <div className="flex h-20 items-center px-6">
@@ -81,8 +81,8 @@ export function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                   className={cn(
                     "group relative flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold transition-all duration-200 overflow-hidden",
                     isActive
-                      ? "bg-[#0b2217] text-[#00ea77]"
-                      : "text-slate-400 hover:bg-[#121c17] hover:text-slate-200"
+                      ? "bg-[#00ea77]/10 text-[#00ea77]"
+                      : "text-slate-400 hover:bg-white/5 hover:text-white"
                   )}
                 >
                   {isActive && (
@@ -100,7 +100,7 @@ export function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         </div>
 
         <div className="p-4">
-          <div className="flex items-center justify-between rounded-xl bg-[#121c17] p-3 border border-[#1a231f]">
+          <div className="flex items-center justify-between rounded-xl bg-white/5 p-3 border border-white/10 hover:border-[#00ea77]/30 transition-colors">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-slate-800 border border-[#1a231f] flex items-center justify-center overflow-hidden">
                 <img src="https://i.pravatar.cc/150?img=11" alt="Profile" className="w-full h-full object-cover" />
