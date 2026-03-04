@@ -73,7 +73,11 @@ export function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         <div className="flex-1 overflow-y-auto py-6">
           <nav className="space-y-2 px-4">
             {navItems.map((item) => {
-              const isActive = pathname.startsWith(item.href) || (pathname === '/' && item.name === 'Home');
+              const exactMatch = pathname === item.href || (pathname === '/' && item.name === 'Home');
+              const partialMatch = pathname.startsWith(item.href + '/') && item.name !== 'Home';
+              const isPurchasesPOConflict = item.href === '/purchases' && pathname.startsWith('/purchases/orders');
+              const isActive = exactMatch || (partialMatch && !isPurchasesPOConflict);
+
               return (
                 <Link
                   key={item.name}
