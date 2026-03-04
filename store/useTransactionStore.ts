@@ -1,15 +1,16 @@
 import { create } from 'zustand';
 import { Transaction } from '@/types';
 import { getCollection, addDocument, updateDocument, deleteDocument } from '@/lib/firebase/firestore';
+import { useMasterDataStore } from './useMasterDataStore';
 
 interface TransactionState {
   transactions: Transaction[];
   isLoading: boolean;
   businessId: string | null;
-  
+
   setBusinessId: (id: string | null) => void;
   fetchTransactions: () => Promise<void>;
-  
+
   addTransaction: (transaction: Omit<Transaction, 'id'>) => Promise<string>;
   updateTransaction: (id: string, updates: Partial<Transaction>) => Promise<void>;
   deleteTransaction: (id: string) => Promise<void>;
@@ -38,8 +39,8 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
       // Sorting desc by date by getting them all and sorting locally if index is missing, 
       // or rely on firestore orderBy if indexes are correct
       const data = await getCollection<Transaction>(`businesses/${businessId}/transactions`);
-      data.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-      
+      data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
       set({ transactions: data, isLoading: false });
     } catch (error) {
       console.error("Error fetching transactions:", error);
@@ -50,7 +51,7 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
   addTransaction: async (data) => {
     const { businessId, transactions } = get();
     if (!businessId) throw new Error("No business selected");
-    
+
     // Determine status from amount paid
     let status: Transaction['status'] = data.status || 'draft';
     if (data.type !== 'purchase_order' && data.type !== 'estimate') {
@@ -61,7 +62,28 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
 
     const newTxData = { ...data, status };
     const docId = await addDocument(`businesses/${businessId}/transactions`, newTxData);
-    
+
+    // Side Effect: Adjust Stock for Sale Invoices
+    if (data.type === 'sale_invoice') {
+      const masterStore = useMasterDataStore.getState();
+      for (const item of data.items) {
+        // We'll reduce from the global pool for MVP or default godown
+        // Since we don't have godown selection per line item in the lean invoice yet, 
+        // we'll pass undefined for godownId to deduct from the global tracking
+        try {
+          await masterStore.adjustStock(
+            item.itemId,
+            'reduce',
+            item.quantity,
+            'Sale Invoice',
+            `Auto-deducted for Invoice ${data.number}`
+          );
+        } catch (e) {
+          console.error(`Failed to adjust stock for item ${item.itemId}:`, e);
+        }
+      }
+    }
+
     const newTx = { id: docId, ...newTxData } as Transaction;
     set({ transactions: [newTx, ...transactions] });
     return docId;
@@ -72,7 +94,7 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
     if (!businessId) throw new Error("No business selected");
 
     await updateDocument(`businesses/${businessId}/transactions`, id, updates);
-    
+
     set({
       transactions: transactions.map(t => t.id === id ? { ...t, ...updates } : t)
     });
@@ -83,7 +105,7 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
     if (!businessId) throw new Error("No business selected");
 
     await deleteDocument(`businesses/${businessId}/transactions`, id);
-    
+
     set({
       transactions: transactions.filter(t => t.id !== id)
     });

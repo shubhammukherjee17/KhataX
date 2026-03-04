@@ -29,7 +29,9 @@ export interface Party {
   billingAddress: string;
   shippingAddress: string;
   openingBalance: number;
-  currentBalance: number; // Computed locally or by triggers
+  currentBalance: number;
+  creditLimit?: number;
+  creditDays?: number; // Payment terms: 7/15/30 days
 }
 
 export interface Item {
@@ -40,10 +42,29 @@ export interface Item {
   unit: string; // 'PCS', 'KG', 'LTR'
   purchasePrice: number;
   salePrice: number;
-  taxRate: number; // 0, 5, 12, 18, 28
+  taxRate: number; // 0, 5, 18
   openingStock: number;
-  currentStock: number; // Computed locally or by triggers
+  currentStock: number; 
   lowStockAlertLimit: number;
+  stockByGodown?: { godownId: string; quantity: number }[];
+}
+
+export interface Godown {
+  id: string;
+  name: string;
+  location?: string;
+  isDefault: boolean;
+}
+
+export interface StockTransfer {
+  id: string;
+  date: string;
+  itemId: string;
+  itemName: string;
+  fromGodownId: string;
+  toGodownId: string;
+  quantity: number;
+  reason?: string;
 }
 
 export interface StockAdjustment {
@@ -58,6 +79,7 @@ export interface StockAdjustment {
 }
 
 export interface TransactionItem {
+  netAmount: number;
   itemId: string;
   name: string;
   quantity: number;

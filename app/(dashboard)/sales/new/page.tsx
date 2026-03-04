@@ -32,7 +32,7 @@ export default function NewSalePage() {
       number: `INV-${Date.now().toString().slice(-6)}`,
       date: format(new Date(), 'yyyy-MM-dd'),
       dueDate: format(new Date(), 'yyyy-MM-dd'),
-      items: [{ itemId: '', name: '', quantity: 1, rate: 0, discount: 0, taxRate: 18, taxAmount: 0, totalAmount: 0 }],
+      items: [{ itemId: '', name: '', quantity: 1, rate: 0, discount: 0, taxRate: 18, taxAmount: 0, totalAmount: 0, netAmount: 0 }],
       amountPaid: 0
     }
   });
@@ -58,7 +58,7 @@ export default function NewSalePage() {
       const rate = item.rate || 0;
       const discount = item.discount || 0;
       const taxRate = item.taxRate || 0;
-      
+
       const lineTotalBeforeTax = (qty * rate) - discount;
       const taxAmount = (lineTotalBeforeTax * taxRate) / 100;
       const totalAmount = lineTotalBeforeTax + taxAmount;
@@ -85,10 +85,23 @@ export default function NewSalePage() {
       return;
     }
 
+    const selectedParty = parties.find(p => p.id === data.partyId);
+
+    // Credit Limit Check
+    if (selectedParty && selectedParty.type === 'customer' && selectedParty.creditLimit && selectedParty.creditLimit > 0) {
+      // Balance is positive when they owe us money (our receivable)
+      // Since currentBalance is from their perspective, negative is our receivable
+      const currentReceivable = Math.abs(selectedParty.currentBalance < 0 ? selectedParty.currentBalance : 0);
+      const newReceivable = currentReceivable + grandTotal - (data.amountPaid || 0);
+
+      if (newReceivable > selectedParty.creditLimit) {
+        alert(`Cannot create invoice. Credit limit of ₹${selectedParty.creditLimit} will be exceeded.\nCurrent Owed: ₹${currentReceivable.toFixed(2)}\nNew Invoice: ₹${grandTotal.toFixed(2)}`);
+        return;
+      }
+    }
+
     setIsSubmitting(true);
     try {
-      const selectedParty = parties.find(p => p.id === data.partyId);
-      
       const transactionData: Omit<Transaction, 'id'> = {
         type: 'sale_invoice',
         number: data.number,
@@ -117,7 +130,7 @@ export default function NewSalePage() {
   return (
     <div className="max-w-5xl mx-auto space-y-6 pb-24">
       <div className="flex items-center gap-4">
-        <button 
+        <button
           onClick={() => router.back()}
           className="p-2 hover:bg-slate-200 rounded-full transition"
         >
@@ -134,7 +147,7 @@ export default function NewSalePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-2">
               <label className="text-sm font-medium text-slate-700 text-red-600">Customer *</label>
-              <select 
+              <select
                 {...register("partyId", { required: true })}
                 className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
@@ -144,10 +157,10 @@ export default function NewSalePage() {
                 ))}
               </select>
             </div>
-            
+
             <div className="space-y-2">
               <label className="text-sm font-medium text-slate-700 text-red-600">Invoice No *</label>
-              <input 
+              <input
                 {...register("number", { required: true })}
                 className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -155,7 +168,7 @@ export default function NewSalePage() {
 
             <div className="space-y-2">
               <label className="text-sm font-medium text-slate-700 text-red-600">Invoice Date *</label>
-              <input 
+              <input
                 type="date"
                 {...register("date", { required: true })}
                 className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -203,36 +216,34 @@ export default function NewSalePage() {
                       <input type="hidden" {...register(`items.${index}.name`)} />
                     </td>
                     <td className="px-4 py-3">
-                      <input 
+                      <input
                         type="number" step="0.01" min="1"
                         {...register(`items.${index}.quantity`, { valueAsNumber: true })}
                         className="w-full px-2 py-1.5 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                       />
                     </td>
                     <td className="px-4 py-3">
-                      <input 
+                      <input
                         type="number" step="0.01"
                         {...register(`items.${index}.rate`, { valueAsNumber: true })}
                         className="w-full px-2 py-1.5 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                       />
                     </td>
                     <td className="px-4 py-3">
-                      <input 
+                      <input
                         type="number" step="0.01"
                         {...register(`items.${index}.discount`, { valueAsNumber: true })}
                         className="w-full px-2 py-1.5 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                       />
                     </td>
                     <td className="px-4 py-3">
-                      <select 
+                      <select
                         {...register(`items.${index}.taxRate`, { valueAsNumber: true })}
                         className="w-full px-2 py-1.5 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                       >
                         <option value={0}>0%</option>
                         <option value={5}>5%</option>
-                        <option value={12}>12%</option>
                         <option value={18}>18%</option>
-                        <option value={28}>28%</option>
                       </select>
                     </td>
                     <td className="px-4 py-3">
@@ -246,8 +257,8 @@ export default function NewSalePage() {
                       </div>
                     </td>
                     <td className="px-4 py-3 text-center">
-                      <button 
-                        type="button" 
+                      <button
+                        type="button"
                         onClick={() => remove(index)}
                         className="text-red-500 hover:text-red-700 p-1"
                       >
@@ -262,7 +273,7 @@ export default function NewSalePage() {
           <div className="p-4 border-t border-slate-200">
             <button
               type="button"
-              onClick={() => append({ itemId: '', name: '', quantity: 1, rate: 0, discount: 0, taxRate: 18, taxAmount: 0, totalAmount: 0 })}
+              onClick={() => append({ itemId: '', name: '', quantity: 1, rate: 0, discount: 0, taxRate: 18, taxAmount: 0, totalAmount: 0, netAmount: 0 })}
               className="flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-800"
             >
               <Plus className="h-4 w-4" /> Add Row
@@ -276,7 +287,7 @@ export default function NewSalePage() {
             <h3 className="font-semibold text-slate-800 border-b pb-2">Payment Received Setup</h3>
             <div className="space-y-2">
               <label className="text-sm font-medium text-slate-700">Amount Received (₹)</label>
-              <input 
+              <input
                 type="number" step="0.01"
                 {...register("amountPaid", { valueAsNumber: true })}
                 className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
@@ -326,7 +337,7 @@ export default function NewSalePage() {
               disabled={isSubmitting}
               className="px-6 py-2.5 flex items-center gap-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50"
             >
-              <Save className="h-4 w-4" /> 
+              <Save className="h-4 w-4" />
               {isSubmitting ? 'Saving...' : 'Save Invoice'}
             </button>
           </div>

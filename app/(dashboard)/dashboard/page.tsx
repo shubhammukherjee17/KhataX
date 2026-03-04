@@ -1,16 +1,22 @@
 'use client';
 
 import { useAuth } from '@/hooks/useAuth';
+import { useMemo } from 'react';
 import { AreaChart, Area, XAxis, Tooltip as RechartsTooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { 
-  FileText, 
-  Wallet, 
-  AlertTriangle, 
+import {
+  FileText,
+  Wallet,
+  AlertTriangle,
   Users,
   Landmark,
-  ChevronDown
+  ChevronDown,
+  TrendingDown,
+  Clock
 } from 'lucide-react';
 import Link from 'next/link';
+import { useMasterDataStore } from '@/store/useMasterDataStore';
+import { useTransactionStore } from '@/store/useTransactionStore';
+import { format, differenceInDays, isSameDay } from 'date-fns';
 
 const salesData = [
   { name: 'JAN', value: 100 },
@@ -30,38 +36,115 @@ const expenseData = [
 
 export default function DashboardPage() {
   const { profile } = useAuth();
+  const { parties } = useMasterDataStore();
+  const { transactions } = useTransactionStore();
+
+  const customers = parties.filter(p => p.type === 'customer');
+
+  const { totalOutstanding, overdueAmount, todayCollections, upcomingDues, riskyRetailers } = useMemo(() => {
+    let outstanding = 0;
+    let overdue = 0;
+    let collections = 0;
+    let upcoming = 0;
+    const today = new Date();
+
+    const riskyTemp: { id: string, name: string, owed: number, overdue: number, risk: string, phone?: string }[] = [];
+
+    // Calculate Today's Collections
+    transactions.forEach(tx => {
+      if (tx.type === 'payment_in' || (tx.type === 'sale_invoice' && tx.amountPaid > 0)) {
+        const txDate = new Date(tx.date);
+        const paymentAmount = tx.type === 'payment_in' ? tx.grandTotal : tx.amountPaid;
+        if (isSameDay(txDate, today)) {
+          collections += paymentAmount;
+        }
+      }
+    });
+
+    customers.forEach(customer => {
+      if (customer.currentBalance < 0) {
+        const owed = Math.abs(customer.currentBalance);
+        outstanding += owed;
+
+        let customerOverdue = 0;
+        let customerUpcoming = 0;
+
+        const customerTxs = transactions.filter(t => t.partyId === customer.id && t.type === 'sale_invoice');
+
+        customerTxs.forEach((tx) => {
+          const remaining = tx.grandTotal - (tx.amountPaid || 0);
+          if (remaining > 0) {
+            const invoiceDate = new Date(tx.date);
+            const daysSinceInvoice = differenceInDays(today, invoiceDate);
+            const creditDays = customer.creditDays !== undefined ? customer.creditDays : 30;
+
+            // Overdue
+            if (daysSinceInvoice > creditDays) {
+              customerOverdue += remaining;
+            }
+            // Upcoming (Due in next 7 days)
+            else if (creditDays - daysSinceInvoice <= 7 && creditDays - daysSinceInvoice >= 0) {
+              customerUpcoming += remaining;
+            }
+          }
+        });
+
+        overdue += customerOverdue;
+        upcoming += customerUpcoming;
+
+        // Determine Risk
+        if (customerOverdue > 0 || (customer.creditLimit && owed >= customer.creditLimit * 0.9)) {
+          riskyTemp.push({
+            ...customer,
+            owed,
+            overdue: customerOverdue,
+            risk: customerOverdue > 0 ? 'High' : 'Medium'
+          });
+        }
+      }
+    });
+
+    riskyTemp.sort((a, b) => b.overdue - a.overdue || b.owed - a.owed);
+
+    return {
+      totalOutstanding: outstanding,
+      overdueAmount: overdue,
+      todayCollections: collections,
+      upcomingDues: upcoming,
+      riskyRetailers: riskyTemp.slice(0, 10)
+    };
+  }, [customers, transactions]);
 
   return (
     <div className="space-y-6">
-      
+
       {/* KPI Cards Grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <KpiCard 
-          title="TOTAL RECEIVABLE" 
-          val="₹45,200" 
-          subtext="vs. last 30 days" 
-          badge="+5.2%"
-          badgeType="positive"
+        <KpiCard
+          title="TOTAL OUTSTANDING"
+          val={`₹${totalOutstanding.toFixed(2)}`}
+          subtext="Amount owed by customers"
+          icon={<Wallet className="w-5 h-5 text-blue-500" />}
         />
-        <KpiCard 
-          title="TOTAL PAYABLE" 
-          val="₹12,800" 
-          subtext="Due in 7 days" 
-          badge="-2.1%"
+        <KpiCard
+          title="OVERDUE AMOUNT"
+          val={`₹${overdueAmount.toFixed(2)}`}
+          subtext="Past payment terms"
+          badge="High Priority"
           badgeType="negative"
+          icon={<AlertTriangle className="w-5 h-5 text-red-500" />}
         />
-        <KpiCard 
-          title="CASH IN HAND" 
-          val="₹85,400" 
-          subtext="Steady liquidity" 
+        <KpiCard
+          title="TODAY'S COLLECTIONS"
+          val={`₹${todayCollections.toFixed(2)}`}
+          subtext="Payments received today"
           icon={<Landmark className="w-5 h-5 text-[#00ea77]" />}
         />
-        <KpiCard 
-          title="NET PROFIT" 
-          val="₹32,600" 
-          subtext="Current quarter" 
-          badge="+12.4%"
-          badgeType="positive"
+        <KpiCard
+          title="UPCOMING DUES (7d)"
+          val={`₹${upcomingDues.toFixed(2)}`}
+          subtext="Due in next 7 days"
+          icon={<Clock className="w-5 h-5 text-yellow-500" />}
         />
       </div>
 
@@ -111,12 +194,12 @@ export default function DashboardPage() {
               <AreaChart data={salesData} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorSales" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#00ea77" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#00ea77" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#00ea77" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#00ea77" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#475569', fontSize: 10, fontWeight: 700}} dy={10} />
-                <RechartsTooltip 
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#475569', fontSize: 10, fontWeight: 700 }} dy={10} />
+                <RechartsTooltip
                   contentStyle={{ backgroundColor: '#0A0F0D', borderColor: '#1a231f', borderRadius: '8px', color: '#fff' }}
                   itemStyle={{ color: '#00ea77', fontWeight: 'bold' }}
                 />
@@ -149,7 +232,7 @@ export default function DashboardPage() {
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <RechartsTooltip 
+                <RechartsTooltip
                   contentStyle={{ backgroundColor: '#0A0F0D', borderColor: '#1a231f', borderRadius: '8px', color: '#fff' }}
                   itemStyle={{ color: '#fff', fontWeight: 'bold' }}
                 />
@@ -171,72 +254,72 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Bottom Row */}
-      <div className="grid gap-6 md:grid-cols-2">
-        {/* Recent Activity */}
-        <div className="rounded-2xl bg-[#121c17] border border-[#1a231f] p-6 shadow-sm">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-bold text-white">Recent Activity</h2>
-            <button className="text-xs font-bold text-[#00ea77] hover:underline">View All</button>
-          </div>
-          <div className="space-y-6">
-            <ActivityRow 
-              icon={<FileText className="w-4 h-4 text-[#00ea77]" />}
-              iconBg="bg-[#0b2217]"
-              title="Invoice #INV-2042 Generated"
-              desc="For Rajesh Exports • ₹12,500"
-              time="12:45 PM"
-            />
-            <ActivityRow 
-              icon={<Wallet className="w-4 h-4 text-blue-400" />}
-              iconBg="bg-blue-900/30"
-              title="Payment Received"
-              desc="From Sunita Furnitures • ₹8,000"
-              time="10:30 AM"
-            />
-            <ActivityRow 
-              icon={<AlertTriangle className="w-4 h-4 text-red-400" />}
-              iconBg="bg-red-900/30"
-              title="Late Payment Alert"
-              desc="Modern Retailers • 5 days overdue"
-              time="YESTERDAY"
-            />
-            <ActivityRow 
-              icon={<Users className="w-4 h-4 text-[#00ea77]" />}
-              iconBg="bg-[#0b2217]"
-              title="New Party Added"
-              desc="Global Tech Solutions"
-              time="YESTERDAY"
-            />
+      {/* Top 10 Risky Retailers */}
+      <div className="rounded-2xl bg-[#121c17] border border-[#1a231f] p-6 shadow-sm">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-lg font-bold text-white flex items-center gap-2">
+            <TrendingDown className="w-5 h-5 text-red-500" />
+            Risky Retailers
+          </h2>
+          <div className={`bg-red-500/10 text-red-500 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider`}>
+            {riskyRetailers.length} RETAILERS
           </div>
         </div>
-
-        {/* Inventory Alerts */}
-        <div className="rounded-2xl bg-[#121c17] border border-[#1a231f] p-6 shadow-sm">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-bold text-white">Inventory Alerts</h2>
-            <div className="bg-yellow-500/10 text-yellow-500 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">
-              4 LOW ITEMS
-            </div>
-          </div>
+        <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-[#1a231f]">
-                <th className="pb-3 text-[10px] uppercase tracking-wider font-bold text-slate-500">ITEM NAME</th>
-                <th className="pb-3 text-[10px] uppercase tracking-wider font-bold text-slate-500 text-center">CURRENT</th>
-                <th className="pb-3 text-[10px] uppercase tracking-wider font-bold text-slate-500 text-center">REORDER LEVEL</th>
+                <th className="pb-3 text-[10px] uppercase tracking-wider font-bold text-slate-500">RETAILER</th>
+                <th className="pb-3 text-[10px] uppercase tracking-wider font-bold text-slate-500 text-right">TOTAL OWED</th>
+                <th className="pb-3 text-[10px] uppercase tracking-wider font-bold text-red-500/70 text-right">OVERDUE</th>
                 <th className="pb-3 text-[10px] uppercase tracking-wider font-bold text-slate-500 text-right">ACTION</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#1a231f]">
-              <InventoryRow name="Wireless Keyboard X1" sku="SKU: HW-402" current={5} alert={true} reorder={20} />
-              <InventoryRow name="HDMI Cables 2m" sku="SKU: CB-901" current={12} alert={true} reorder={15} />
-              <InventoryRow name="Laser Paper A4" sku="SKU: ST-112" current={2} alert={true} reorder={50} />
+              {riskyRetailers.length === 0 ? (
+                <tr>
+                  <td colSpan={4} className="py-6 text-center text-slate-500 text-sm">
+                    No risky retailers currently. Great job on collections!
+                  </td>
+                </tr>
+              ) : (
+                riskyRetailers.map(r => (
+                  <tr key={r.id} className="group">
+                    <td className="py-4">
+                      <Link href={`/parties/${r.id}`} className="text-sm font-bold text-slate-200 group-hover:text-blue-400 block">
+                        {r.name}
+                      </Link>
+                      <p className="text-[10px] font-bold mt-1">
+                        <span className={r.risk === 'High' ? 'text-red-500' : 'text-yellow-500'}>{r.risk} Risk</span>
+                      </p>
+                    </td>
+                    <td className="py-4 text-right">
+                      <span className="text-sm font-bold text-slate-200">₹{r.owed.toFixed(2)}</span>
+                    </td>
+                    <td className="py-4 text-right">
+                      <span className="text-sm font-bold text-red-400">{r.overdue > 0 ? `₹${r.overdue.toFixed(2)}` : '-'}</span>
+                    </td>
+                    <td className="py-4 text-right">
+                      {r.phone ? (
+                        <a
+                          href={`https://wa.me/91${r.phone}?text=Hello ${r.name}, this is a gentle reminder for your outstanding balance of ₹${r.owed.toFixed(2)}${r.overdue > 0 ? ` (Overdue: ₹${r.overdue.toFixed(2)})` : ''}. Please process the payment at your earliest convenience.`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[10px] font-bold tracking-wider uppercase bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366] hover:text-white transition-colors px-3 py-1.5 rounded"
+                        >
+                          WhatsApp
+                        </a>
+                      ) : (
+                        <span className="text-xs text-slate-600">No Phone</span>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
       </div>
-
     </div>
   );
 }
@@ -265,41 +348,5 @@ function KpiCard({ title, val, subtext, badge, badgeType, icon }: { title: strin
   );
 }
 
-function ActivityRow({ icon, iconBg, title, desc, time }: { icon: React.ReactNode, iconBg: string, title: string, desc: string, time: string }) {
-  return (
-    <div className="flex items-start justify-between group">
-      <div className="flex items-center gap-4">
-        <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${iconBg}`}>
-          {icon}
-        </div>
-        <div>
-          <h4 className="text-sm font-bold text-slate-200 group-hover:text-white transition-colors">{title}</h4>
-          <p className="text-xs text-slate-500 mt-1 font-medium">{desc}</p>
-        </div>
-      </div>
-      <span className="text-[10px] font-bold tracking-wider uppercase text-slate-500 pt-1">{time}</span>
-    </div>
-  );
-}
 
-function InventoryRow({ name, sku, current, reorder, alert }: { name: string, sku: string, current: number, reorder: number, alert: boolean }) {
-  return (
-    <tr>
-      <td className="py-4">
-        <h4 className="text-sm font-bold text-slate-200">{name}</h4>
-        <p className="text-[10px] text-slate-500 font-medium uppercase tracking-wider mt-1">{sku}</p>
-      </td>
-      <td className="py-4 text-center">
-        <span className={`text-sm font-bold ${alert ? (current < 10 ? 'text-red-500' : 'text-yellow-500') : 'text-slate-200'}`}>{current}</span>
-      </td>
-      <td className="py-4 text-center">
-        <span className="text-sm font-bold text-slate-200">{reorder}</span>
-      </td>
-      <td className="py-4 text-right">
-        <button className="text-[10px] font-bold tracking-wider uppercase bg-[#00ea77]/10 text-[#00ea77] hover:bg-[#00ea77] hover:text-black transition-colors px-3 py-1.5 rounded">
-          Restock
-        </button>
-      </td>
-    </tr>
-  );
-}
+

@@ -3,11 +3,16 @@
 import { useState } from 'react';
 import { useMasterDataStore } from '@/store/useMasterDataStore';
 import { Item } from '@/types';
-import { Plus, Search, Edit, Trash2, X, AlertTriangle, ArrowRightLeft } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, X, AlertTriangle, ArrowRightLeft, Database } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { GodownManager } from '@/components/inventory/GodownManager';
+import { StockTransferForm } from '@/components/inventory/StockTransferForm';
+
+type InventoryTab = 'items' | 'godowns' | 'transfers';
 
 export default function InventoryPage() {
-  const { items, isLoading, addItem, updateItem, deleteItem, adjustStock } = useMasterDataStore();
+  const { items, godowns, isLoading, addItem, updateItem, deleteItem, adjustStock } = useMasterDataStore();
+  const [activeTab, setActiveTab] = useState<InventoryTab>('items');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Item | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -15,17 +20,18 @@ export default function InventoryPage() {
   // Adjustment Modal State
   const [isAdjModalOpen, setIsAdjModalOpen] = useState(false);
   const [adjustingItem, setAdjustingItem] = useState<Item | null>(null);
-  const [adjType, setAdjType] = useState<'add'|'reduce'>('add');
+  const [adjType, setAdjType] = useState<'add' | 'reduce'>('add');
   const [adjQty, setAdjQty] = useState(1);
   const [adjReason, setAdjReason] = useState('Stock Check');
   const [adjNotes, setAdjNotes] = useState('');
+  const [adjGodownId, setAdjGodownId] = useState('');
   const [isAdjusting, setIsAdjusting] = useState(false);
 
   const { register, handleSubmit, reset, watch } = useForm<Omit<Item, 'id' | 'currentStock'>>();
-  
+
   const itemType = watch('type', 'product');
 
-  const filteredItems = items.filter(i => 
+  const filteredItems = items.filter(i =>
     i.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -57,22 +63,23 @@ export default function InventoryPage() {
     setAdjQty(1);
     setAdjReason('Stock Check');
     setAdjNotes('');
+    setAdjGodownId(godowns.length > 0 ? godowns[godowns.findIndex(g => g.isDefault)]?.id || godowns[0].id : '');
     setIsAdjModalOpen(true);
   };
 
   const handleAdjustStock = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!adjustingItem || adjQty <= 0) return;
-    
+
     setIsAdjusting(true);
     try {
-      await adjustStock(adjustingItem.id, adjType, adjQty, adjReason, adjNotes);
+      await adjustStock(adjustingItem.id, adjType, adjQty, adjReason, adjNotes, adjGodownId || undefined);
       setIsAdjModalOpen(false);
     } catch (error) {
-       console.error(error);
-       alert("Failed to adjust stock");
+      console.error(error);
+      alert("Failed to adjust stock");
     } finally {
-       setIsAdjusting(false);
+      setIsAdjusting(false);
     }
   };
 
@@ -101,104 +108,151 @@ export default function InventoryPage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">Inventory</h1>
-          <p className="text-sm text-slate-500">Manage your products, services, and stock levels.</p>
+          <p className="text-sm text-slate-500">Manage your products, services, godowns, and stock levels.</p>
         </div>
-        <button 
-          onClick={openAddModal}
-          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+        {activeTab === 'items' && (
+          <button
+            onClick={openAddModal}
+            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+          >
+            <Plus className="h-4 w-4" /> Add Item
+          </button>
+        )}
+      </div>
+
+      {/* Tabs */}
+      <div className="flex border-b border-slate-200">
+        <button
+          onClick={() => setActiveTab('items')}
+          className={`px-4 py-3 font-medium text-sm border-b-2 transition-colors ${activeTab === 'items' ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
+            }`}
         >
-          <Plus className="h-4 w-4" /> Add Item
+          Items & Stock
+        </button>
+        <button
+          onClick={() => setActiveTab('godowns')}
+          className={`px-4 py-3 font-medium text-sm border-b-2 transition-colors ${activeTab === 'godowns' ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
+            }`}
+        >
+          Godowns
+        </button>
+        <button
+          onClick={() => setActiveTab('transfers')}
+          className={`px-4 py-3 font-medium text-sm border-b-2 transition-colors ${activeTab === 'transfers' ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
+            }`}
+        >
+          Stock Transfers
         </button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="p-4 border-b border-slate-200 flex items-center gap-4">
-          <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-4 w-4" />
-            <input 
-              type="text" 
-              placeholder="Search by product/service name..." 
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        </div>
+      {activeTab === 'godowns' && <GodownManager />}
 
-        {isLoading ? (
-          <div className="p-8 text-center text-slate-500">Loading inventory...</div>
-        ) : filteredItems.length === 0 ? (
-          <div className="p-12 text-center text-slate-500">
-            <p>No inventory items found.</p>
-            <button onClick={openAddModal} className="text-blue-600 font-medium hover:underline mt-2">
-              Add your first product or service
-            </button>
+      {activeTab === 'transfers' && (
+        <div className="flex justify-center pt-8">
+          <StockTransferForm />
+        </div>
+      )}
+
+      {activeTab === 'items' && (
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+          <div className="p-4 border-b border-slate-200 flex items-center gap-4">
+            <div className="relative flex-1 max-w-md">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-4 w-4" />
+              <input
+                type="text"
+                placeholder="Search by product/service name..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
           </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm whitespace-nowrap">
-              <thead className="bg-slate-50 text-slate-600 font-medium border-b border-slate-200">
-                <tr>
-                  <th className="px-6 py-3">Item Name</th>
-                  <th className="px-6 py-3">Type</th>
-                  <th className="px-6 py-3 text-right">Sale Price</th>
-                  <th className="px-6 py-3 text-right">Purchase Price</th>
-                  <th className="px-6 py-3 text-right">Current Stock</th>
-                  <th className="px-6 py-3 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-200">
-                {filteredItems.map((item) => (
-                  <tr key={item.id} className="hover:bg-slate-50 transition">
-                    <td className="px-6 py-4 font-medium text-slate-900">
-                      {item.name}
-                      <span className="block text-xs font-normal text-slate-500 mt-1">GST: {item.taxRate}%</span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium capitalize ${item.type === 'product' ? 'bg-indigo-100 text-indigo-700' : 'bg-purple-100 text-purple-700'}`}>
-                        {item.type}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      ₹{item.salePrice.toFixed(2)}
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      ₹{item.purchasePrice.toFixed(2)}
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      {item.type === 'service' ? (
-                        <span className="text-slate-400">-</span>
-                      ) : (
-                        <div className="flex items-center justify-end gap-2" title={item.currentStock <= item.lowStockAlertLimit ? "Low Stock" : ""}>
-                          {item.currentStock <= item.lowStockAlertLimit && (
-                            <AlertTriangle className="h-4 w-4 text-amber-500" />
-                          )}
-                          <span className={`font-medium ${item.currentStock <= 0 ? 'text-red-600' : 'text-slate-900'}`}>
-                            {item.currentStock} {item.unit}
-                          </span>
-                        </div>
-                      )}
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      {item.type === 'product' && (
-                        <button onClick={() => openAdjModal(item)} className="text-slate-600 hover:text-slate-800 p-1 mr-2" title="Adjust Stock">
-                          <ArrowRightLeft className="h-4 w-4" />
-                        </button>
-                      )}
-                      <button onClick={() => openEditModal(item)} className="text-blue-600 hover:text-blue-800 p-1">
-                        <Edit className="h-4 w-4" />
-                      </button>
-                      <button onClick={() => handleDelete(item.id, item.name)} className="text-red-600 hover:text-red-800 p-1 ml-2">
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </td>
+
+          {isLoading ? (
+            <div className="p-8 text-center text-slate-500">Loading inventory...</div>
+          ) : filteredItems.length === 0 ? (
+            <div className="p-12 text-center text-slate-500">
+              <p>No inventory items found.</p>
+              <button onClick={openAddModal} className="text-blue-600 font-medium hover:underline mt-2">
+                Add your first product or service
+              </button>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm whitespace-nowrap">
+                <thead className="bg-slate-50 text-slate-600 font-medium border-b border-slate-200">
+                  <tr>
+                    <th className="px-6 py-3">Item Name</th>
+                    <th className="px-6 py-3">Type</th>
+                    <th className="px-6 py-3 text-right">Sale Price</th>
+                    <th className="px-6 py-3 text-right">Purchase Price</th>
+                    <th className="px-6 py-3 text-right">Current Stock</th>
+                    <th className="px-6 py-3 text-right">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+                </thead>
+                <tbody className="divide-y divide-slate-200">
+                  {filteredItems.map((item) => (
+                    <tr key={item.id} className="hover:bg-slate-50 transition">
+                      <td className="px-6 py-4 font-medium text-slate-900">
+                        {item.name}
+                        <span className="block text-xs font-normal text-slate-500 mt-1">GST: {item.taxRate}%</span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium capitalize ${item.type === 'product' ? 'bg-indigo-100 text-indigo-700' : 'bg-purple-100 text-purple-700'}`}>
+                          {item.type}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        ₹{item.salePrice.toFixed(2)}
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        ₹{item.purchasePrice.toFixed(2)}
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        {item.type === 'service' ? (
+                          <span className="text-slate-400">-</span>
+                        ) : (
+                          <div className="flex flex-col items-end">
+                            <div className="flex items-center gap-2" title={item.currentStock <= item.lowStockAlertLimit ? "Low Stock" : ""}>
+                              {item.currentStock <= item.lowStockAlertLimit && (
+                                <AlertTriangle className="h-4 w-4 text-amber-500" />
+                              )}
+                              <span className={`font-bold ${item.currentStock <= 0 ? 'text-red-600' : 'text-slate-900'}`}>
+                                {item.currentStock} {item.unit}
+                              </span>
+                            </div>
+                            {item.stockByGodown && item.stockByGodown.length > 0 && item.currentStock > 0 && (
+                              <div className="text-[10px] text-slate-500 mt-1 space-y-0.5 text-right">
+                                {item.stockByGodown.map(s => {
+                                  const godownName = godowns.find(g => g.id === s.godownId)?.name || 'Unknown';
+                                  return s.quantity > 0 ? <div key={s.godownId}>{godownName}: {s.quantity}</div> : null;
+                                })}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        {item.type === 'product' && (
+                          <button onClick={() => openAdjModal(item)} className="text-slate-600 hover:text-slate-800 p-1 mr-2" title="Adjust Stock">
+                            <ArrowRightLeft className="h-4 w-4" />
+                          </button>
+                        )}
+                        <button onClick={() => openEditModal(item)} className="text-blue-600 hover:text-blue-800 p-1">
+                          <Edit className="h-4 w-4" />
+                        </button>
+                        <button onClick={() => handleDelete(item.id, item.name)} className="text-red-600 hover:text-red-800 p-1 ml-2">
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
 
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
@@ -209,10 +263,10 @@ export default function InventoryPage() {
                 <X className="h-5 w-5" />
               </button>
             </div>
-            
+
             <div className="p-6 overflow-y-auto">
               <form id="item-form" onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-slate-700 text-red-600">Item Type *</label>
@@ -230,16 +284,16 @@ export default function InventoryPage() {
 
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-slate-700 text-red-600">Item Name *</label>
-                    <input 
+                    <input
                       {...register("name", { required: true })}
                       placeholder="e.g. Dell Monitor 24 inch"
                       className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
-                  
+
                   <div className="space-y-2 md:col-span-2">
                     <label className="text-sm font-medium text-slate-700">Description</label>
-                    <textarea 
+                    <textarea
                       {...register("description")}
                       rows={2}
                       className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
@@ -248,7 +302,7 @@ export default function InventoryPage() {
 
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-slate-700">Unit</label>
-                    <select 
+                    <select
                       {...register("unit")}
                       className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
@@ -263,7 +317,7 @@ export default function InventoryPage() {
 
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-slate-700">Tax Rate (GST %)</label>
-                    <select 
+                    <select
                       {...register("taxRate", { valueAsNumber: true })}
                       className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
@@ -279,7 +333,7 @@ export default function InventoryPage() {
                     <label className="text-sm font-medium text-slate-700 text-red-600">Sale Price *</label>
                     <div className="relative">
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">₹</span>
-                      <input 
+                      <input
                         type="number"
                         step="0.01"
                         {...register("salePrice", { required: true, valueAsNumber: true })}
@@ -293,7 +347,7 @@ export default function InventoryPage() {
                     <label className="text-sm font-medium text-slate-700 text-red-600">Purchase Price *</label>
                     <div className="relative">
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">₹</span>
-                      <input 
+                      <input
                         type="number"
                         step="0.01"
                         {...register("purchasePrice", { required: true, valueAsNumber: true })}
@@ -307,7 +361,7 @@ export default function InventoryPage() {
                     <>
                       <div className="space-y-2">
                         <label className="text-sm font-medium text-slate-700">Opening Stock</label>
-                        <input 
+                        <input
                           type="number"
                           {...register("openingStock", { valueAsNumber: true })}
                           placeholder="0"
@@ -318,7 +372,7 @@ export default function InventoryPage() {
 
                       <div className="space-y-2">
                         <label className="text-sm font-medium text-slate-700">Low Stock Alert Limit</label>
-                        <input 
+                        <input
                           type="number"
                           {...register("lowStockAlertLimit", { valueAsNumber: true })}
                           placeholder="5"
@@ -331,17 +385,17 @@ export default function InventoryPage() {
 
               </form>
             </div>
-            
+
             <div className="px-6 py-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3">
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={() => setIsModalOpen(false)}
                 className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-md hover:bg-slate-50"
               >
                 Cancel
               </button>
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 form="item-form"
                 className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
               >
@@ -362,13 +416,13 @@ export default function InventoryPage() {
                 <X className="h-5 w-5" />
               </button>
             </div>
-            
+
             <div className="p-6">
               <div className="mb-6 flex gap-3 p-3 bg-slate-50 rounded-lg border border-slate-100 items-center">
-                 <div className="flex-1">
-                   <p className="text-sm font-semibold text-slate-900">{adjustingItem.name}</p>
-                   <p className="text-xs text-slate-500">Current Stock: <span className="font-bold text-slate-900">{adjustingItem.currentStock} {adjustingItem.unit}</span></p>
-                 </div>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-slate-900">{adjustingItem.name}</p>
+                  <p className="text-xs text-slate-500">Current Stock: <span className="font-bold text-slate-900">{adjustingItem.currentStock} {adjustingItem.unit}</span></p>
+                </div>
               </div>
 
               <form id="adj-form" onSubmit={handleAdjustStock} className="space-y-4">
@@ -388,23 +442,39 @@ export default function InventoryPage() {
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-slate-700">Quantity to Adjust</label>
-                  <input 
-                    type="number" 
-                    min="1" 
-                    step="1" 
-                    required 
-                    value={adjQty} 
+                  <input
+                    type="number"
+                    min="1"
+                    step="1"
+                    required
+                    value={adjQty}
                     onChange={e => setAdjQty(parseInt(e.target.value) || 0)}
                     className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   {adjType === 'reduce' && adjQty > adjustingItem.currentStock && (
-                     <p className="text-xs text-orange-500 mt-1">Warning: This will drop stock below zero.</p>
+                    <p className="text-xs text-orange-500 mt-1">Warning: This will drop stock below zero globally.</p>
                   )}
                 </div>
 
+                {godowns.length > 0 && (
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-slate-700">Godown</label>
+                    <select
+                      value={adjGodownId}
+                      onChange={e => setAdjGodownId(e.target.value)}
+                      className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="">-- Global Pool --</option>
+                      {godowns.map(g => (
+                        <option key={g.id} value={g.id}>{g.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-slate-700">Reason</label>
-                  <select 
+                  <select
                     value={adjReason}
                     onChange={e => setAdjReason(e.target.value)}
                     className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -419,8 +489,8 @@ export default function InventoryPage() {
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-slate-700">Notes (Optional)</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     value={adjNotes}
                     onChange={e => setAdjNotes(e.target.value)}
                     className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -429,18 +499,18 @@ export default function InventoryPage() {
                 </div>
               </form>
             </div>
-            
+
             <div className="px-6 py-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3">
-              <button 
-                type="button" 
+              <button
+                type="button"
                 disabled={isAdjusting}
                 onClick={() => setIsAdjModalOpen(false)}
                 className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-md hover:bg-slate-50"
               >
                 Cancel
               </button>
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 form="adj-form"
                 disabled={isAdjusting || adjQty <= 0}
                 className="px-4 py-2 text-sm font-medium text-black bg-[#00ea77] rounded-md hover:bg-[#00c563] disabled:opacity-50"

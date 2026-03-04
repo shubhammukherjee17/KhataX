@@ -14,7 +14,7 @@ export default function PartiesPage() {
 
   const { register, handleSubmit, reset } = useForm<Omit<Party, 'id' | 'currentBalance'>>();
 
-  const filteredParties = parties.filter(p => 
+  const filteredParties = parties.filter(p =>
     p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     (p.phone && p.phone.includes(searchTerm))
   );
@@ -29,7 +29,9 @@ export default function PartiesPage() {
       email: '',
       billingAddress: '',
       shippingAddress: '',
-      openingBalance: 0
+      openingBalance: 0,
+      creditLimit: 0,
+      creditDays: 30
     });
     setIsModalOpen(true);
   };
@@ -67,7 +69,7 @@ export default function PartiesPage() {
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">Parties</h1>
           <p className="text-sm text-slate-500">Manage your customers and vendors.</p>
         </div>
-        <button 
+        <button
           onClick={openAddModal}
           className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
         >
@@ -79,9 +81,9 @@ export default function PartiesPage() {
         <div className="p-4 border-b border-slate-200 flex items-center gap-4">
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-4 w-4" />
-            <input 
-              type="text" 
-              placeholder="Search by name or phone..." 
+            <input
+              type="text"
+              placeholder="Search by name or phone..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -159,14 +161,14 @@ export default function PartiesPage() {
                 <X className="h-5 w-5" />
               </button>
             </div>
-            
+
             <div className="p-6 overflow-y-auto">
               <form id="party-form" onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-slate-700 text-red-600">Party Type *</label>
-                    <select 
+                    <select
                       {...register("type", { required: true })}
                       className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
@@ -177,16 +179,16 @@ export default function PartiesPage() {
 
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-slate-700 text-red-600">Party Name *</label>
-                    <input 
+                    <input
                       {...register("name", { required: true })}
                       placeholder="e.g. Acme Corp"
                       className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-slate-700">GSTIN</label>
-                    <input 
+                    <input
                       {...register("gstin")}
                       placeholder="e.g. 29ABCDE1234F1Z5"
                       className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -195,7 +197,7 @@ export default function PartiesPage() {
 
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-slate-700 text-red-600">Phone Number *</label>
-                    <input 
+                    <input
                       {...register("phone", { required: true })}
                       placeholder="10-digit mobile"
                       className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -204,7 +206,7 @@ export default function PartiesPage() {
 
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-slate-700">Email Address</label>
-                    <input 
+                    <input
                       type="email"
                       {...register("email")}
                       placeholder="email@example.com"
@@ -216,7 +218,7 @@ export default function PartiesPage() {
                     <label className="text-sm font-medium text-slate-700">Opening Balance</label>
                     <div className="relative">
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">₹</span>
-                      <input 
+                      <input
                         type="number"
                         step="0.01"
                         {...register("openingBalance", { valueAsNumber: true })}
@@ -226,6 +228,35 @@ export default function PartiesPage() {
                     </div>
                     <p className="text-xs text-slate-500">+ve for Payable, -ve for Receivable</p>
                   </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-slate-700">Credit Limit (₹)</label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">₹</span>
+                      <input
+                        type="number"
+                        step="0.01"
+                        {...register("creditLimit", { valueAsNumber: true })}
+                        placeholder="10000.00"
+                        className="w-full pl-8 pr-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-slate-700">Payment Terms (Days)</label>
+                    <select
+                      {...register("creditDays", { valueAsNumber: true })}
+                      className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="0">0 Days (Advance)</option>
+                      <option value="7">7 Days</option>
+                      <option value="15">15 Days</option>
+                      <option value="30">30 Days</option>
+                      <option value="45">45 Days</option>
+                      <option value="60">60 Days</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div className="space-y-4">
@@ -233,7 +264,7 @@ export default function PartiesPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-slate-700">Billing Address</label>
-                      <textarea 
+                      <textarea
                         {...register("billingAddress")}
                         rows={3}
                         className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
@@ -241,7 +272,7 @@ export default function PartiesPage() {
                     </div>
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-slate-700">Shipping Address</label>
-                      <textarea 
+                      <textarea
                         {...register("shippingAddress")}
                         rows={3}
                         className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
@@ -252,17 +283,17 @@ export default function PartiesPage() {
 
               </form>
             </div>
-            
+
             <div className="px-6 py-4 border-t border-slate-200 bg-slate-50 flex justify-end gap-3">
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={() => setIsModalOpen(false)}
                 className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-md hover:bg-slate-50"
               >
                 Cancel
               </button>
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 form="party-form"
                 className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
               >

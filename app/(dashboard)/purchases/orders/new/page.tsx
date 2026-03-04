@@ -32,7 +32,7 @@ export default function NewPurchaseOrderPage() {
       number: `PO-${Date.now().toString().slice(-6)}`,
       date: format(new Date(), 'yyyy-MM-dd'),
       dueDate: format(new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd'),
-      items: [{ itemId: '', name: '', quantity: 1, rate: 0, discount: 0, taxRate: 18, taxAmount: 0, totalAmount: 0 }],
+      items: [{ itemId: '', name: '', quantity: 1, rate: 0, discount: 0, taxRate: 18, taxAmount: 0, totalAmount: 0, netAmount: 0 }],
     }
   });
 
@@ -56,7 +56,7 @@ export default function NewPurchaseOrderPage() {
       const rate = item.rate || 0;
       const discount = item.discount || 0;
       const taxRate = item.taxRate || 0;
-      
+
       const lineTotalBeforeTax = (qty * rate) - discount;
       const taxAmount = (lineTotalBeforeTax * taxRate) / 100;
       const totalAmount = lineTotalBeforeTax + taxAmount;
@@ -86,7 +86,7 @@ export default function NewPurchaseOrderPage() {
     setIsSubmitting(true);
     try {
       const selectedParty = parties.find(p => p.id === data.partyId);
-      
+
       const transactionData: Omit<Transaction, 'id'> = {
         type: 'purchase_order',
         number: data.number,
@@ -104,19 +104,19 @@ export default function NewPurchaseOrderPage() {
       };
 
       await addTransaction(transactionData);
-      
+
       router.push('/purchases/orders');
     } catch (error) {
-       console.error("Error saving PO:", error);
-       alert("Failed to save Purchase Order.");
-       setIsSubmitting(false);
+      console.error("Error saving PO:", error);
+      alert("Failed to save Purchase Order.");
+      setIsSubmitting(false);
     }
   };
 
   return (
     <div className="max-w-5xl mx-auto space-y-6 pb-24">
       <div className="flex items-center gap-4">
-        <button 
+        <button
           onClick={() => router.back()}
           className="p-2 hover:bg-slate-200 rounded-full transition"
         >
@@ -132,7 +132,7 @@ export default function NewPurchaseOrderPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="space-y-2 col-span-1 md:col-span-2">
               <label className="text-sm font-medium text-slate-700 text-red-600">Vendor *</label>
-              <select 
+              <select
                 {...register("partyId", { required: true })}
                 className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
@@ -142,10 +142,10 @@ export default function NewPurchaseOrderPage() {
                 ))}
               </select>
             </div>
-            
+
             <div className="space-y-2">
               <label className="text-sm font-medium text-slate-700 text-red-600">PO No *</label>
-              <input 
+              <input
                 {...register("number", { required: true })}
                 className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50"
               />
@@ -153,7 +153,7 @@ export default function NewPurchaseOrderPage() {
 
             <div className="space-y-2">
               <label className="text-sm font-medium text-slate-700 text-red-600">Issue Date *</label>
-              <input 
+              <input
                 type="date"
                 {...register("date", { required: true })}
                 className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -201,28 +201,28 @@ export default function NewPurchaseOrderPage() {
                       <input type="hidden" {...register(`items.${index}.name`)} />
                     </td>
                     <td className="px-4 py-3">
-                      <input 
+                      <input
                         type="number" step="0.01" min="1"
                         {...register(`items.${index}.quantity`, { valueAsNumber: true })}
                         className="w-full px-2 py-1.5 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                       />
                     </td>
                     <td className="px-4 py-3">
-                      <input 
+                      <input
                         type="number" step="0.01"
                         {...register(`items.${index}.rate`, { valueAsNumber: true })}
                         className="w-full px-2 py-1.5 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                       />
                     </td>
                     <td className="px-4 py-3">
-                      <input 
+                      <input
                         type="number" step="0.01"
                         {...register(`items.${index}.discount`, { valueAsNumber: true })}
                         className="w-full px-2 py-1.5 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                       />
                     </td>
                     <td className="px-4 py-3">
-                      <select 
+                      <select
                         {...register(`items.${index}.taxRate`, { valueAsNumber: true })}
                         className="w-full px-2 py-1.5 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                       >
@@ -244,8 +244,8 @@ export default function NewPurchaseOrderPage() {
                       </div>
                     </td>
                     <td className="px-4 py-3 text-center">
-                      <button 
-                        type="button" 
+                      <button
+                        type="button"
                         onClick={() => remove(index)}
                         className="text-red-500 hover:text-red-700 p-1"
                       >
@@ -260,7 +260,7 @@ export default function NewPurchaseOrderPage() {
           <div className="p-4 border-t border-slate-200">
             <button
               type="button"
-              onClick={() => append({ itemId: '', name: '', quantity: 1, rate: 0, discount: 0, taxRate: 18, taxAmount: 0, totalAmount: 0 })}
+              onClick={() => append({ itemId: '', name: '', quantity: 1, rate: 0, discount: 0, taxRate: 18, taxAmount: 0, totalAmount: 0, netAmount: 0 })}
               className="flex items-center gap-2 text-sm font-medium text-blue-600 hover:text-blue-800"
             >
               <Plus className="h-4 w-4" /> Add Row
@@ -308,7 +308,7 @@ export default function NewPurchaseOrderPage() {
               disabled={isSubmitting}
               className="px-6 py-2.5 flex items-center gap-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50"
             >
-              <Send className="h-4 w-4" /> 
+              <Send className="h-4 w-4" />
               {isSubmitting ? 'Saving...' : 'Send PO'}
             </button>
           </div>
