@@ -18,6 +18,8 @@ export interface UserProfile {
   email: string;
   currentBusinessId: string;
   businesses: { businessId: string, role: 'owner' | 'admin' | 'staff' }[];
+  plan: 'free' | 'starter' | 'professional';
+  trialExpiresAt: number; // timestamp
 }
 
 export interface Party {

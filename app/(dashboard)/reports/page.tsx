@@ -4,13 +4,33 @@ import { useState } from 'react';
 import { useTransactionStore } from '@/store/useTransactionStore';
 import { useMasterDataStore } from '@/store/useMasterDataStore';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Download, FileText, PieChart, TrendingUp, Users, Package } from 'lucide-react';
+import { Download, FileText, PieChart, TrendingUp, Users, Package, Lock } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import Link from 'next/link';
 import { format, parseISO, startOfMonth, endOfMonth, isWithinInterval, differenceInDays } from 'date-fns';
 
 export default function ReportsPage() {
+  const { isPremium } = useAuth();
   const { transactions, isLoading: txLoading } = useTransactionStore();
   const { items, parties, isLoading: itemsLoading } = useMasterDataStore();
   const [activeTab, setActiveTab] = useState<'pnl' | 'gst' | 'stock' | 'outstanding' | 'dead_stock' | 'sales_party' | 'sales_item'>('pnl');
+
+  if (!isPremium) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+        <div className="w-16 h-16 rounded-full bg-[#00ea77]/10 flex items-center justify-center mb-6">
+          <Lock className="w-8 h-8 text-[#00ea77]" />
+        </div>
+        <h2 className="text-2xl font-bold text-white mb-2">Premium Feature Locked</h2>
+        <p className="text-slate-400 max-w-md mb-8">
+          Detailed business reporting, GST reconciliation, and stock analytics are available exclusively for Premium subscribers.
+        </p>
+        <Link href="/#pricing" className="bg-[#00ea77] text-black px-8 py-3 rounded-full font-bold hover:bg-[#00c563] transition shadow-[0_0_20px_rgba(0,234,119,0.2)]">
+          Upgrade to Professional
+        </Link>
+      </div>
+    );
+  }
 
   const isLoading = txLoading || itemsLoading;
 

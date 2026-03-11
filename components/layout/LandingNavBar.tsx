@@ -17,12 +17,12 @@ export function LandingNavBar() {
           </div>
           <span className="font-bold text-xl tracking-tight text-white">KhataX</span>
         </div>
-        
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-          <Link href="#features" className="hover:text-white transition">Product</Link>
-          <Link href="#features" className="hover:text-white transition">Features</Link>
-          <Link href="#pricing" className="hover:text-white transition">Pricing</Link>
-          <Link href="#demo" className="hover:text-white transition">Demo</Link>
+        {/* Desktop Links */}
+        <div className="hidden md:flex items-center gap-8">
+          <Link href="#features" className="text-sm font-semibold text-slate-300 hover:text-white transition">Product</Link>
+          <Link href="#features" className="text-sm font-semibold text-slate-300 hover:text-white transition">Features</Link>
+          <Link href="#pricing" className="text-sm font-semibold text-slate-300 hover:text-white transition">Pricing</Link>
+          <Link href="#features" className="text-sm font-semibold text-slate-300 hover:text-white transition">Demo</Link>
         </div>
 
         <div className="flex items-center gap-4">

@@ -69,13 +69,32 @@ export default function LandingPage() {
               </div>
 
               <div className="flex flex-col items-center mb-8 w-full border-t border-white/5 pt-6">
-                <p className="text-[10px] text-slate-500 font-bold mb-3 uppercase tracking-wider">Accepted Payment Apps</p>
+                <p className="text-[10px] text-slate-500 font-bold mb-3 uppercase tracking-wider">Tap to Pay via App</p>
                 <div className="flex flex-wrap justify-center gap-2">
-                   <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-bold text-slate-300 transition hover:bg-white/10">GPay</span>
-                   <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-bold text-slate-300 transition hover:bg-white/10">PhonePe</span>
-                   <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-bold text-slate-300 transition hover:bg-white/10">Paytm</span>
-                   <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-bold text-slate-300 transition hover:bg-white/10">Amazon Pay</span>
-                   <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-bold text-slate-300 transition hover:bg-white/10">& More</span>
+                   <a 
+                     href={`gpay://upi/pay?pa=7067294951@ptsbi&pn=KhataX%20Pro&am=${checkoutPlan.price}.00&cu=INR&tn=${encodeURIComponent(`KhataX ${checkoutPlan.name} Sub`)}`}
+                     className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-bold text-slate-300 transition hover:bg-white/10 hover:text-white"
+                   >
+                     GPay
+                   </a>
+                   <a 
+                     href={`phonepe://pay?pa=7067294951@ptsbi&pn=KhataX%20Pro&am=${checkoutPlan.price}.00&cu=INR&tn=${encodeURIComponent(`KhataX ${checkoutPlan.name} Sub`)}`}
+                     className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-bold text-slate-300 transition hover:bg-white/10 hover:text-white"
+                   >
+                     PhonePe
+                   </a>
+                   <a 
+                     href={`paytmmp://pay?pa=7067294951@ptsbi&pn=KhataX%20Pro&am=${checkoutPlan.price}.00&cu=INR&tn=${encodeURIComponent(`KhataX ${checkoutPlan.name} Sub`)}`}
+                     className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-bold text-slate-300 transition hover:bg-white/10 hover:text-white"
+                   >
+                     Paytm
+                   </a>
+                   <a 
+                     href={`upi://pay?pa=7067294951@ptsbi&pn=KhataX%20Pro&am=${checkoutPlan.price}.00&cu=INR&tn=${encodeURIComponent(`KhataX ${checkoutPlan.name} Sub`)}`}
+                     className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-bold text-slate-300 transition hover:bg-white/10 hover:text-white"
+                   >
+                     Any UPI App
+                   </a>
                 </div>
               </div>
 
@@ -123,9 +142,9 @@ export default function LandingPage() {
                 <Link href="/login" className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#00ea77] text-black px-8 py-4 rounded-full font-semibold hover:bg-[#00c563] transition text-lg">
                   Start Free Trial <ArrowRight className="h-5 w-5" />
                 </Link>
-                <button className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white/5 border border-white/10 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition text-lg">
+                <a href="#features" className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white/5 border border-white/10 text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition text-lg">
                   <Play className="h-5 w-5 fill-white" /> Watch Demo
-                </button>
+                </a>
               </div>
 
               <div className="mt-12 flex items-center gap-4">

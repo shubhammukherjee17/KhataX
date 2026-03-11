@@ -10,6 +10,8 @@ interface UserProfile {
   email: string;
   currentBusinessId: string | null;
   businesses: { businessId: string; role: 'owner' | 'admin' | 'staff' }[];
+  plan: 'free' | 'starter' | 'professional';
+  trialExpiresAt: number;
 }
 
 interface AuthContextType {
@@ -17,6 +19,7 @@ interface AuthContextType {
   profile: UserProfile | null;
   loading: boolean;
   businessId: string | null;
+  isPremium: boolean;
   logout: () => Promise<void>;
   updateCurrentBusiness: (businessId: string) => Promise<void>;
 }
@@ -26,6 +29,7 @@ const AuthContext = createContext<AuthContextType>({
   profile: null,
   loading: true,
   businessId: null,
+  isPremium: false,
   logout: async () => {},
   updateCurrentBusiness: async () => {},
 });
@@ -49,7 +53,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             name: firebaseUser.displayName || '',
             email: firebaseUser.email || '',
             currentBusinessId: null,
-            businesses: []
+            businesses: [],
+            plan: 'free',
+            trialExpiresAt: Date.now() + (3 * 24 * 60 * 60 * 1000) // 3 days from now
           };
           await setDocument('users', firebaseUser.uid, userProfile);
         }
@@ -80,6 +86,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       profile, 
       loading, 
       businessId: profile?.currentBusinessId || null,
+      isPremium: profile ? (profile.plan !== 'free' || profile.trialExpiresAt > Date.now()) : false,
       logout,
       updateCurrentBusiness
     }}>
