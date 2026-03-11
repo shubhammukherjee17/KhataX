@@ -36,7 +36,8 @@ export default function SettingsPage() {
       await updateDocument('businesses', profile.currentBusinessId, {
         name: business.name || '',
         gstin: business.gstin || '',
-        address: business.address || ''
+        address: business.address || '',
+        upiId: business.upiId || ''
       });
       // Optional toast notification
     } catch (error) {
@@ -92,6 +93,20 @@ export default function SettingsPage() {
                   placeholder="123 Business Park, Tech City"
                   className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 resize-none"
                 />
+              </div>
+
+              <div className="space-y-2 md:col-span-2">
+                <label className="text-xs font-bold tracking-wider text-[#00ea77] uppercase flex items-center gap-2">
+                   UPI ID (VPA) for Payments
+                   <span className="bg-[#00ea77]/20 text-[#00ea77] px-2 py-0.5 rounded text-[10px] tracking-widest">NEW</span>
+                </label>
+                <input 
+                  value={business?.upiId || ''}
+                  onChange={e => setBusiness(business ? { ...business, upiId: e.target.value } : null)}
+                  placeholder="merchant@sbi / 9876543210@ybl"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-[#00ea77]/20 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-bold placeholder:text-slate-600 placeholder:font-medium"
+                />
+                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wide mt-1">If provided, invoices will automatically include a dynamic Scan-to-Pay QR Code.</p>
               </div>
             </div>
 

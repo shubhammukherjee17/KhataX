@@ -8,6 +8,7 @@ export interface Business {
   address: string;
   phone: string;
   email: string;
+  upiId?: string;
   createdAt: Timestamp;
 }
 

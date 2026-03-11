@@ -4,10 +4,13 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useTransactionStore } from '@/store/useTransactionStore';
 import { useAuth } from '@/hooks/useAuth';
+import { getDocument } from '@/lib/firebase/firestore';
 import { generateInvoicePDF } from '@/lib/pdf/generateInvoice';
-import { ArrowLeft, Download, Printer, FileText } from 'lucide-react';
+import { ArrowLeft, Download, Printer, QrCode } from 'lucide-react';
 import Link from 'next/link';
 import { format } from 'date-fns';
+import { QRCodeSVG } from 'qrcode.react';
+import { Business } from '@/types';
 
 export default function InvoiceViewPage() {
   const params = useParams();
@@ -18,12 +21,27 @@ export default function InvoiceViewPage() {
 
   const invoiceId = params.id as string;
   const invoice = transactions.find(t => t.id === invoiceId);
+  const balanceDue = invoice ? invoice.grandTotal - invoice.amountPaid : 0;
+  
+  const [business, setBusiness] = useState<Business | null>(null);
 
   useEffect(() => {
     if (!isLoading && !invoice) {
       router.push('/sales');
     }
-  }, [isLoading, invoice, router]);
+    
+    async function fetchBusiness() {
+      if (profile?.currentBusinessId) {
+        try {
+          const b = await getDocument<Business>('businesses', profile.currentBusinessId);
+          setBusiness(b);
+        } catch (e) {
+          console.error("Failed to load business profile", e);
+        }
+      }
+    }
+    fetchBusiness();
+  }, [isLoading, invoice, router, profile]);
 
   if (isLoading || !invoice) {
     return <div className="p-8 text-center text-slate-500">Loading invoice...</div>;
@@ -200,7 +218,7 @@ export default function InvoiceViewPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-slate-400">Balance Due</span>
-                <span className="text-sm font-bold text-red-400">₹{(invoice.grandTotal - invoice.amountPaid).toFixed(2)}</span>
+                <span className="text-sm font-bold text-red-400">₹{balanceDue.toFixed(2)}</span>
               </div>
             </div>
 
@@ -208,6 +226,34 @@ export default function InvoiceViewPage() {
               Record Payment
             </button>
           </div>
+          
+          {/* UPI Payment Gateway / QR Code */}
+          {business?.upiId && balanceDue > 0 && (
+            <div className="bg-[#121c17] border border-[#1a231f] rounded-xl p-6 shadow-sm flex flex-col items-center text-center">
+              <h3 className="text-sm font-bold text-white mb-1 w-full text-left flex items-center gap-2">
+                <QrCode className="w-4 h-4 text-[#00ea77]" /> Scan to Pay
+              </h3>
+              <p className="text-xs text-slate-400 font-medium mb-6 w-full text-left">
+                Pay instantly via any UPI App
+              </p>
+              
+              <div className="bg-white p-3 rounded-xl shadow-[0_0_20px_rgba(0,234,119,0.1)] inline-block">
+                <QRCodeSVG 
+                  value={`upi://pay?pa=${business.upiId}&pn=${encodeURIComponent(business.name)}&am=${balanceDue.toFixed(2)}&cu=INR&tn=${encodeURIComponent(`Invoice ${invoice.number}`)}`} 
+                  size={160} 
+                  level="H"
+                  includeMargin={false}
+                />
+              </div>
+              
+              <p className="text-xs font-bold text-slate-300 mt-4 tracking-wider uppercase">₹{balanceDue.toFixed(2)}</p>
+              <div className="flex gap-2 items-center justify-center mt-3">
+                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-bold text-slate-400">GPay</span>
+                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-bold text-slate-400">PhonePe</span>
+                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-bold text-slate-400">Paytm</span>
+              </div>
+            </div>
+          )}
 
         </div>
 

@@ -303,12 +303,12 @@ export default function NewSalePage() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="w-full px-4 py-2 bg-white/5 rounded-xl text-slate-400 border border-transparent font-medium">
-                        {watchItems[index]?.taxAmount?.toFixed(2) || '0.00'}
+                        {(!isNaN(watchItems[index]?.taxAmount) ? (watchItems[index]?.taxAmount || 0) : 0).toFixed(2)}
                       </div>
                     </td>
                     <td className="px-4 py-3 text-center">
                       <div className="font-bold text-white text-lg">
-                        {watchItems[index]?.totalAmount?.toFixed(2) || '0.00'}
+                        {(!isNaN(watchItems[index]?.totalAmount) ? (watchItems[index]?.totalAmount || 0) : 0).toFixed(2)}
                       </div>
                     </td>
                     <td className="px-4 py-3 text-center">
