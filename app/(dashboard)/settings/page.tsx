@@ -1,10 +1,53 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { Save } from 'lucide-react';
+import { Save, Loader2 } from 'lucide-react';
+import { getDocument, updateDocument } from '@/lib/firebase/firestore';
+import { Business } from '@/types';
 
 export default function SettingsPage() {
   const { profile } = useAuth();
+  const [business, setBusiness] = useState<Business | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    async function fetchBusiness() {
+      if (profile?.currentBusinessId) {
+        try {
+          const b = await getDocument<Business>('businesses', profile.currentBusinessId);
+          setBusiness(b);
+        } catch (e) {
+          console.error("Error fetching business", e);
+        }
+      }
+      setLoading(false);
+    }
+    fetchBusiness();
+  }, [profile]);
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!profile?.currentBusinessId || !business) return;
+    
+    setIsSaving(true);
+    try {
+      await updateDocument('businesses', profile.currentBusinessId, {
+        name: business.name || '',
+        gstin: business.gstin || '',
+        address: business.address || ''
+      });
+      // Optional toast notification
+    } catch (error) {
+      console.error("Failed to save:", error);
+    }
+    setIsSaving(false);
+  };
+
+  if (loading) {
+    return <div className="flex justify-center items-center h-64 text-slate-500"><Loader2 className="w-8 h-8 animate-spin" /></div>;
+  }
 
   return (
     <div className="max-w-4xl space-y-6">
@@ -18,12 +61,14 @@ export default function SettingsPage() {
           <h2 className="text-lg font-bold text-white">Business Profile</h2>
           <p className="text-sm text-slate-500 mb-6">Update your company details and GST information.</p>
 
-          <form className="space-y-6 max-w-2xl">
+          <form className="space-y-6 max-w-2xl" onSubmit={handleSave}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Business Name</label>
                 <input 
-                  defaultValue="My Business"
+                  value={business?.name || ''}
+                  onChange={e => setBusiness(business ? { ...business, name: e.target.value } : null)}
+                  placeholder="My Business"
                   className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
                 />
               </div>
@@ -31,7 +76,9 @@ export default function SettingsPage() {
               <div className="space-y-2">
                 <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">GSTIN / Tax ID</label>
                 <input 
-                  defaultValue="29ABCDE1234F1Z5"
+                  value={business?.gstin || ''}
+                  onChange={e => setBusiness(business ? { ...business, gstin: e.target.value } : null)}
+                  placeholder="Your GSTIN"
                   className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 uppercase"
                 />
               </div>
@@ -40,7 +87,9 @@ export default function SettingsPage() {
                 <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Registered Address</label>
                 <textarea 
                   rows={3}
-                  defaultValue="123 Business Park, Tech City"
+                  value={business?.address || ''}
+                  onChange={e => setBusiness(business ? { ...business, address: e.target.value } : null)}
+                  placeholder="123 Business Park, Tech City"
                   className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 resize-none"
                 />
               </div>
@@ -48,10 +97,12 @@ export default function SettingsPage() {
 
             <div className="pt-4 border-t border-white/5 flex justify-end">
               <button 
-                type="button" 
-                className="flex items-center gap-2 bg-[#00ea77] text-black font-bold px-6 py-2.5 rounded-xl hover:bg-[#00c563] transition shadow-[0_0_15px_rgba(0,234,119,0.2)]"
+                type="submit" 
+                disabled={isSaving}
+                className="flex items-center gap-2 bg-[#00ea77] text-black font-bold px-6 py-2.5 rounded-xl hover:bg-[#00c563] transition shadow-[0_0_15px_rgba(0,234,119,0.2)] disabled:opacity-70"
               >
-                <Save className="h-4 w-4" /> Save Profile
+                {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />} 
+                {isSaving ? 'Saving...' : 'Save Profile'}
               </button>
             </div>
           </form>

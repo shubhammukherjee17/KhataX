@@ -16,23 +16,7 @@ import {
 import Link from 'next/link';
 import { useMasterDataStore } from '@/store/useMasterDataStore';
 import { useTransactionStore } from '@/store/useTransactionStore';
-import { format, differenceInDays, isSameDay } from 'date-fns';
-
-const salesData = [
-  { name: 'JAN', value: 100 },
-  { name: 'FEB', value: 150 },
-  { name: 'MAR', value: 200 },
-  { name: 'APR', value: 400 },
-  { name: 'MAY', value: 150 },
-  { name: 'JUN', value: 350 },
-];
-
-const expenseData = [
-  { name: 'Rent', value: 40, color: '#00ea77' },
-  { name: 'Inv', value: 20, color: '#009e52' },
-  { name: 'Tax', value: 15, color: '#006536' },
-  { name: 'Others', value: 25, color: '#003b1f' },
-];
+import { format, differenceInDays, isSameDay, subMonths, startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
 
 export default function DashboardPage() {
   const { profile } = useAuth();
@@ -41,7 +25,7 @@ export default function DashboardPage() {
 
   const customers = parties.filter(p => p.type === 'customer');
 
-  const { totalOutstanding, overdueAmount, todayCollections, upcomingDues, riskyRetailers } = useMemo(() => {
+  const { totalOutstanding, overdueAmount, todayCollections, upcomingDues, riskyRetailers, salesData, expenseData, totalExpenseMonth } = useMemo(() => {
     let outstanding = 0;
     let overdue = 0;
     let collections = 0;
@@ -106,12 +90,77 @@ export default function DashboardPage() {
 
     riskyTemp.sort((a, b) => b.overdue - a.overdue || b.owed - a.owed);
 
+    // Sales Data Calculation (Last 6 Months)
+    const last6Months = Array.from({ length: 6 }).map((_, i) => subMonths(today, 5 - i));
+    const computedSalesData = last6Months.map(month => {
+      const start = startOfMonth(month);
+      const end = endOfMonth(month);
+      
+      let monthSales = 0;
+      transactions.forEach(tx => {
+        if (tx.type === 'sale_invoice') {
+          const txDate = new Date(tx.date);
+          if (isWithinInterval(txDate, { start, end })) {
+            monthSales += tx.grandTotal;
+          }
+        }
+      });
+      
+      return {
+        name: format(month, 'MMM').toUpperCase(),
+        value: monthSales
+      };
+    });
+
+    // Expense Data Calculation (Purchases this month mapped by top vendors)
+    const vendorPurchases: Record<string, number> = {};
+    let totalPurchasesForMonth = 0;
+    
+    transactions.forEach(tx => {
+      if (tx.type === 'purchase_invoice') {
+        const txDate = new Date(tx.date);
+        if (isWithinInterval(txDate, { start: startOfMonth(today), end: endOfMonth(today) })) {
+          vendorPurchases[tx.partyName] = (vendorPurchases[tx.partyName] || 0) + tx.grandTotal;
+          totalPurchasesForMonth += tx.grandTotal;
+        }
+      }
+    });
+
+    const colors = ['#00ea77', '#009e52', '#006536', '#003b1f'];
+    const sortedVendors = Object.entries(vendorPurchases).sort((a,b) => b[1] - a[1]);
+    const top3 = sortedVendors.slice(0, 3);
+    const others = sortedVendors.slice(3).reduce((acc, [_, val]) => acc + val, 0);
+    
+    const rawExpenseData = [];
+    let colorIndex = 0;
+    
+    top3.forEach(([name, value]) => {
+      rawExpenseData.push({ name: name.substring(0, 10) + (name.length > 10 ? '...' : ''), value, color: colors[colorIndex++] });
+    });
+    
+    if (others > 0) {
+      rawExpenseData.push({ name: 'Others', value: others, color: colors[colorIndex] });
+    }
+
+    if (rawExpenseData.length === 0) {
+      rawExpenseData.push({ name: 'No Expenses', value: 1, color: '#1a231f' });
+    }
+
+    // Convert values to percentages for the tooltip display
+    const computedExpenseData = rawExpenseData.map(item => ({
+      ...item,
+      percentage: totalPurchasesForMonth > 0 && item.name !== 'No Expenses' ? Math.round((item.value / totalPurchasesForMonth) * 100) : (item.name === 'No Expenses' ? 0 : 100)
+    }));
+
     return {
       totalOutstanding: outstanding,
       overdueAmount: overdue,
       todayCollections: collections,
       upcomingDues: upcoming,
-      riskyRetailers: riskyTemp.slice(0, 10)
+      riskyRetailers: riskyTemp.slice(0, 10),
+      salesData: computedSalesData,
+      expenseData: computedExpenseData,
+      totalExpenseMonth: totalPurchasesForMonth
     };
   }, [customers, transactions]);
 
@@ -239,15 +288,15 @@ export default function DashboardPage() {
               </PieChart>
             </ResponsiveContainer>
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none mt-4">
-              <span className="text-xs text-slate-500 font-bold mb-1">Total</span>
-              <span className="text-xl font-bold text-white">₹42.8k</span>
+              <span className="text-xs text-slate-500 font-bold mb-1">Total (Month)</span>
+              <span className="text-xl font-bold text-white">₹{totalExpenseMonth >= 1000 ? (totalExpenseMonth/1000).toFixed(1) + 'k' : totalExpenseMonth.toFixed(0)}</span>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-y-3 pt-4 border-t border-[#1a231f]">
             {expenseData.map(item => (
               <div key={item.name} className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color }}></div>
-                <span className="text-xs font-medium text-slate-400">{item.name} ({item.value}%)</span>
+                <span className="text-xs font-medium text-slate-400">{item.name} {item.percentage > 0 && `(${item.percentage}%)`}</span>
               </div>
             ))}
           </div>

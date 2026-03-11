@@ -14,7 +14,6 @@ export default function BankingPage() {
 
   const { register, handleSubmit, reset } = useForm<Omit<BankAccount, 'id' | 'currentBalance'>>();
 
-  // Initialize store
   useEffect(() => {
     setBusinessId(businessId);
   }, [businessId, setBusinessId]);
