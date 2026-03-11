@@ -11,6 +11,9 @@ import { format } from 'date-fns';
 
 type InvoiceFormData = {
   partyId: string;
+  customerName?: string;
+  customerPhone?: string;
+  customerAddress?: string;
   number: string;
   date: string;
   dueDate: string;
@@ -29,6 +32,9 @@ export default function NewSalePage() {
   const { register, control, handleSubmit, watch, setValue } = useForm<InvoiceFormData>({
     defaultValues: {
       partyId: '',
+      customerName: '',
+      customerPhone: '',
+      customerAddress: '',
       number: `INV-${Date.now().toString().slice(-6)}`,
       date: format(new Date(), 'yyyy-MM-dd'),
       dueDate: format(new Date(), 'yyyy-MM-dd'),
@@ -44,6 +50,7 @@ export default function NewSalePage() {
 
   const watchItems = watch('items');
   const watchAmountPaid = watch('amountPaid');
+  const watchPartyId = watch('partyId');
 
   // Calculations
   const subTotal = watchItems.reduce((sum, item) => sum + ((item.quantity || 0) * (item.rate || 0)), 0);
@@ -100,6 +107,10 @@ export default function NewSalePage() {
       }
     }
 
+    // Determine party info
+    const isWalkIn = data.partyId === 'walk-in';
+    const finalPartyName = isWalkIn ? (data.customerName || 'Walk-in Customer') : (selectedParty?.name || 'Unknown Party');
+
     setIsSubmitting(true);
     try {
       const transactionData: Omit<Transaction, 'id'> = {
@@ -108,7 +119,9 @@ export default function NewSalePage() {
         date: new Date(data.date).toISOString(),
         dueDate: data.dueDate ? new Date(data.dueDate).toISOString() : undefined,
         partyId: data.partyId,
-        partyName: selectedParty?.name || 'Unknown Party',
+        partyName: finalPartyName,
+        customerPhone: isWalkIn ? data.customerPhone : undefined,
+        customerAddress: isWalkIn ? data.customerAddress : undefined,
         items: data.items.filter(i => i.itemId), // Remove empty rows
         subTotal,
         taxAmountTotal,
@@ -158,6 +171,7 @@ export default function NewSalePage() {
                 className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
               >
                 <option value="">Select Customer</option>
+                <option value="walk-in">--- Walk-in / Custom Customer ---</option>
                 {customers.map(c => (
                   <option key={c.id} value={c.id}>{c.name} {c.gstin ? `(${c.gstin})` : ''}</option>
                 ))}
@@ -181,6 +195,39 @@ export default function NewSalePage() {
               />
             </div>
           </div>
+
+          {/* Walk-in Customer Custom Details */}
+          {watchPartyId === 'walk-in' && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10 mt-6 pt-6 border-t border-white/5 animate-in fade-in slide-in-from-top-4 duration-300">
+              <div className="space-y-2">
+                <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Customer Name</label>
+                <input
+                  {...register("customerName", { required: true })}
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
+                  placeholder="e.g. John Doe"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Phone Number</label>
+                <input
+                  {...register("customerPhone")}
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
+                  placeholder="+91 9876543210"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Billing Address</label>
+                <textarea
+                  {...register("customerAddress")}
+                  rows={1}
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 resize-none"
+                  placeholder="Street, City, PIN"
+                />
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Line Items */}

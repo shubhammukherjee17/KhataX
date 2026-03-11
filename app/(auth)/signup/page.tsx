@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ShieldCheck, ChevronDown, ArrowRight, Lock, MapPin, Building2, Check } from 'lucide-react';
 import Link from 'next/link';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '@/lib/firebase/config';
+import { setDocument, addDocument } from '@/lib/firebase/firestore';
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -14,6 +15,8 @@ export default function SignUpPage() {
     businessName: '',
     industry: '',
     gstin: '',
+    adminName: '',
+    phone: '',
     email: '',
     password: ''
   });
@@ -25,7 +28,30 @@ export default function SignUpPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      const { user } = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      
+      await updateProfile(user, { displayName: formData.adminName });
+
+      // Create Business
+      const businessId = await addDocument('businesses', {
+        name: formData.businessName,
+        industry: formData.industry,
+        gstin: formData.gstin || null,
+        phone: formData.phone || null,
+        ownerId: user.uid,
+        createdAt: new Date().toISOString()
+      });
+
+      // Create User Profile linked to Business
+      await setDocument('users', user.uid, {
+        id: user.uid,
+        name: formData.adminName,
+        email: formData.email,
+        phone: formData.phone || null,
+        currentBusinessId: businessId,
+        businesses: [{ businessId, role: 'owner' }]
+      });
+
       router.push('/dashboard');
     } catch (error) {
       console.error(error);
@@ -202,6 +228,62 @@ export default function SignUpPage() {
               <div className="animate-in fade-in slide-in-from-right-4 duration-500">
                 <p className="text-sm font-bold tracking-widest text-slate-500 uppercase mb-2">Registration Flow</p>
                 <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4">
+                  Contact Info
+                </h1>
+                <p className="text-slate-400 font-medium text-lg leading-relaxed mb-10">
+                  Who will be managing the primary administration for this account?
+                </p>
+
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold tracking-widest text-slate-400 uppercase flex gap-1 items-center">
+                      Admin Full Name <span className="text-[#00ea77] text-base leading-none">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.adminName}
+                      onChange={(e) => setFormData({ ...formData, adminName: e.target.value })}
+                      className="w-full px-4 py-3.5 bg-[#111] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 transition-colors placeholder:text-slate-600 text-white font-medium"
+                      placeholder="e.g. John Doe"
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold tracking-widest text-slate-400 uppercase flex gap-1 items-center">
+                      Phone Number <span className="text-[#00ea77] text-base leading-none">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full px-4 py-3.5 bg-[#111] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 transition-colors placeholder:text-slate-600 text-white font-medium"
+                      placeholder="+91 98765 43210"
+                    />
+                  </div>
+
+                  <div className="flex gap-4 mt-8">
+                    <button
+                      onClick={() => setStep(1)}
+                      className="w-1/3 flex justify-center items-center py-4 px-4 rounded-xl bg-white/5 border border-white/10 text-white font-bold hover:bg-white/10 transition-colors"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={handleNext}
+                      disabled={!formData.adminName || !formData.phone}
+                      className="w-2/3 flex justify-center flex-1 items-center py-4 px-4 rounded-xl text-black font-bold text-base bg-[#00ea77] hover:bg-[#00c563] disabled:opacity-50 transition-colors shadow-[0_0_15px_rgba(0,234,119,0.2)] gap-2 group tracking-wide uppercase text-sm"
+                    >
+                      Secure Account <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {step === 3 && (
+              <div className="animate-in fade-in slide-in-from-right-4 duration-500">
+                <p className="text-sm font-bold tracking-widest text-slate-500 uppercase mb-2">Registration Flow</p>
+                <h1 className="text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4">
                   Secure Account
                 </h1>
                 <p className="text-slate-400 font-medium text-lg mb-10">
@@ -240,7 +322,7 @@ export default function SignUpPage() {
                   <div className="flex gap-4 pt-4 mt-8">
                     <button
                       type="button"
-                      onClick={() => setStep(1)}
+                      onClick={() => setStep(2)}
                       className="w-1/3 flex justify-center items-center py-4 px-4 rounded-xl bg-white/5 border border-white/10 text-white font-bold hover:bg-white/10 transition-colors"
                     >
                       Back

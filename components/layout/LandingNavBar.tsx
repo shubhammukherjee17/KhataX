@@ -49,7 +49,7 @@ export function LandingNavBar() {
             <Link href="#demo" onClick={() => setIsMobileMenuOpen(false)} className="text-xl font-medium text-slate-300 hover:text-white">Demo</Link>
           </div>
           <div className="pt-6 border-t border-white/10 w-full flex justify-start">
-            <LandingNavAuth isMobile={true} />
+            <LandingNavAuth />
           </div>
         </div>
       )}

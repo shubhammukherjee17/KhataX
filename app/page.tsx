@@ -1,9 +1,12 @@
+'use client'
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Play, ArrowRight, CheckCircle2, FileText, PieChart, Bell, Zap, ArrowUpRight, Check } from 'lucide-react';
 import { LandingNavBar } from '@/components/layout/LandingNavBar';
-
 export default function LandingPage() {
+  const [isYearly, setIsYearly] = useState(true);
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-[#00ea77] selection:text-black font-sans">
       
@@ -281,9 +284,26 @@ export default function LandingPage() {
                 Choose the plan that fits your business scale. No hidden fees, no complicated tiers.
               </p>
 
-              <div className="inline-flex bg-white/5 p-1 rounded-full border border-white/10">
-                <button className="px-6 py-2 rounded-full bg-[#00ea77] text-black font-semibold text-sm">Monthly</button>
-                <button className="px-6 py-2 rounded-full text-slate-300 font-semibold text-sm hover:text-white transition">Yearly (Save 20%)</button>
+              <div className="inline-flex bg-white/5 p-1 rounded-full border border-white/10 relative">
+                <div 
+                  className="absolute top-1 bottom-1 bg-[#00ea77] rounded-full transition-all duration-300 ease-in-out z-0" 
+                  style={{ 
+                    left: isYearly ? '124px' : '4px', 
+                    width: isYearly ? '160px' : '120px' 
+                  }}
+                ></div>
+                <button 
+                  onClick={() => setIsYearly(false)}
+                  className={`w-[120px] py-2 rounded-full font-semibold text-sm transition relative z-10 ${!isYearly ? 'text-black' : 'text-slate-300 hover:text-white'}`}
+                >
+                  Monthly
+                </button>
+                <button 
+                  onClick={() => setIsYearly(true)}
+                  className={`w-[160px] py-2 rounded-full font-semibold text-sm transition relative z-10 ${isYearly ? 'text-black' : 'text-slate-300 hover:text-white'}`}
+                >
+                  Yearly (Save 20%)
+                </button>
               </div>
             </div>
 
@@ -293,8 +313,8 @@ export default function LandingPage() {
                 <p className="text-xs font-bold tracking-widest text-slate-500 uppercase mb-2">ESSENTIAL</p>
                 <h3 className="text-2xl font-bold mb-4">Starter</h3>
                 <div className="flex items-end gap-1 mb-4">
-                  <span className="text-4xl font-bold">₹999</span>
-                  <span className="text-slate-500 mb-1">/mo</span>
+                  <span className="text-4xl font-bold">{isYearly ? '₹1,299' : '₹149'}</span>
+                  <span className="text-slate-500 mb-1">{isYearly ? '/year' : '/mo'}</span>
                 </div>
                 <p className="text-sm text-slate-400 mb-8 h-10">Perfect for freelancers & small shops</p>
                 
@@ -319,8 +339,8 @@ export default function LandingPage() {
                 <p className="text-xs font-bold tracking-widest text-[#00ea77] uppercase mb-2">AUTOMATED</p>
                 <h3 className="text-2xl font-bold mb-4">Professional</h3>
                 <div className="flex items-end gap-1 mb-4">
-                  <span className="text-4xl font-bold">₹2,499</span>
-                  <span className="text-slate-500 mb-1">/mo</span>
+                  <span className="text-4xl font-bold">{isYearly ? '₹1,899' : '₹299'}</span>
+                  <span className="text-slate-500 mb-1">{isYearly ? '/year' : '/mo'}</span>
                 </div>
                 <p className="text-sm text-slate-400 mb-8 h-10">Scaling businesses needing speed</p>
                 

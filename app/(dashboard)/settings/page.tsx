@@ -9,47 +9,47 @@ export default function SettingsPage() {
   return (
     <div className="max-w-4xl space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900">Settings</h1>
-        <p className="text-sm text-slate-500">Manage your business profile and preferences.</p>
+        <h1 className="text-2xl font-bold tracking-tight text-white">Settings</h1>
+        <p className="text-sm font-semibold text-slate-400">Manage your business profile and preferences.</p>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="p-6 border-b border-slate-200">
-          <h2 className="text-lg font-semibold text-slate-800">Business Profile</h2>
+      <div className="bg-[#111] rounded-2xl shadow-sm border border-white/10 overflow-hidden">
+        <div className="p-6 border-b border-white/5">
+          <h2 className="text-lg font-bold text-white">Business Profile</h2>
           <p className="text-sm text-slate-500 mb-6">Update your company details and GST information.</p>
 
           <form className="space-y-6 max-w-2xl">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-700">Business Name</label>
+                <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Business Name</label>
                 <input 
                   defaultValue="My Business"
-                  className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-700">GSTIN / Tax ID</label>
+                <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">GSTIN / Tax ID</label>
                 <input 
                   defaultValue="29ABCDE1234F1Z5"
-                  className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 uppercase"
                 />
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <label className="text-sm font-medium text-slate-700">Registered Address</label>
+                <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Registered Address</label>
                 <textarea 
                   rows={3}
                   defaultValue="123 Business Park, Tech City"
-                  className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 resize-none"
                 />
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-100 flex justify-end">
+            <div className="pt-4 border-t border-white/5 flex justify-end">
               <button 
                 type="button" 
-                className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+                className="flex items-center gap-2 bg-[#00ea77] text-black font-bold px-6 py-2.5 rounded-xl hover:bg-[#00c563] transition shadow-[0_0_15px_rgba(0,234,119,0.2)]"
               >
                 <Save className="h-4 w-4" /> Save Profile
               </button>
@@ -58,20 +58,20 @@ export default function SettingsPage() {
         </div>
 
         <div className="p-6">
-          <h2 className="text-lg font-semibold text-slate-800">User Account</h2>
+          <h2 className="text-lg font-bold text-white">User Account</h2>
           <p className="text-sm text-slate-500 mb-6">Your personal account details.</p>
 
           <div className="max-w-2xl space-y-4">
-            <div className="flex justify-between items-center py-3 border-b border-slate-100">
+            <div className="flex justify-between items-center py-3 border-b border-white/5">
               <div>
-                <p className="font-medium text-slate-900">Name</p>
-                <p className="text-sm text-slate-500">{profile?.name || 'User'}</p>
+                <p className="font-bold text-white text-sm">Name</p>
+                <p className="text-sm text-slate-400 font-medium">{profile?.name || 'User'}</p>
               </div>
             </div>
-            <div className="flex justify-between items-center py-3 border-b border-slate-100">
+            <div className="flex justify-between items-center py-3 border-b border-white/5">
               <div>
-                <p className="font-medium text-slate-900">Email Address</p>
-                <p className="text-sm text-slate-500">{profile?.email || 'email@example.com'}</p>
+                <p className="font-bold text-white text-sm">Email Address</p>
+                <p className="text-sm text-slate-400 font-medium">{profile?.email || 'email@example.com'}</p>
               </div>
             </div>
           </div>

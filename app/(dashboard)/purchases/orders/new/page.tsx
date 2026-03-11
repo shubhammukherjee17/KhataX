@@ -11,6 +11,9 @@ import { format } from 'date-fns';
 
 type POFormData = {
   partyId: string;
+  vendorName?: string;
+  vendorPhone?: string;
+  vendorAddress?: string;
   number: string;
   date: string;
   dueDate: string;
@@ -29,6 +32,9 @@ export default function NewPurchaseOrderPage() {
   const { register, control, handleSubmit, watch, setValue } = useForm<POFormData>({
     defaultValues: {
       partyId: '',
+      vendorName: '',
+      vendorPhone: '',
+      vendorAddress: '',
       number: `PO-${Date.now().toString().slice(-6)}`,
       date: format(new Date(), 'yyyy-MM-dd'),
       dueDate: format(new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), 'yyyy-MM-dd'),
@@ -42,6 +48,7 @@ export default function NewPurchaseOrderPage() {
   });
 
   const watchItems = watch('items');
+  const watchPartyId = watch('partyId');
 
   // Calculations
   const subTotal = watchItems.reduce((sum, item) => sum + ((item.quantity || 0) * (item.rate || 0)), 0);
@@ -87,13 +94,18 @@ export default function NewPurchaseOrderPage() {
     try {
       const selectedParty = parties.find(p => p.id === data.partyId);
 
+      const isWalkIn = data.partyId === 'walk-in';
+      const finalPartyName = isWalkIn ? (data.vendorName || 'Walk-in Vendor') : (selectedParty?.name || 'Unknown Vendor');
+
       const transactionData: Omit<Transaction, 'id'> = {
         type: 'purchase_order',
         number: data.number,
         date: new Date(data.date).toISOString(),
         dueDate: data.dueDate ? new Date(data.dueDate).toISOString() : undefined,
         partyId: data.partyId,
-        partyName: selectedParty?.name || 'Unknown Vendor',
+        partyName: finalPartyName,
+        customerPhone: isWalkIn ? data.vendorPhone : undefined,
+        customerAddress: isWalkIn ? data.vendorAddress : undefined,
         items: data.items.filter(i => i.itemId),
         subTotal,
         taxAmountTotal,
@@ -139,6 +151,7 @@ export default function NewPurchaseOrderPage() {
                 className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
               >
                 <option value="">Select Vendor</option>
+                <option value="walk-in">--- Walk-in / Custom Vendor ---</option>
                 {vendors.map(c => (
                   <option key={c.id} value={c.id}>{c.name} {c.gstin ? `(${c.gstin})` : ''}</option>
                 ))}
@@ -162,6 +175,39 @@ export default function NewPurchaseOrderPage() {
               />
             </div>
           </div>
+
+          {/* Walk-in Custom Details */}
+          {watchPartyId === 'walk-in' && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10 mt-6 pt-6 border-t border-white/5 animate-in fade-in slide-in-from-top-4 duration-300">
+              <div className="space-y-2">
+                <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Vendor Name</label>
+                <input
+                  {...register("vendorName", { required: true })}
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
+                  placeholder="e.g. ABC Suppliers"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Phone Number</label>
+                <input
+                  {...register("vendorPhone")}
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
+                  placeholder="+91 9876543210"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Billing Address</label>
+                <textarea
+                  {...register("vendorAddress")}
+                  rows={1}
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 resize-none"
+                  placeholder="Street, City, PIN"
+                />
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Line Items */}

@@ -98,6 +98,8 @@ export interface Transaction {
   dueDate?: string;
   partyId: string;
   partyName: string;
+  customerPhone?: string;
+  customerAddress?: string;
   items: TransactionItem[];
   subTotal: number;
   taxAmountTotal: number;

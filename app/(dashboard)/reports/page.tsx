@@ -104,102 +104,102 @@ export default function ReportsPage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Reports Center</h1>
-          <p className="text-sm text-slate-500">View performance, compliance, and stock reports.</p>
+          <h1 className="text-2xl font-bold tracking-tight text-white">Reports Center</h1>
+          <p className="text-sm font-semibold text-slate-400">View performance, compliance, and stock reports.</p>
         </div>
         <button
-          className="flex items-center gap-2 bg-white border border-slate-300 text-slate-700 px-4 py-2 rounded-md hover:bg-slate-50 transition"
+          className="flex items-center gap-2 bg-[#111] border border-white/10 text-white font-bold px-4 py-2 rounded-xl hover:bg-white/5 hover:border-[#00ea77]/50 transition shadow-sm"
         >
           <Download className="h-4 w-4" /> Export PDF
         </button>
       </div>
 
-      <div className="flex bg-white rounded-lg p-1 border border-slate-200 w-fit">
+      <div className="flex bg-[#111] rounded-2xl p-1.5 border border-white/10 w-fit shadow-sm overflow-x-auto max-w-full">
         <button
           onClick={() => setActiveTab('pnl')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition ${activeTab === 'pnl' ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:text-slate-900'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'pnl' ? 'bg-[#00ea77]/10 text-[#00ea77]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
         >
           <TrendingUp className="h-4 w-4" /> Profit & Loss
         </button>
         <button
           onClick={() => setActiveTab('outstanding')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition ${activeTab === 'outstanding' ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:text-slate-900'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'outstanding' ? 'bg-[#00ea77]/10 text-[#00ea77]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
         >
           <FileText className="h-4 w-4" /> Outstanding
         </button>
         <button
           onClick={() => setActiveTab('gst')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition ${activeTab === 'gst' ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:text-slate-900'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'gst' ? 'bg-[#00ea77]/10 text-[#00ea77]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
         >
           <FileText className="h-4 w-4" /> GST (GSTR-3B)
         </button>
         <button
           onClick={() => setActiveTab('stock')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition ${activeTab === 'stock' ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:text-slate-900'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'stock' ? 'bg-[#00ea77]/10 text-[#00ea77]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
         >
           <PieChart className="h-4 w-4" /> Stock Summary
         </button>
         <button
           onClick={() => setActiveTab('dead_stock')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition ${activeTab === 'dead_stock' ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:text-slate-900'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'dead_stock' ? 'bg-[#00ea77]/10 text-[#00ea77]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
         >
           <TrendingUp className="h-4 w-4" /> Dead Stock
         </button>
         <button
           onClick={() => setActiveTab('sales_party')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition ${activeTab === 'sales_party' ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:text-slate-900'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'sales_party' ? 'bg-[#00ea77]/10 text-[#00ea77]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
         >
           <Users className="h-4 w-4" /> Party Sales
         </button>
         <button
           onClick={() => setActiveTab('sales_item')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition ${activeTab === 'sales_item' ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:text-slate-900'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'sales_item' ? 'bg-[#00ea77]/10 text-[#00ea77]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
         >
           <Package className="h-4 w-4" /> Item Sales
         </button>
       </div>
 
       {isLoading ? (
-        <div className="p-12 text-center text-slate-500 bg-white rounded-xl border border-slate-200">
+        <div className="p-12 text-center text-slate-500 bg-[#111] rounded-2xl border border-white/10 font-medium tracking-wide">
           Loading report data...
         </div>
       ) : (
         <div className="grid gap-6">
           {activeTab === 'pnl' && (
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6">
+              <div className="bg-[#111] p-6 rounded-2xl border border-white/10 shadow-sm space-y-6">
                 <div>
-                  <h2 className="text-lg font-semibold text-slate-800">Income Statement</h2>
-                  <p className="text-sm text-slate-500">For the month of {format(currentDate, 'MMMM yyyy')}</p>
+                  <h2 className="text-lg font-bold text-white">Income Statement</h2>
+                  <p className="text-sm font-semibold text-slate-400">For the month of {format(currentDate, 'MMMM yyyy')}</p>
                 </div>
 
                 <div className="space-y-4">
-                  <div className="flex justify-between items-center py-2 border-b border-slate-100">
-                    <span className="text-slate-600">Total Sales Revenue</span>
-                    <span className="font-semibold text-slate-900">₹{sales.toFixed(2)}</span>
+                  <div className="flex justify-between items-center py-2 border-b border-white/5">
+                    <span className="text-slate-400 font-bold text-sm">Total Sales Revenue</span>
+                    <span className="font-extrabold text-white text-base">₹{sales.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b border-slate-100">
-                    <span className="text-slate-600">Cost of Goods (Purchases)</span>
-                    <span className="font-semibold text-slate-900">₹{purchases.toFixed(2)}</span>
+                  <div className="flex justify-between items-center py-2 border-b border-white/5">
+                    <span className="text-slate-400 font-bold text-sm">Cost of Goods (Purchases)</span>
+                    <span className="font-extrabold text-white text-base">₹{purchases.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between items-center py-4 border-t-2 border-slate-800">
-                    <span className="font-bold text-slate-900 text-lg">Gross Profit</span>
-                    <span className={`font-bold text-lg ${grossProfit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  <div className="flex justify-between items-center py-4 border-t-2 border-white/10">
+                    <span className="font-extrabold text-white text-lg tracking-wider uppercase">Gross Profit</span>
+                    <span className={`font-extrabold text-lg ${grossProfit >= 0 ? 'text-[#00ea77]' : 'text-red-500'}`}>
                       ₹{grossProfit.toFixed(2)}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                <h2 className="text-lg font-semibold text-slate-800 mb-6">P&L Overview</h2>
+              <div className="bg-[#111] p-6 rounded-2xl border border-white/10 shadow-sm">
+                <h2 className="text-lg font-bold text-white mb-6">P&L Overview</h2>
                 <div className="h-[300px] w-full">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                      <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                      <YAxis axisLine={false} tickLine={false} tickFormatter={(val) => `₹${val}`} />
-                      <Tooltip formatter={(value) => `₹${Number(value).toFixed(2)}`} cursor={{ fill: 'transparent' }} />
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#333" />
+                      <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 12, fontWeight: 'bold'}} />
+                      <YAxis axisLine={false} tickLine={false} tickFormatter={(val) => `₹${val}`} tick={{fill: '#94a3b8', fontSize: 12, fontWeight: 'bold'}} />
+                      <Tooltip formatter={(value) => `₹${Number(value).toFixed(2)}`} cursor={{ fill: 'rgba(255,255,255,0.05)' }} contentStyle={{backgroundColor: '#111', borderColor: 'rgba(255,255,255,0.1)', color: '#fff', borderRadius: '12px', fontWeight: 'bold'}} />
                       <Bar dataKey="amount" radius={[4, 4, 0, 0]} maxBarSize={60} />
                     </BarChart>
                   </ResponsiveContainer>
@@ -209,73 +209,73 @@ export default function ReportsPage() {
           )}
 
           {activeTab === 'gst' && (
-            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6 max-w-3xl">
+            <div className="bg-[#111] p-6 rounded-2xl border border-white/10 shadow-sm space-y-6 max-w-3xl">
               <div>
-                <h2 className="text-lg font-semibold text-slate-800">GSTR-3B Summary Estimate</h2>
-                <p className="text-sm text-slate-500">For the month of {format(currentDate, 'MMMM yyyy')}</p>
+                <h2 className="text-lg font-bold text-white">GSTR-3B Summary Estimate</h2>
+                <p className="text-sm font-semibold text-slate-400">For the month of {format(currentDate, 'MMMM yyyy')}</p>
               </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-4 bg-slate-50 border border-slate-200 rounded-lg">
-                  <p className="text-sm text-slate-500 font-medium">Outward Supplies (Sales)</p>
-                  <p className="text-2xl font-bold text-slate-900 mt-1">₹{sales.toFixed(2)}</p>
-                  <p className="text-xs text-slate-500 mt-2">Output Tax: ₹{outputGST.toFixed(2)}</p>
+                <div className="p-5 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
+                  <p className="text-[10px] text-blue-400 font-bold uppercase tracking-wider">Outward Supplies (Sales)</p>
+                  <p className="text-2xl font-extrabold text-blue-500 mt-1">₹{sales.toFixed(2)}</p>
+                  <p className="text-xs font-bold text-blue-400/80 mt-2">Output Tax: ₹{outputGST.toFixed(2)}</p>
                 </div>
-                <div className="p-4 bg-slate-50 border border-slate-200 rounded-lg">
-                  <p className="text-sm text-slate-500 font-medium">Inward Supplies (Purchases)</p>
-                  <p className="text-2xl font-bold text-slate-900 mt-1">₹{purchases.toFixed(2)}</p>
-                  <p className="text-xs text-slate-500 mt-2">Input Tax Credit (ITC): ₹{inputGST.toFixed(2)}</p>
+                <div className="p-5 bg-orange-500/10 border border-orange-500/20 rounded-2xl">
+                  <p className="text-[10px] text-orange-400 font-bold uppercase tracking-wider">Inward Supplies (Purchases)</p>
+                  <p className="text-2xl font-extrabold text-orange-500 mt-1">₹{purchases.toFixed(2)}</p>
+                  <p className="text-xs font-bold text-orange-400/80 mt-2">Input Tax Credit (ITC): ₹{inputGST.toFixed(2)}</p>
                 </div>
               </div>
 
-              <div className={`p-4 rounded-lg border flex justify-between items-center ${gstLiability > 0 ? 'bg-orange-50 border-orange-200' : 'bg-green-50 border-green-200'}`}>
+              <div className={`p-5 rounded-2xl border flex justify-between items-center ${gstLiability > 0 ? 'bg-orange-500/10 border-orange-500/20' : 'bg-[#00ea77]/10 border-[#00ea77]/20'}`}>
                 <div>
-                  <p className={`text-sm font-medium ${gstLiability > 0 ? 'text-orange-800' : 'text-green-800'}`}>
+                  <p className={`text-[10px] font-bold uppercase tracking-wider ${gstLiability > 0 ? 'text-orange-400' : 'text-[#00ea77]'}`}>
                     {gstLiability > 0 ? 'Net GST Payable' : 'Net ITC Available'}
                   </p>
-                  <p className={`text-2xl font-bold mt-1 ${gstLiability > 0 ? 'text-orange-900' : 'text-green-900'}`}>
+                  <p className={`text-2xl font-extrabold mt-1 ${gstLiability > 0 ? 'text-orange-500' : 'text-[#00ea77]'}`}>
                     ₹{Math.abs(gstLiability).toFixed(2)}
                   </p>
                 </div>
-                <FileText className={`h-8 w-8 opacity-50 ${gstLiability > 0 ? 'text-orange-600' : 'text-green-600'}`} />
+                <FileText className={`h-8 w-8 opacity-50 ${gstLiability > 0 ? 'text-orange-500' : 'text-[#00ea77]'}`} />
               </div>
             </div>
           )}
 
           {activeTab === 'stock' && (
-            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div className="bg-[#111] p-6 rounded-2xl border border-white/10 shadow-sm">
               <div className="flex justify-between items-end mb-6">
                 <div>
-                  <h2 className="text-lg font-semibold text-slate-800">Stock Valuation Summary</h2>
-                  <p className="text-sm text-slate-500">Real-time inventory worth</p>
+                  <h2 className="text-lg font-bold text-white">Stock Valuation Summary</h2>
+                  <p className="text-sm font-semibold text-slate-400">Real-time inventory worth</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm text-slate-500">Total Valuation</p>
-                  <p className="text-2xl font-bold text-blue-600">
+                  <p className="text-[10px] uppercase tracking-wider font-bold text-slate-500">Total Valuation</p>
+                  <p className="text-2xl font-extrabold text-[#00ea77]">
                     ₹{items.filter(i => i.type === 'product').reduce((sum, i) => sum + (i.currentStock * i.purchasePrice), 0).toFixed(2)}
                   </p>
                 </div>
               </div>
 
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm whitespace-nowrap">
-                  <thead className="bg-slate-50 text-slate-600 font-medium border-b border-slate-200">
+                <table className="w-full text-left font-medium">
+                  <thead className="bg-[#0a0a0a]/50 text-[10px] uppercase font-bold tracking-wider text-slate-500 border-b border-white/5">
                     <tr>
-                      <th className="px-4 py-3">Product Name</th>
-                      <th className="px-4 py-3 text-right">In Stock Qty</th>
-                      <th className="px-4 py-3 text-right">Avg. Purchase Price</th>
-                      <th className="px-4 py-3 text-right">Stock Value</th>
+                      <th className="px-6 py-4">Product Name</th>
+                      <th className="px-6 py-4 text-right">In Stock Qty</th>
+                      <th className="px-6 py-4 text-right">Avg. Purchase Price</th>
+                      <th className="px-6 py-4 text-right">Stock Value</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
+                  <tbody className="divide-y divide-white/5">
                     {items.filter(i => i.type === 'product').map((item) => (
-                      <tr key={item.id} className="hover:bg-slate-50">
-                        <td className="px-4 py-3 font-medium text-slate-900">{item.name}</td>
-                        <td className={`px-4 py-3 text-right ${item.currentStock <= 0 ? 'text-red-600' : ''}`}>
+                      <tr key={item.id} className="hover:bg-white/5 transition-colors group">
+                        <td className="px-6 py-4 font-bold text-white text-sm">{item.name}</td>
+                        <td className={`px-6 py-4 text-right font-bold text-sm ${item.currentStock <= 0 ? 'text-red-500' : 'text-white'}`}>
                           {item.currentStock} {item.unit}
                         </td>
-                        <td className="px-4 py-3 text-right">₹{item.purchasePrice.toFixed(2)}</td>
-                        <td className="px-4 py-3 text-right font-medium text-slate-900">
+                        <td className="px-6 py-4 text-right text-slate-300 font-bold text-sm">₹{item.purchasePrice.toFixed(2)}</td>
+                        <td className="px-6 py-4 text-right font-extrabold text-[#00ea77] text-sm">
                           ₹{(item.currentStock * item.purchasePrice).toFixed(2)}
                         </td>
                       </tr>
@@ -287,59 +287,59 @@ export default function ReportsPage() {
           )}
 
           {activeTab === 'outstanding' && (
-            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6">
+            <div className="bg-[#111] p-6 rounded-2xl border border-white/10 shadow-sm space-y-6">
               <div className="flex justify-between items-end mb-6">
                 <div>
-                  <h2 className="text-lg font-semibold text-slate-800">Outstanding Summary</h2>
-                  <p className="text-sm text-slate-500">Amount to Receive vs Amount to Pay</p>
+                  <h2 className="text-lg font-bold text-white">Outstanding Summary</h2>
+                  <p className="text-sm font-semibold text-slate-400">Amount to Receive vs Amount to Pay</p>
                 </div>
               </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                  <p className="text-sm text-blue-600 font-medium tracking-wide uppercase">Total Receivables</p>
-                  <p className="text-2xl font-bold text-blue-900 mt-1">₹{totalReceivables.toFixed(2)}</p>
-                  <p className="text-xs text-blue-600 mt-2">Money you will get from Customers</p>
+                <div className="p-5 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
+                  <p className="text-[10px] text-blue-400 font-bold tracking-wider uppercase">Total Receivables</p>
+                  <p className="text-2xl font-extrabold text-blue-500 mt-1">₹{totalReceivables.toFixed(2)}</p>
+                  <p className="text-xs font-bold text-blue-400/80 mt-2">Money you will get from Customers</p>
                 </div>
-                <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
-                  <p className="text-sm text-orange-600 font-medium tracking-wide uppercase">Total Payables</p>
-                  <p className="text-2xl font-bold text-orange-900 mt-1">₹{totalPayables.toFixed(2)}</p>
-                  <p className="text-xs text-orange-600 mt-2">Money you owe to Suppliers</p>
+                <div className="p-5 bg-orange-500/10 border border-orange-500/20 rounded-2xl">
+                  <p className="text-[10px] text-orange-400 font-bold tracking-wider uppercase">Total Payables</p>
+                  <p className="text-2xl font-extrabold text-orange-500 mt-1">₹{totalPayables.toFixed(2)}</p>
+                  <p className="text-xs font-bold text-orange-400/80 mt-2">Money you owe to Suppliers</p>
                 </div>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6 pt-4">
                 <div>
-                  <h3 className="font-semibold text-slate-800 mb-3 border-b border-slate-100 pb-2">Top Debtors (To Receive)</h3>
+                  <h3 className="font-bold text-white mb-3 border-b border-white/5 pb-2">Top Debtors (To Receive)</h3>
                   <div className="space-y-3">
                     {parties.filter(p => p.type === 'customer' && p.currentBalance < 0)
                       .sort((a, b) => Math.abs(b.currentBalance) - Math.abs(a.currentBalance))
                       .slice(0, 5)
                       .map(p => (
                         <div key={p.id} className="flex justify-between items-center text-sm">
-                          <span className="font-medium text-slate-700">{p.name}</span>
-                          <span className="font-bold text-blue-600">₹{Math.abs(p.currentBalance).toFixed(2)}</span>
+                          <span className="font-bold text-slate-300">{p.name}</span>
+                          <span className="font-extrabold text-blue-500">₹{Math.abs(p.currentBalance).toFixed(2)}</span>
                         </div>
                       ))}
                     {parties.filter(p => p.type === 'customer' && p.currentBalance < 0).length === 0 && (
-                      <div className="text-sm text-slate-500 italic">No outstanding receivables.</div>
+                      <div className="text-sm font-semibold text-slate-500 italic">No outstanding receivables.</div>
                     )}
                   </div>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-slate-800 mb-3 border-b border-slate-100 pb-2">Top Creditors (To Pay)</h3>
+                  <h3 className="font-bold text-white mb-3 border-b border-white/5 pb-2">Top Creditors (To Pay)</h3>
                   <div className="space-y-3">
                     {parties.filter(p => p.type === 'vendor' && p.currentBalance > 0)
                       .sort((a, b) => b.currentBalance - a.currentBalance)
                       .slice(0, 5)
                       .map(p => (
                         <div key={p.id} className="flex justify-between items-center text-sm">
-                          <span className="font-medium text-slate-700">{p.name}</span>
-                          <span className="font-bold text-orange-600">₹{p.currentBalance.toFixed(2)}</span>
+                          <span className="font-bold text-slate-300">{p.name}</span>
+                          <span className="font-extrabold text-orange-500">₹{p.currentBalance.toFixed(2)}</span>
                         </div>
                       ))}
                     {parties.filter(p => p.type === 'vendor' && p.currentBalance > 0).length === 0 && (
-                      <div className="text-sm text-slate-500 italic">No outstanding payables.</div>
+                      <div className="text-sm font-semibold text-slate-500 italic">No outstanding payables.</div>
                     )}
                   </div>
                 </div>
@@ -348,44 +348,44 @@ export default function ReportsPage() {
           )}
 
           {activeTab === 'dead_stock' && (
-            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div className="bg-[#111] p-6 rounded-2xl border border-white/10 shadow-sm">
               <div className="flex justify-between items-end mb-6">
                 <div>
-                  <h2 className="text-lg font-semibold text-slate-800">Dead Stock Report</h2>
-                  <p className="text-sm text-slate-500">Items with &gt;0 stock but no sales in the last 30 days.</p>
+                  <h2 className="text-lg font-bold text-white">Dead Stock Report</h2>
+                  <p className="text-sm font-semibold text-slate-400">Items with &gt;0 stock but no sales in the last 30 days.</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm text-slate-500">Capital Blocked</p>
-                  <p className="text-2xl font-bold text-red-600">
+                  <p className="text-[10px] uppercase font-bold tracking-wider text-slate-500">Capital Blocked</p>
+                  <p className="text-2xl font-extrabold text-red-500">
                     ₹{deadStockValue.toFixed(2)}
                   </p>
                 </div>
               </div>
 
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm whitespace-nowrap">
-                  <thead className="bg-slate-50 text-slate-600 font-medium border-b border-slate-200">
+                <table className="w-full text-left font-medium">
+                  <thead className="bg-[#0a0a0a]/50 text-[10px] uppercase font-bold tracking-wider text-slate-500 border-b border-white/5">
                     <tr>
-                      <th className="px-4 py-3">Product Name</th>
-                      <th className="px-4 py-3 text-right">In Stock Qty</th>
-                      <th className="px-4 py-3 text-right">Purchase Price</th>
-                      <th className="px-4 py-3 text-right">Blocked Capital</th>
+                      <th className="px-6 py-4">Product Name</th>
+                      <th className="px-6 py-4 text-right">In Stock Qty</th>
+                      <th className="px-6 py-4 text-right">Purchase Price</th>
+                      <th className="px-6 py-4 text-right">Blocked Capital</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
+                  <tbody className="divide-y divide-white/5">
                     {deadStockItems.length === 0 ? (
                       <tr>
-                        <td colSpan={4} className="px-4 py-8 text-center text-slate-500">No dead stock found. Great inventory management!</td>
+                        <td colSpan={4} className="px-6 py-8 text-center font-bold text-slate-500">No dead stock found. Great inventory management!</td>
                       </tr>
                     ) : (
                       deadStockItems.map((item) => (
-                        <tr key={item.id} className="hover:bg-amber-50">
-                          <td className="px-4 py-3 font-medium text-slate-900">{item.name}</td>
-                          <td className="px-4 py-3 text-right text-amber-600 font-bold">
+                        <tr key={item.id} className="hover:bg-white/5 transition-colors group">
+                          <td className="px-6 py-4 font-bold text-white text-sm">{item.name}</td>
+                          <td className="px-6 py-4 text-right text-orange-500 font-extrabold text-sm">
                             {item.currentStock} {item.unit}
                           </td>
-                          <td className="px-4 py-3 text-right">₹{item.purchasePrice.toFixed(2)}</td>
-                          <td className="px-4 py-3 text-right font-medium text-slate-900">
+                          <td className="px-6 py-4 text-right text-slate-300 font-bold text-sm">₹{item.purchasePrice.toFixed(2)}</td>
+                          <td className="px-6 py-4 text-right font-extrabold text-red-500 text-sm">
                             ₹{(item.currentStock * item.purchasePrice).toFixed(2)}
                           </td>
                         </tr>
@@ -398,42 +398,42 @@ export default function ReportsPage() {
           )}
 
           {activeTab === 'sales_party' && (
-            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div className="bg-[#111] p-6 rounded-2xl border border-white/10 shadow-sm">
               <div className="flex justify-between items-end mb-6">
                 <div>
-                  <h2 className="text-lg font-semibold text-slate-800">Sales by Retailer</h2>
-                  <p className="text-sm text-slate-500">For the month of {format(currentDate, 'MMMM yyyy')}</p>
+                  <h2 className="text-lg font-bold text-white">Sales by Retailer</h2>
+                  <p className="text-sm font-semibold text-slate-400">For the month of {format(currentDate, 'MMMM yyyy')}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm text-slate-500">Total B2B Sales</p>
-                  <p className="text-2xl font-bold text-blue-600">
+                  <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Total B2B Sales</p>
+                  <p className="text-2xl font-extrabold text-blue-500">
                     ₹{sales.toFixed(2)}
                   </p>
                 </div>
               </div>
 
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm whitespace-nowrap">
-                  <thead className="bg-slate-50 text-slate-600 font-medium border-b border-slate-200">
+                <table className="w-full text-left font-medium">
+                  <thead className="bg-[#0a0a0a]/50 text-[10px] uppercase font-bold tracking-wider text-slate-500 border-b border-white/5">
                     <tr>
-                      <th className="px-4 py-3">Retailer Name</th>
-                      <th className="px-4 py-3 text-center">Invoices count</th>
-                      <th className="px-4 py-3 text-right">Total Revenue Generated</th>
+                      <th className="px-6 py-4">Retailer Name</th>
+                      <th className="px-6 py-4 text-center">Invoices count</th>
+                      <th className="px-6 py-4 text-right">Total Revenue Generated</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
+                  <tbody className="divide-y divide-white/5">
                     {salesByParty.length === 0 ? (
                       <tr>
-                        <td colSpan={3} className="px-4 py-8 text-center text-slate-500">No B2B sales data for this period.</td>
+                        <td colSpan={3} className="px-6 py-8 text-center font-bold text-slate-500">No B2B sales data for this period.</td>
                       </tr>
                     ) : (
                       salesByParty.map((party, idx) => (
-                        <tr key={idx} className="hover:bg-blue-50">
-                          <td className="px-4 py-3 font-medium text-slate-900">{party.name}</td>
-                          <td className="px-4 py-3 text-center text-slate-600 font-medium">
+                        <tr key={idx} className="hover:bg-white/5 transition-colors group">
+                          <td className="px-6 py-4 font-bold text-white text-sm">{party.name}</td>
+                          <td className="px-6 py-4 text-center text-slate-400 font-bold text-sm">
                             {party.invoices}
                           </td>
-                          <td className="px-4 py-3 text-right font-bold text-slate-900">
+                          <td className="px-6 py-4 text-right font-extrabold text-white text-sm">
                             ₹{party.total.toFixed(2)}
                           </td>
                         </tr>
@@ -446,36 +446,36 @@ export default function ReportsPage() {
           )}
 
           {activeTab === 'sales_item' && (
-            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div className="bg-[#111] p-6 rounded-2xl border border-white/10 shadow-sm">
               <div className="flex justify-between items-end mb-6">
                 <div>
-                  <h2 className="text-lg font-semibold text-slate-800">Sales by Item</h2>
-                  <p className="text-sm text-slate-500">For the month of {format(currentDate, 'MMMM yyyy')}</p>
+                  <h2 className="text-lg font-bold text-white">Sales by Item</h2>
+                  <p className="text-sm font-semibold text-slate-400">For the month of {format(currentDate, 'MMMM yyyy')}</p>
                 </div>
               </div>
 
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm whitespace-nowrap">
-                  <thead className="bg-slate-50 text-slate-600 font-medium border-b border-slate-200">
+                <table className="w-full text-left font-medium">
+                  <thead className="bg-[#0a0a0a]/50 text-[10px] uppercase font-bold tracking-wider text-slate-500 border-b border-white/5">
                     <tr>
-                      <th className="px-4 py-3">Item Name</th>
-                      <th className="px-4 py-3 text-center">Quantity Sold</th>
-                      <th className="px-4 py-3 text-right">Revenue Generated</th>
+                      <th className="px-6 py-4">Item Name</th>
+                      <th className="px-6 py-4 text-center">Quantity Sold</th>
+                      <th className="px-6 py-4 text-right">Revenue Generated</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
+                  <tbody className="divide-y divide-white/5">
                     {salesByItem.length === 0 ? (
                       <tr>
-                        <td colSpan={3} className="px-4 py-8 text-center text-slate-500">No item sales data for this period.</td>
+                        <td colSpan={3} className="px-6 py-8 text-center font-bold text-slate-500">No item sales data for this period.</td>
                       </tr>
                     ) : (
                       salesByItem.map((item, idx) => (
-                        <tr key={idx} className="hover:bg-slate-50">
-                          <td className="px-4 py-3 font-medium text-slate-900">{item.name}</td>
-                          <td className="px-4 py-3 text-center text-slate-600 font-medium">
+                        <tr key={idx} className="hover:bg-white/5 transition-colors group">
+                          <td className="px-6 py-4 font-bold text-white text-sm">{item.name}</td>
+                          <td className="px-6 py-4 text-center text-slate-400 font-bold text-sm">
                             {item.quantity}
                           </td>
-                          <td className="px-4 py-3 text-right font-bold text-slate-900">
+                          <td className="px-6 py-4 text-right font-extrabold text-white text-sm">
                             ₹{item.revenue.toFixed(2)}
                           </td>
                         </tr>
