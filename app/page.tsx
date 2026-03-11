@@ -1,15 +1,101 @@
-'use client'
+'use client';
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Play, ArrowRight, CheckCircle2, FileText, PieChart, Bell, Zap, ArrowUpRight, Check } from 'lucide-react';
+import { Play, ArrowRight, CheckCircle2, FileText, PieChart, Bell, Zap, ArrowUpRight, Check, X, QrCode } from 'lucide-react';
 import { LandingNavBar } from '@/components/layout/LandingNavBar';
+import { QRCodeSVG } from 'qrcode.react';
 export default function LandingPage() {
   const [isYearly, setIsYearly] = useState(true);
+  const [checkoutPlan, setCheckoutPlan] = useState<{ name: string; price: number } | null>(null);
+
+  const handleCheckout = (name: string, price: number) => {
+    setCheckoutPlan({ name, price });
+  };
+
+  const simulatedPaymentComplete = () => {
+    alert(`Testing Mode: Successfully upgraded to ${checkoutPlan?.name}! In production, this would trigger after webhook confirmation.`);
+    setCheckoutPlan(null);
+  };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-[#00ea77] selection:text-black font-sans">
+    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-[#00ea77] selection:text-black font-sans relative">
       
+      {/* Checkout Modal Overlay */}
+      {checkoutPlan && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-[#111] border border-white/10 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden relative animate-in slide-in-from-bottom-8 duration-300">
+            {/* Modal Header */}
+            <div className="p-6 border-b border-white/5 flex justify-between items-center bg-[#0a0a0a]">
+              <div>
+                <h3 className="text-xl font-bold text-white">Upgrade to {checkoutPlan.name}</h3>
+                <p className="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wider">{isYearly ? 'Yearly' : 'Monthly'} Subscription</p>
+              </div>
+              <button 
+                onClick={() => setCheckoutPlan(null)}
+                className="p-2 text-slate-400 hover:text-white hover:bg-white/5 rounded-full transition-colors"
+                aria-label="Close Checkout"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            {/* Modal Content */}
+            <div className="p-8 flex flex-col items-center text-center">
+              <div className="bg-[#00ea77]/10 text-[#00ea77] p-3 rounded-full mb-6">
+                <QrCode className="w-8 h-8" />
+              </div>
+              
+              <h4 className="text-sm font-bold text-slate-300 mb-2">Scan to start your subscription</h4>
+              <p className="text-xs font-medium text-slate-500 mb-6">
+                Complete your seamless, zero-fee UPI payment directly to KhataX Technologies.
+              </p>
+
+              <div className="bg-white p-4 rounded-xl shadow-[0_0_30px_rgba(0,234,119,0.15)] mb-6 inline-block">
+                <QRCodeSVG 
+                  value={`upi://pay?pa=7067294951@ptsbi&pn=KhataX%20Pro&am=${checkoutPlan.price}.00&cu=INR&tn=${encodeURIComponent(`KhataX ${checkoutPlan.name} Sub`)}`} 
+                  size={200} 
+                  level="H"
+                  includeMargin={false}
+                />
+              </div>
+
+              <div className="flex items-center justify-center gap-2 mb-8">
+                <span className="text-3xl font-black tracking-tight flex items-start">
+                  <span className="text-xl mt-1 mr-1 text-[#00ea77]">₹</span>
+                  {checkoutPlan.price}
+                </span>
+                <span className="text-sm font-bold text-slate-500 uppercase tracking-widest mt-2">.00</span>
+              </div>
+
+              <div className="flex flex-col items-center mb-8 w-full border-t border-white/5 pt-6">
+                <p className="text-[10px] text-slate-500 font-bold mb-3 uppercase tracking-wider">Accepted Payment Apps</p>
+                <div className="flex flex-wrap justify-center gap-2">
+                   <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-bold text-slate-300 transition hover:bg-white/10">GPay</span>
+                   <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-bold text-slate-300 transition hover:bg-white/10">PhonePe</span>
+                   <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-bold text-slate-300 transition hover:bg-white/10">Paytm</span>
+                   <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-bold text-slate-300 transition hover:bg-white/10">Amazon Pay</span>
+                   <span className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-bold text-slate-300 transition hover:bg-white/10">& More</span>
+                </div>
+              </div>
+
+              <button 
+                onClick={simulatedPaymentComplete}
+                className="w-full py-4 rounded-xl bg-[#00ea77] text-black font-bold text-sm tracking-wide hover:bg-[#00c563] transition shadow-[0_0_20px_rgba(0,234,119,0.2)]"
+              >
+                I have paid (Simulator)
+              </button>
+              <button 
+                onClick={() => setCheckoutPlan(null)}
+                className="w-full mt-3 py-3 rounded-xl border border-transparent text-slate-400 font-semibold text-sm hover:text-white transition"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <LandingNavBar />
 
       <main>
@@ -326,7 +412,10 @@ export default function LandingPage() {
                     </div>
                   ))}
                 </div>
-                <button className="w-full py-4 rounded-xl border border-white/10 text-white font-semibold hover:bg-white/5 transition">
+                <button 
+                  onClick={() => handleCheckout('Starter', isYearly ? 1299 : 149)}
+                  className="w-full py-4 rounded-xl border border-white/10 text-white font-semibold hover:bg-white/5 transition"
+                >
                   Get Started
                 </button>
               </div>
@@ -352,7 +441,10 @@ export default function LandingPage() {
                     </div>
                   ))}
                 </div>
-                <button className="w-full py-4 rounded-xl bg-[#00ea77] text-black font-semibold hover:bg-[#00c563] transition shadow-[0_0_20px_rgba(0,234,119,0.3)]">
+                <button 
+                  onClick={() => handleCheckout('Professional', isYearly ? 1899 : 299)}
+                  className="w-full py-4 rounded-xl bg-[#00ea77] text-black font-semibold hover:bg-[#00c563] transition shadow-[0_0_20px_rgba(0,234,119,0.3)]"
+                >
                   Go Professional
                 </button>
               </div>

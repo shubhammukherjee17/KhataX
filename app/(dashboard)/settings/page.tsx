@@ -68,7 +68,7 @@ export default function SettingsPage() {
                 <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Business Name</label>
                 <input 
                   value={business?.name || ''}
-                  onChange={e => setBusiness(business ? { ...business, name: e.target.value } : null)}
+                  onChange={e => setBusiness(prev => ({ ...(prev || {}), name: e.target.value } as Business))}
                   placeholder="My Business"
                   className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
                 />
@@ -78,7 +78,7 @@ export default function SettingsPage() {
                 <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">GSTIN / Tax ID</label>
                 <input 
                   value={business?.gstin || ''}
-                  onChange={e => setBusiness(business ? { ...business, gstin: e.target.value } : null)}
+                  onChange={e => setBusiness(prev => ({ ...(prev || {}), gstin: e.target.value } as Business))}
                   placeholder="Your GSTIN"
                   className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 uppercase"
                 />
@@ -89,7 +89,7 @@ export default function SettingsPage() {
                 <textarea 
                   rows={3}
                   value={business?.address || ''}
-                  onChange={e => setBusiness(business ? { ...business, address: e.target.value } : null)}
+                  onChange={e => setBusiness(prev => ({ ...(prev || {}), address: e.target.value } as Business))}
                   placeholder="123 Business Park, Tech City"
                   className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 resize-none"
                 />
@@ -102,7 +102,7 @@ export default function SettingsPage() {
                 </label>
                 <input 
                   value={business?.upiId || ''}
-                  onChange={e => setBusiness(business ? { ...business, upiId: e.target.value } : null)}
+                  onChange={e => setBusiness(prev => ({ ...(prev || {}), upiId: e.target.value } as Business))}
                   placeholder="merchant@sbi / 9876543210@ybl"
                   className="w-full px-4 py-3 bg-[#0a0a0a] border border-[#00ea77]/20 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-bold placeholder:text-slate-600 placeholder:font-medium"
                 />

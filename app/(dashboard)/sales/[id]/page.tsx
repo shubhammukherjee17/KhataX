@@ -247,10 +247,11 @@ export default function InvoiceViewPage() {
               </div>
               
               <p className="text-xs font-bold text-slate-300 mt-4 tracking-wider uppercase">₹{balanceDue.toFixed(2)}</p>
-              <div className="flex gap-2 items-center justify-center mt-3">
-                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-bold text-slate-400">GPay</span>
-                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-bold text-slate-400">PhonePe</span>
-                <span className="px-2 py-1 bg-white/5 rounded text-[10px] font-bold text-slate-400">Paytm</span>
+              <div className="flex flex-wrap gap-2 items-center justify-center mt-3">
+                <span className="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-bold text-slate-400">GPay</span>
+                <span className="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-bold text-slate-400">PhonePe</span>
+                <span className="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-bold text-slate-400">Paytm</span>
+                <span className="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-bold text-slate-400">Amazon Pay</span>
               </div>
             </div>
           )}
