@@ -7,6 +7,7 @@ import { useTransactionStore } from '@/store/useTransactionStore';
 import { Transaction, TransactionItem } from '@/types';
 import { ArrowLeft, Plus, Trash2, Save } from 'lucide-react';
 import { format } from 'date-fns';
+import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
 
 type InvoiceFormData = {
   partyId: string;
@@ -245,14 +246,14 @@ export default function NewPurchasePage() {
             <table className="w-full text-left font-medium">
               <thead className="text-xs uppercase tracking-wider text-slate-500 font-bold">
                 <tr>
-                  <th className="py-4 w-1/3">Item</th>
-                  <th className="px-4 py-4 w-24">Qty</th>
-                  <th className="px-4 py-4 w-32">Purch. Rate (₹)</th>
-                  <th className="px-4 py-4 w-28">Disc (₹)</th>
-                  <th className="px-4 py-4 w-28">GST (%)</th>
-                  <th className="px-4 py-4 w-32">Tax (₹)</th>
-                  <th className="px-4 py-4 text-center">Amount (₹)</th>
-                  <th className="px-4 py-4 w-12"></th>
+                  <th className="py-4 min-w-[180px]">Item</th>
+                  <th className="px-3 py-4 w-[110px]">Qty</th>
+                  <th className="px-3 py-4 w-[130px]">Purch. Rate (₹)</th>
+                  <th className="px-3 py-4 w-[110px]">Disc (₹)</th>
+                  <th className="px-3 py-4 w-[110px]">GST (%)</th>
+                  <th className="px-3 py-4 w-[120px]">Tax (₹)</th>
+                  <th className="px-4 py-4 w-[140px] text-right">Amount (₹)</th>
+                  <th className="px-2 py-4 w-12 text-center"></th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
@@ -265,7 +266,7 @@ export default function NewPurchasePage() {
                           register(`items.${index}.itemId`).onChange(e); // Trigger RHF
                           handleItemSelect(index, e.target.value);
                         }}
-                        className="w-full px-4 py-2 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
+                        className="w-full min-w-[80px] px-3 py-2.5 text-[15px] font-semibold tracking-wide bg-[#0a0a0a] border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white transition-colors"
                       >
                         <option value="">Select Item</option>
                         {inventoryItems.map(item => (
@@ -278,27 +279,27 @@ export default function NewPurchasePage() {
                       <input
                         type="number" step="0.01" min="1"
                         {...register(`items.${index}.quantity`, { valueAsNumber: true })}
-                        className="w-full px-4 py-2 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
+                        className="w-full min-w-[80px] px-3 py-2.5 text-[15px] font-semibold tracking-wide bg-[#0a0a0a] border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white transition-colors"
                       />
                     </td>
                     <td className="px-4 py-3">
                       <input
                         type="number" step="0.01"
                         {...register(`items.${index}.rate`, { valueAsNumber: true })}
-                        className="w-full px-4 py-2 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
+                        className="w-full min-w-[80px] px-3 py-2.5 text-[15px] font-semibold tracking-wide bg-[#0a0a0a] border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white transition-colors"
                       />
                     </td>
                     <td className="px-4 py-3">
                       <input
                         type="number" step="0.01"
                         {...register(`items.${index}.discount`, { valueAsNumber: true })}
-                        className="w-full px-4 py-2 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
+                        className="w-full min-w-[80px] px-3 py-2.5 text-[15px] font-semibold tracking-wide bg-[#0a0a0a] border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white transition-colors"
                       />
                     </td>
                     <td className="px-4 py-3">
                       <select
                         {...register(`items.${index}.taxRate`, { valueAsNumber: true })}
-                        className="w-full px-4 py-2 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
+                        className="w-full min-w-[80px] px-3 py-2.5 text-[15px] font-semibold tracking-wide bg-[#0a0a0a] border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white transition-colors"
                       >
                         <option value={0}>0%</option>
                         <option value={5}>5%</option>
@@ -308,11 +309,11 @@ export default function NewPurchasePage() {
                       </select>
                     </td>
                     <td className="px-4 py-3">
-                      <div className="w-full px-4 py-2 bg-white/5 rounded-xl text-slate-400 border border-transparent font-medium">
+                      <div className="w-full px-3 py-2.5 bg-white/5 line-clamp-1 rounded-lg text-slate-400 border border-transparent font-semibold tracking-wide flex items-center h-[42px]">
                         {watchItems[index]?.taxAmount?.toFixed(2) || '0.00'}
                       </div>
                     </td>
-                    <td className="px-4 py-3 text-center">
+                    <td className="px-4 py-3 text-right">
                       <div className="font-bold text-white text-lg">
                         {watchItems[index]?.totalAmount?.toFixed(2) || '0.00'}
                       </div>
@@ -360,7 +361,7 @@ export default function NewPurchasePage() {
             {watchAmountPaid > 0 && (
               <p className="text-xs font-bold text-slate-400 flex justify-between bg-white/5 p-3 rounded-lg border border-white/5">
                 <span>To be Paid later</span>
-                <span className="text-white">₹{Math.max(0, grandTotal - (watchAmountPaid || 0)).toFixed(2)}</span>
+                <span className="text-white"><AnimatedNumber value={Math.max(0, grandTotal - (watchAmountPaid || 0))} format="currency" /></span>
               </p>
             )}
           </div>
@@ -369,19 +370,19 @@ export default function NewPurchasePage() {
             <div className="space-y-4 text-sm font-medium relative z-10">
               <div className="flex justify-between text-slate-400">
                 <span>Subtotal</span>
-                <span className="text-white">₹{subTotal.toFixed(2)}</span>
+                <span className="text-white"><AnimatedNumber value={subTotal} format="currency" /></span>
               </div>
               <div className="flex justify-between text-slate-400">
                 <span>Total Discount</span>
-                <span className="text-red-400">- ₹{discountTotal.toFixed(2)}</span>
+                <span className="text-red-400 flex items-center gap-1">- <AnimatedNumber value={discountTotal} format="currency" /></span>
               </div>
               <div className="flex justify-between text-slate-400">
                 <span>Total Tax (GST)</span>
-                <span className="text-yellow-400">+ ₹{taxAmountTotal.toFixed(2)}</span>
+                <span className="text-yellow-400 flex items-center gap-1">+ <AnimatedNumber value={taxAmountTotal} format="currency" /></span>
               </div>
               <div className="pt-4 mt-2 border-t border-white/10 flex justify-between items-center">
                 <span className="font-bold text-slate-300 uppercase tracking-wider text-xs">Grand Total</span>
-                <span className="font-bold text-3xl text-white">₹{grandTotal.toFixed(2)}</span>
+                <span className="font-bold text-3xl text-white"><AnimatedNumber value={grandTotal} format="currency" /></span>
               </div>
             </div>
           </div>

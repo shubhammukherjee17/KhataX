@@ -17,6 +17,7 @@ import Link from 'next/link';
 import { useMasterDataStore } from '@/store/useMasterDataStore';
 import { useTransactionStore } from '@/store/useTransactionStore';
 import { format, differenceInDays, isSameDay, subMonths, startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
+import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
 
 export default function DashboardPage() {
   const { profile } = useAuth();
@@ -171,13 +172,13 @@ export default function DashboardPage() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <KpiCard
           title="TOTAL OUTSTANDING"
-          val={`₹${totalOutstanding.toFixed(2)}`}
+          val={<AnimatedNumber value={totalOutstanding} format="currency" />}
           subtext="Amount owed by customers"
           icon={<Wallet className="w-5 h-5 text-blue-500" />}
         />
         <KpiCard
           title="OVERDUE AMOUNT"
-          val={`₹${overdueAmount.toFixed(2)}`}
+          val={<AnimatedNumber value={overdueAmount} format="currency" />}
           subtext="Past payment terms"
           badge="High Priority"
           badgeType="negative"
@@ -185,13 +186,13 @@ export default function DashboardPage() {
         />
         <KpiCard
           title="TODAY'S COLLECTIONS"
-          val={`₹${todayCollections.toFixed(2)}`}
+          val={<AnimatedNumber value={todayCollections} format="currency" />}
           subtext="Payments received today"
           icon={<Landmark className="w-5 h-5 text-[#00ea77]" />}
         />
         <KpiCard
           title="UPCOMING DUES (7d)"
-          val={`₹${upcomingDues.toFixed(2)}`}
+          val={<AnimatedNumber value={upcomingDues} format="currency" />}
           subtext="Due in next 7 days"
           icon={<Clock className="w-5 h-5 text-yellow-500" />}
         />
@@ -373,7 +374,7 @@ export default function DashboardPage() {
   );
 }
 
-function KpiCard({ title, val, subtext, badge, badgeType, icon }: { title: string, val: string, subtext: string, badge?: string, badgeType?: 'positive' | 'negative', icon?: React.ReactNode }) {
+function KpiCard({ title, val, subtext, badge, badgeType, icon }: { title: string, val: React.ReactNode, subtext: string, badge?: string, badgeType?: 'positive' | 'negative', icon?: React.ReactNode }) {
   return (
     <div className="rounded-2xl bg-[#121c17] border border-[#1a231f] p-6 shadow-sm relative overflow-hidden group hover:border-[#00ea77]/30 transition-colors">
       <div className="flex items-center justify-between mb-3">
