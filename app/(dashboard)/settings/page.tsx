@@ -27,6 +27,45 @@ export default function SettingsPage() {
     fetchBusiness();
   }, [profile]);
 
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX_WIDTH = 200;
+        const MAX_HEIGHT = 200;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0, width, height);
+        
+        const dataUrl = canvas.toDataURL(file.type === 'image/png' ? 'image/png' : 'image/jpeg', 0.8);
+        setBusiness(prev => ({ ...(prev || {}), logoBase64: dataUrl } as Business));
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!profile?.currentBusinessId || !business) return;
@@ -37,7 +76,8 @@ export default function SettingsPage() {
         name: business.name || '',
         gstin: business.gstin || '',
         address: business.address || '',
-        upiId: business.upiId || ''
+        upiId: business.upiId || '',
+        logoBase64: business.logoBase64 || ''
       });
       // Optional toast notification
     } catch (error) {
@@ -64,6 +104,39 @@ export default function SettingsPage() {
 
           <form className="space-y-6 max-w-2xl" onSubmit={handleSave}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
+              {/* Logo Upload */}
+              <div className="space-y-3 md:col-span-2 border-b border-white/5 pb-6 mb-2">
+                <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Business Logo</label>
+                <div className="flex items-center gap-6">
+                  <div className="w-20 h-20 rounded-xl bg-[#0a0a0a] border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
+                    {business?.logoBase64 ? (
+                      <img src={business.logoBase64} alt="Logo" className="w-full h-full object-contain" />
+                    ) : (
+                      <span className="text-xs font-bold text-slate-600">No Logo</span>
+                    )}
+                  </div>
+                  <div className="space-y-2">
+                    <input 
+                      type="file" 
+                      accept="image/*"
+                      onChange={handleLogoUpload}
+                      className="block w-full text-sm text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-[#00ea77]/10 file:text-[#00ea77] hover:file:bg-[#00ea77]/20 file:transition-colors file:cursor-pointer cursor-pointer"
+                    />
+                    <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Recommended size: 200x200px. PNG or JPG.</p>
+                  </div>
+                  {business?.logoBase64 && (
+                    <button 
+                      type="button" 
+                      onClick={() => setBusiness(prev => ({ ...(prev || {}), logoBase64: undefined } as Business))}
+                      className="text-xs font-bold text-red-500 hover:text-red-400 px-3 py-2 bg-red-500/10 rounded-lg transition-colors ml-auto"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+              </div>
+
               <div className="space-y-2">
                 <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Business Name</label>
                 <input 

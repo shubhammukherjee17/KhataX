@@ -3,7 +3,7 @@ import 'jspdf-autotable';
 import { Transaction } from '@/types';
 import { format } from 'date-fns';
 
-export async function generateInvoicePDF(invoice: Transaction, businessProfile: { name?: string; gstin?: string; address?: string } | undefined | null) {
+export async function generateInvoicePDF(invoice: Transaction, businessProfile: { name?: string; gstin?: string; address?: string; logoBase64?: string } | undefined | null) {
     // Initialize A4 PDF
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
@@ -23,12 +23,24 @@ export async function generateInvoicePDF(invoice: Transaction, businessProfile: 
 
     // --- HEADER ---
     // Business Info (Left)
-    addText(businessProfile?.name || 'My Business', 14, 20, 16, 'left', true);
+    let textX = 14;
+    
+    if (businessProfile?.logoBase64) {
+        try {
+            const isPng = businessProfile.logoBase64.startsWith('data:image/png');
+            doc.addImage(businessProfile.logoBase64, isPng ? 'PNG' : 'JPEG', 14, 14, 24, 24);
+            textX = 42; // Shift text right of the logo
+        } catch (e) {
+            console.error("Failed to render logo: ", e);
+        }
+    }
+
+    addText(businessProfile?.name || 'My Business', textX, 20, 16, 'left', true);
     if (businessProfile?.gstin) {
-        addText(`GSTIN: ${businessProfile.gstin}`, 14, 28, 10);
+        addText(`GSTIN: ${businessProfile.gstin}`, textX, 28, 10);
     }
     if (businessProfile?.address) {
-        addText(businessProfile.address, 14, 34, 10);
+        addText(businessProfile.address, textX, 34, 10);
     }
 
     // Invoice Title (Right)

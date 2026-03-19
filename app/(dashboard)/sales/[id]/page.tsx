@@ -50,7 +50,7 @@ export default function InvoiceViewPage() {
   const handleDownload = async () => {
     try {
       setIsGenerating(true);
-      await generateInvoicePDF(invoice, { name: profile?.name || 'My Business' });
+      await generateInvoicePDF(invoice, business || { name: profile?.name || 'My Business' });
     } catch (error) {
       console.error('Failed to generate PDF', error);
       alert('Failed to generate PDF');

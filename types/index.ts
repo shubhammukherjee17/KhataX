@@ -9,6 +9,7 @@ export interface Business {
   phone: string;
   email: string;
   upiId?: string;
+  logoBase64?: string;
   createdAt: Timestamp;
 }
 
