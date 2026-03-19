@@ -5,6 +5,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useMasterDataStore } from '@/store/useMasterDataStore';
 import { useTransactionStore } from '@/store/useTransactionStore';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import { ChatAssistant } from '@/components/ai/ChatAssistant';
 
 export default function AppLayout({
   children,
@@ -20,5 +21,10 @@ export default function AppLayout({
     setBusinessIdTx(businessId);
   }, [businessId, setBusinessIdMaster, setBusinessIdTx]);
 
-  return <DashboardLayout>{children}</DashboardLayout>;
+  return (
+    <>
+      <DashboardLayout>{children}</DashboardLayout>
+      <ChatAssistant />
+    </>
+  );
 }

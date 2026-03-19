@@ -67,9 +67,6 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
     if (data.type === 'sale_invoice') {
       const masterStore = useMasterDataStore.getState();
       for (const item of data.items) {
-        // We'll reduce from the global pool for MVP or default godown
-        // Since we don't have godown selection per line item in the lean invoice yet, 
-        // we'll pass undefined for godownId to deduct from the global tracking
         try {
           await masterStore.adjustStock(
             item.itemId,
@@ -80,6 +77,25 @@ export const useTransactionStore = create<TransactionState>((set, get) => ({
           );
         } catch (e) {
           console.error(`Failed to adjust stock for item ${item.itemId}:`, e);
+        }
+      }
+    } else if (data.type === 'purchase_invoice') {
+      const masterStore = useMasterDataStore.getState();
+      for (const item of data.items) {
+        try {
+          // If items don't exist yet, we only increment existing items via their ID.
+          // Walk-in custom items won't trigger stock tracking unless added to master previously.
+          if (item.itemId) {
+            await masterStore.adjustStock(
+              item.itemId,
+              'add',
+              item.quantity,
+              'Purchase Bill',
+              `Auto-added for Bill ${data.number}`
+            );
+          }
+        } catch (e) {
+          console.error(`Failed to adjust stock for purchase item ${item.itemId}:`, e);
         }
       }
     }

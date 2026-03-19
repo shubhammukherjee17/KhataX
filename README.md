@@ -38,6 +38,10 @@ KhataX is a full-featured Minimum Viable Product (MVP) tailored specifically for
    - Easy GSTR-3B summaries to keep you tax-ready.
    - Dead Stock capital reports and item vs. retailer sales velocities.
 
+7. **KhataX AI Assistant & Vision OCR (Powered by Gemini 1.5 Flash)**
+   - **Conversational Assistant:** A floating AI chat widget that understands your live Zustand state data. Ask it natural language questions (e.g. "Who owes me money?", "What were my sales today?") and it mathematically parses your ledger to respond accurately in Hinglish.
+   - **Smart Receipt Scanner:** A built-in Vision AI integration on the Purchase form. Upload any blurry vendor receipt, and the model mathematically extracts the vendor details, dates, and strict line-items—auto-filling the frontend React form securely.
+
 ## 🛠️ Technology Stack
 - **Framework**: [Next.js](https://nextjs.org/) (App Directory)
 - **Language**: TypeScript

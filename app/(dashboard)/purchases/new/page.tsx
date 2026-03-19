@@ -5,7 +5,7 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { useMasterDataStore } from '@/store/useMasterDataStore';
 import { useTransactionStore } from '@/store/useTransactionStore';
 import { Transaction, TransactionItem } from '@/types';
-import { ArrowLeft, Plus, Trash2, Save } from 'lucide-react';
+import { ArrowLeft, Plus, Trash2, Save, Sparkles, Loader2, ImagePlus } from 'lucide-react';
 import { format } from 'date-fns';
 import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
 
@@ -28,6 +28,7 @@ export default function NewPurchasePage() {
   const { parties, items: inventoryItems } = useMasterDataStore();
   const { transactions, addTransaction, updateTransaction } = useTransactionStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isScanning, setIsScanning] = useState(false);
 
   // We show vendors for purchases
   const vendors = parties.filter(p => p.type === 'vendor');
@@ -99,6 +100,57 @@ export default function NewPurchasePage() {
     }
   };
 
+  const handleReceiptScan = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsScanning(true);
+    try {
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        const base64 = event.target?.result as string;
+        const res = await fetch('/api/vision', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ imageBase64: base64 })
+        });
+        
+        if (!res.ok) throw new Error("API Failed");
+        const data = await res.json();
+        
+        if (data.result) {
+          const parsed = JSON.parse(data.result);
+          if (parsed.vendorName) {
+            setValue('partyId', 'walk-in');
+            setValue('vendorName', parsed.vendorName);
+          }
+          if (parsed.date) setValue('date', parsed.date);
+          if (parsed.number) setValue('number', parsed.number);
+          
+          if (parsed.items && parsed.items.length > 0) {
+            replace(parsed.items.map((i: any) => ({
+              itemId: '',
+              name: i.name,
+              quantity: i.quantity || 1,
+              rate: i.rate || 0,
+              discount: 0,
+              taxRate: i.taxRate || 0,
+              taxAmount: 0,
+              totalAmount: 0,
+              netAmount: 0
+            })));
+          }
+        }
+        setIsScanning(false);
+      };
+      reader.readAsDataURL(file);
+    } catch (e) {
+      console.error(e);
+      alert("Failed to scan receipt intelligently.");
+      setIsScanning(false);
+    }
+  };
+
   const onSubmit = async (data: InvoiceFormData) => {
     if (data.items.length === 0 || !data.items[0].itemId) {
       alert("Please add at least one item");
@@ -164,6 +216,14 @@ export default function NewPurchasePage() {
             </span>
             Record Purchase Bill
           </h1>
+        </div>
+        
+        <div className="ml-auto flex items-center">
+          <label className={`cursor-pointer flex items-center justify-center gap-2 bg-[#00ea77]/10 border border-[#00ea77]/30 text-[#00ea77] hover:bg-[#00ea77]/20 px-4 py-2.5 rounded-lg transition-colors text-sm font-bold shadow-[0_0_15px_rgba(0,234,119,0.1)] ${isScanning ? 'opacity-50 pointer-events-none' : ''}`}>
+            {isScanning ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+            {isScanning ? 'Scanning Receipt...' : 'AI Auto-Fill'}
+            <input type="file" accept="image/*" onChange={handleReceiptScan} className="hidden" />
+          </label>
         </div>
       </div>
 
@@ -269,11 +329,20 @@ export default function NewPurchasePage() {
                         className="w-full min-w-[80px] px-3 py-2.5 text-[15px] font-semibold tracking-wide bg-[#0a0a0a] border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white transition-colors"
                       >
                         <option value="">Select Item</option>
+                        <option value="walk-in">-- Custom Item --</option>
                         {inventoryItems.map(item => (
                           <option key={item.id} value={item.id}>{item.name}</option>
                         ))}
                       </select>
-                      <input type="hidden" {...register(`items.${index}.name`)} />
+                      {watchItems[index]?.itemId === 'walk-in' || watchItems[index]?.itemId === '' ? (
+                         <input 
+                           {...register(`items.${index}.name`)} 
+                           placeholder="Type custom name"
+                           className="w-full mt-2 px-3 py-2 text-xs font-medium tracking-wide bg-[#1a1a1a] border border-white/5 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 text-slate-300"
+                         />
+                      ) : (
+                         <input type="hidden" {...register(`items.${index}.name`)} />
+                      )}
                     </td>
                     <td className="px-4 py-3">
                       <input
