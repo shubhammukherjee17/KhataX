@@ -115,6 +115,12 @@ export default function NewPurchasePage() {
           body: JSON.stringify({ imageBase64: base64 })
         });
         
+        if (res.status === 403) {
+          alert("⚠️ API Permissions Denied!\n\nYour Firebase key cannot process AI features. Please get a free key from Google AI Studio, add 'GEMINI_API_KEY=your_key' to your .env file, and restart the server.");
+          setIsScanning(false);
+          return;
+        }
+
         if (!res.ok) throw new Error("API Failed");
         const data = await res.json();
         

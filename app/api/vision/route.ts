@@ -5,6 +5,8 @@ export const dynamic = 'force-dynamic';
 export async function POST(req: Request) {
   try {
     const { imageBase64 } = await req.json();
+    
+    // Strictly strictly use the API Key given in the .env file as requested
     const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
     if (!apiKey) return NextResponse.json({ error: 'API Key missing' }, { status: 500 });
 
@@ -32,6 +34,9 @@ export async function POST(req: Request) {
     if (!response.ok) {
       const e = await response.text();
       console.error(e);
+      if (response.status === 403) {
+        return NextResponse.json({ error: 'PERMISSION_DENIED' }, { status: 403 });
+      }
       return NextResponse.json({ error: 'Vision API Failed' }, { status: 500 });
     }
 

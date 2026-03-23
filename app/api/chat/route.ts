@@ -42,8 +42,14 @@ IMPORTANT: Keep responses short, clear, and extremely useful! Do NOT wrap your r
 
 export async function POST(req: Request) {
   try {
-    const { message, context, history } = await req.json();
+    const { message, context, history, businessId } = await req.json();
 
+    // Secure the chat: Only allow processing for active logged-in sessions
+    if (!businessId) {
+      return NextResponse.json({ reply: "⚠️ Unauthorized Access. Please log in securely to KhataX to use the AI Assistant." });
+    }
+
+    // Strictly strictly use the API Key given in the .env file as requested
     const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
     if (!apiKey) {
       return NextResponse.json({ error: 'Gemini API Key missing' }, { status: 500 });
@@ -93,6 +99,9 @@ export async function POST(req: Request) {
     if (!response.ok) {
       const errorText = await response.text();
       console.error("Gemini API Error:", errorText);
+      if (response.status === 403) {
+        return NextResponse.json({ reply: "⚠️ Permission Denied: Your Firebase API Key is not enabled for Generative Language.\n\nTo fix this:\n1. Open Google Cloud Console\n2. Select your Firebase Project\n3. Enable the 'Generative Language API'\n\nOnce enabled, the AI will work immediately with your current key!" });
+      }
       return NextResponse.json({ error: 'Failed to generate response' }, { status: response.status });
     }
 

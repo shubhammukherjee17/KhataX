@@ -119,7 +119,7 @@ export default function LandingPage() {
 
       <main>
         {/* Hero Section */}
-        <section className="relative pt-24 pb-32 overflow-hidden">
+        <section id="product" className="relative pt-24 pb-32 overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00ea77]/10 rounded-full blur-[120px] pointer-events-none"></div>
           
           <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center relative z-10">
@@ -268,7 +268,7 @@ export default function LandingPage() {
         </section>
 
         {/* Dashboard Preview Section */}
-        <section className="py-20">
+        <section id="demo" className="py-20">
           <div className="max-w-7xl mx-auto px-6">
              <div className="bg-[#111] border border-white/10 rounded-2xl p-2 shadow-2xl overflow-hidden">
                <div className="bg-[#0a0a0a] rounded-xl border border-white/5 overflow-hidden flex">

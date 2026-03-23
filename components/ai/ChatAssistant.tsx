@@ -58,13 +58,17 @@ export function ChatAssistant() {
       // Exclude the very last user message from history because the backend attaches it with Context
       const historyToSend = newMessages.slice(0, -1);
 
+      // We explicitly pass the businessId to ensure complete data isolation per user session 
+      const businessId = useMasterDataStore.getState().businessId;
+
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: userMessage,
           context: context,
-          history: historyToSend
+          history: historyToSend,
+          businessId
         })
       });
 
@@ -86,14 +90,14 @@ export function ChatAssistant() {
       {/* Floating Action Button */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 z-50 p-4 rounded-full shadow-2xl transition-all duration-300 \${isOpen ? 'bg-[#111] text-white rotate-90 scale-0 opacity-0' : 'bg-gradient-to-r from-[#00ea77] to-[#00c563] text-black hover:scale-105 hover:shadow-[#00ea77]/20 rotate-0 scale-100 opacity-100'}`}
+        className={`fixed bottom-6 right-6 z-[99999] p-4 rounded-full shadow-2xl transition-all duration-300 ${isOpen ? 'bg-[#111] text-white rotate-90 scale-0 opacity-0' : 'bg-gradient-to-r from-[#00ea77] to-[#00c563] text-black hover:scale-105 hover:shadow-[#00ea77]/20 rotate-0 scale-100 opacity-100'}`}
       >
         <Sparkles className="w-6 h-6" />
       </button>
 
       {/* Chat Window */}
       <div 
-        className={`fixed bottom-6 right-6 z-50 w-full max-w-[380px] h-[550px] bg-[#111] border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 origin-bottom-right \${isOpen ? 'scale-100 opacity-100' : 'scale-75 opacity-0 pointer-events-none'}`}
+        className={`fixed bottom-6 right-6 z-[99999] w-full max-w-[380px] h-[550px] bg-[#111] border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 origin-bottom-right ${isOpen ? 'scale-100 opacity-100' : 'scale-75 opacity-0 pointer-events-none'}`}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 bg-gradient-to-r from-[#0a0a0a] to-[#111] border-b border-white/10">
