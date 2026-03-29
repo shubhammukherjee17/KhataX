@@ -18,6 +18,7 @@ import { useMasterDataStore } from '@/store/useMasterDataStore';
 import { useTransactionStore } from '@/store/useTransactionStore';
 import { format, differenceInDays, isSameDay, subMonths, startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
 import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
+import { AiTransactionInput } from '@/components/ai/AiTransactionInput';
 
 export default function DashboardPage() {
   const { profile } = useAuth();
@@ -167,6 +168,7 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
+      <AiTransactionInput />
 
       {/* KPI Cards Grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">

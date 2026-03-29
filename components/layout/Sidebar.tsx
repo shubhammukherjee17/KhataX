@@ -13,7 +13,8 @@ import {
   ShoppingCart,
   ClipboardList,
   Calculator,
-  Landmark
+  Landmark,
+  Sparkles
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/useAuth';
@@ -32,6 +33,7 @@ const navItems = [
   { name: 'Parties', href: '/parties', icon: Users },
   { name: 'Items', href: '/inventory', icon: Package },
   { name: 'Reports', href: '/reports', icon: BarChart2 },
+  { name: 'AI Insights', href: '/tools/ai-insights', icon: Sparkles },
   { name: 'Margin Calculator', href: '/tools/margin-calculator', icon: Calculator },
   { name: 'Tax Assistant', href: '/tools/tax-assistant', icon: Landmark },
   { name: 'GST', href: '/settings', icon: Percent },

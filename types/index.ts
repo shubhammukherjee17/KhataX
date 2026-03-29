@@ -113,4 +113,8 @@ export interface Transaction {
   status: 'paid' | 'unpaid' | 'partially_paid' | 'draft' | 'sent' | 'partially_billed' | 'fully_billed' | 'cancelled';
   bankAccountId?: string | null;
   linkedPurchaseBillId?: string | null;
+  // AI Enhanced Metadata
+  tags?: string[];
+  category?: string;
+  mood?: string;
 }
