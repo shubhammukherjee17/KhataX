@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMasterDataStore } from '@/store/useMasterDataStore';
+import { useAuth } from '@/hooks/useAuth';
 import { Item } from '@/types';
 import { Plus, Search, Edit, Trash2, X, AlertTriangle, ArrowRightLeft, Database } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -11,7 +12,12 @@ import { StockTransferForm } from '@/components/inventory/StockTransferForm';
 type InventoryTab = 'items' | 'godowns' | 'transfers';
 
 export default function InventoryPage() {
-  const { items, godowns, isLoading, addItem, updateItem, deleteItem, adjustStock } = useMasterDataStore();
+  const { items, godowns, isLoading, addItem, updateItem, deleteItem, adjustStock, setBusinessId } = useMasterDataStore();
+  const { businessId } = useAuth();
+
+  useEffect(() => {
+    setBusinessId(businessId);
+  }, [businessId, setBusinessId]);
   const [activeTab, setActiveTab] = useState<InventoryTab>('items');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Item | null>(null);

@@ -204,7 +204,7 @@ export default function LoginPage() {
 
         </div>
 
-        <div className="absolute bottom-8 flex gap-6 text-xs font-bold uppercase tracking-wider text-slate-500">
+        <div className="mt-auto pb-8 pt-8 w-full flex flex-wrap justify-center gap-4 sm:gap-6 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-500 px-6">
           <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
           <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
           <Link href="#" className="hover:text-white transition-colors">Contact Support</Link>

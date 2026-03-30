@@ -14,7 +14,8 @@ import {
   ClipboardList,
   Calculator,
   Landmark,
-  Sparkles
+  Sparkles,
+  LogOut
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/useAuth';
@@ -41,7 +42,7 @@ const navItems = [
 
 export function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   const pathname = usePathname();
-  const { profile } = useAuth();
+  const { user, profile, logout } = useAuth();
 
   // Close sidebar on route change on mobile
   useEffect(() => {
@@ -111,16 +112,31 @@ export function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
           <div className="flex items-center justify-between rounded-xl bg-white/5 p-3 border border-white/10 hover:border-[#00ea77]/30 transition-colors">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-slate-800 border border-[#1a231f] flex items-center justify-center overflow-hidden">
-                <img src="https://i.pravatar.cc/150?img=11" alt="Profile" className="w-full h-full object-cover" />
+                {user?.photoURL ? (
+                  <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                  <span className="text-white font-bold text-xs uppercase">
+                    {(profile?.name || user?.displayName || user?.email || 'U').charAt(0)}
+                  </span>
+                )}
               </div>
               <div className="flex flex-col">
-                <span className="text-sm font-bold text-white leading-none">{profile?.name || 'Aditya Sharma'}</span>
-                <span className="text-xs text-slate-500 mt-1">{profile?.businesses?.[0]?.role === 'owner' ? 'Admin' : 'User'}</span>
+                <span className="text-sm font-bold text-white leading-none">
+                  {profile?.name || user?.displayName || 'User'}
+                </span>
+                <span className="text-xs text-slate-500 mt-1">
+                  {profile?.businesses?.[0]?.role === 'owner' ? 'Admin' : 'Staff'}
+                </span>
               </div>
             </div>
-            <button className="text-slate-500 hover:text-white transition-colors">
-              <Settings className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-1">
+              <Link href="/settings" className="p-2 text-slate-500 hover:text-white hover:bg-white/5 rounded-lg transition-colors" title="Settings">
+                <Settings className="w-4 h-4" />
+              </Link>
+              <button onClick={logout} className="p-2 text-slate-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors" title="Logout">
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -35,10 +35,10 @@ export async function POST(req: Request) {
     const { message, context, history, businessId } = await req.json();
 
     if (!businessId) {
-      return NextResponse.json({ reply: "⚠️ Unauthorized Access. Please log in to KhataX to use the AI Tax Assistant." });
+      return NextResponse.json({ reply: "⚠️ Please create or select a business in KhataX to use the AI Tax Assistant." });
     }
 
-    const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
     if (!apiKey) {
       return NextResponse.json({ error: 'Gemini API Key missing' }, { status: 500 });
     }

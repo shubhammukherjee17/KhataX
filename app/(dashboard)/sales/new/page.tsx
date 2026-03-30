@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useMasterDataStore } from '@/store/useMasterDataStore';
 import { useTransactionStore } from '@/store/useTransactionStore';
+import { useAuth } from '@/hooks/useAuth';
 import { Transaction, TransactionItem } from '@/types';
 import { ArrowLeft, Plus, Trash2, Save } from 'lucide-react';
 import { format } from 'date-fns';
@@ -24,9 +25,15 @@ type InvoiceFormData = {
 
 export default function NewSalePage() {
   const router = useRouter();
-  const { parties, items: inventoryItems } = useMasterDataStore();
-  const { addTransaction } = useTransactionStore();
+  const { parties, items: inventoryItems, setBusinessId: setBusinessIdMaster } = useMasterDataStore();
+  const { addTransaction, setBusinessId: setBusinessIdTx } = useTransactionStore();
+  const { businessId } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    setBusinessIdMaster(businessId);
+    setBusinessIdTx(businessId);
+  }, [businessId, setBusinessIdMaster, setBusinessIdTx]);
 
   const customers = parties.filter(p => p.type === 'customer');
 
@@ -53,30 +60,14 @@ export default function NewSalePage() {
   const watchAmountPaid = watch('amountPaid');
   const watchPartyId = watch('partyId');
 
-  // Calculations
+  // Calculations derived directly from form state (avoiding useEffect sync issues)
   const subTotal = watchItems.reduce((sum, item) => sum + ((item.quantity || 0) * (item.rate || 0)), 0);
   const discountTotal = watchItems.reduce((sum, item) => sum + (item.discount || 0), 0);
-  const taxAmountTotal = watchItems.reduce((sum, item) => sum + (item.taxAmount || 0), 0);
+  const taxAmountTotal = watchItems.reduce((sum, item) => {
+    const lineTotalBeforeTax = ((item.quantity || 0) * (item.rate || 0)) - (item.discount || 0);
+    return sum + ((lineTotalBeforeTax * (item.taxRate || 0)) / 100);
+  }, 0);
   const grandTotal = subTotal - discountTotal + taxAmountTotal;
-
-  // Auto-calculate line items when dependencies change
-  useEffect(() => {
-    watchItems.forEach((item, index) => {
-      const qty = item.quantity || 0;
-      const rate = item.rate || 0;
-      const discount = item.discount || 0;
-      const taxRate = item.taxRate || 0;
-
-      const lineTotalBeforeTax = (qty * rate) - discount;
-      const taxAmount = (lineTotalBeforeTax * taxRate) / 100;
-      const totalAmount = lineTotalBeforeTax + taxAmount;
-
-      if (item.taxAmount !== taxAmount || item.totalAmount !== totalAmount) {
-        setValue(`items.${index}.taxAmount`, taxAmount);
-        setValue(`items.${index}.totalAmount`, totalAmount);
-      }
-    });
-  }, [watchItems, setValue]);
 
   const handleItemSelect = (index: number, itemId: string) => {
     const selectedItem = inventoryItems.find(i => i.id === itemId);
@@ -123,7 +114,21 @@ export default function NewSalePage() {
         partyName: finalPartyName,
         customerPhone: isWalkIn ? data.customerPhone : undefined,
         customerAddress: isWalkIn ? data.customerAddress : undefined,
-        items: data.items.filter(i => i.itemId), // Remove empty rows
+        items: data.items.filter(i => i.itemId).map(item => {
+          const qty = item.quantity || 0;
+          const rate = item.rate || 0;
+          const discount = item.discount || 0;
+          const taxRate = item.taxRate || 0;
+          const lineTotalBeforeTax = (qty * rate) - discount;
+          const taxAmount = (lineTotalBeforeTax * taxRate) / 100;
+          const totalAmount = lineTotalBeforeTax + taxAmount;
+          return {
+            ...item,
+            taxAmount,
+            totalAmount,
+            netAmount: lineTotalBeforeTax
+          };
+        }), // Remove empty rows and inject accurate final calculations
         subTotal,
         taxAmountTotal,
         discountTotal,
@@ -304,12 +309,22 @@ export default function NewSalePage() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="w-full px-3 py-2.5 bg-white/5 line-clamp-1 rounded-lg text-slate-400 border border-transparent font-semibold tracking-wide flex items-center h-[42px]">
-                        {(!isNaN(watchItems[index]?.taxAmount) ? (watchItems[index]?.taxAmount || 0) : 0).toFixed(2)}
+                        {(() => {
+                          const item = watchItems[index];
+                          const lineTotalBeforeTax = ((item?.quantity || 0) * (item?.rate || 0)) - (item?.discount || 0);
+                          const taxAmount = (lineTotalBeforeTax * (item?.taxRate || 0)) / 100;
+                          return taxAmount.toFixed(2);
+                        })()}
                       </div>
                     </td>
                     <td className="px-4 py-3 text-right">
                       <div className="font-bold text-white text-lg">
-                        {(!isNaN(watchItems[index]?.totalAmount) ? (watchItems[index]?.totalAmount || 0) : 0).toFixed(2)}
+                        {(() => {
+                           const item = watchItems[index];
+                           const lineTotalBeforeTax = ((item?.quantity || 0) * (item?.rate || 0)) - (item?.discount || 0);
+                           const taxAmount = (lineTotalBeforeTax * (item?.taxRate || 0)) / 100;
+                           return (lineTotalBeforeTax + taxAmount).toFixed(2);
+                        })()}
                       </div>
                     </td>
                     <td className="px-4 py-3 text-center">

@@ -8,13 +8,13 @@ export async function POST(req: Request) {
   try {
     const { message, context, history, businessId } = await req.json();
 
-    // Secure the chat: Only allow processing for active logged-in sessions
+    // Secure the chat: Only allow processing for active logged-in sessions with a business
     if (!businessId) {
-      return NextResponse.json({ reply: "⚠️ Unauthorized Access. Please log in securely to KhataX to use the AI Assistant." });
+      return NextResponse.json({ reply: "⚠️ Please select or create a business in KhataX to use the AI Assistant." });
     }
 
     // Strictly strictly use the API Key given in the .env file as requested
-    const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
     if (!apiKey) {
       return NextResponse.json({ error: 'Gemini API Key missing' }, { status: 500 });
     }

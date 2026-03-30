@@ -343,7 +343,7 @@ export default function SignUpPage() {
         </div>
 
         {/* Footer Links */}
-        <div className="absolute bottom-8 w-full flex justify-center gap-8 text-[11px] font-bold tracking-widest text-slate-500 uppercase lg:pl-12">
+        <div className="mt-auto pt-8 pb-8 w-full flex flex-wrap justify-center gap-4 sm:gap-8 text-[10px] sm:text-[11px] font-bold tracking-widest text-slate-500 uppercase px-6 lg:pl-12">
           <Link href="#" className="hover:text-white transition-colors">Help Center</Link>
           <Link href="#" className="hover:text-white transition-colors">Security</Link>
           <Link href="#" className="hover:text-white transition-colors">Contact Support</Link>

@@ -22,7 +22,13 @@ export function LandingNavAuth({ isMobile }: { isMobile?: boolean }) {
         </Link>
         <Link href="/dashboard" className={`flex items-center gap-2 text-sm font-semibold bg-[#111] border border-white/10 text-white px-3 py-1.5 rounded-full hover:bg-white/10 transition group ${isMobile ? 'w-full justify-center py-3' : ''}`}>
           <div className="w-7 h-7 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
-             <img src="https://i.pravatar.cc/150?img=11" alt="Profile" className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
+             {user?.photoURL ? (
+               <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
+             ) : (
+               <span className="text-white font-bold text-xs uppercase">
+                 {(profile?.name || user?.displayName || user?.email || 'U').charAt(0)}
+               </span>
+             )}
           </div>
           <span className="pr-1 text-slate-100">{profile?.name || 'Account'}</span>
         </Link>

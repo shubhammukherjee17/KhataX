@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     const { imageBase64 } = await req.json();
     
     // Strictly strictly use the API Key given in the .env file as requested
-    const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
+    const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
     if (!apiKey) return NextResponse.json({ error: 'API Key missing' }, { status: 500 });
 
     const base64Data = imageBase64.split(',')[1];

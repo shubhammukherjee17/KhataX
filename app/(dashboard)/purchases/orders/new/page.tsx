@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useMasterDataStore } from '@/store/useMasterDataStore';
 import { useTransactionStore } from '@/store/useTransactionStore';
+import { useAuth } from '@/hooks/useAuth';
 import { Transaction, TransactionItem } from '@/types';
 import { ArrowLeft, Plus, Trash2, Save, Send } from 'lucide-react';
 import { format } from 'date-fns';
@@ -22,9 +23,15 @@ type POFormData = {
 
 export default function NewPurchaseOrderPage() {
   const router = useRouter();
-  const { parties, items: inventoryItems } = useMasterDataStore();
-  const { addTransaction } = useTransactionStore();
+  const { parties, items: inventoryItems, setBusinessId: setBusinessIdMaster } = useMasterDataStore();
+  const { addTransaction, setBusinessId: setBusinessIdTx } = useTransactionStore();
+  const { businessId } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    setBusinessIdMaster(businessId);
+    setBusinessIdTx(businessId);
+  }, [businessId, setBusinessIdMaster, setBusinessIdTx]);
 
   // We show vendors for purchase orders
   const vendors = parties.filter(p => p.type === 'vendor');
@@ -50,30 +57,14 @@ export default function NewPurchaseOrderPage() {
   const watchItems = watch('items');
   const watchPartyId = watch('partyId');
 
-  // Calculations
+  // Calculations derived directly from form state (avoiding useEffect sync issues)
   const subTotal = watchItems.reduce((sum, item) => sum + ((item.quantity || 0) * (item.rate || 0)), 0);
   const discountTotal = watchItems.reduce((sum, item) => sum + (item.discount || 0), 0);
-  const taxAmountTotal = watchItems.reduce((sum, item) => sum + (item.taxAmount || 0), 0);
+  const taxAmountTotal = watchItems.reduce((sum, item) => {
+    const lineTotalBeforeTax = ((item.quantity || 0) * (item.rate || 0)) - (item.discount || 0);
+    return sum + ((lineTotalBeforeTax * (item.taxRate || 0)) / 100);
+  }, 0);
   const grandTotal = subTotal - discountTotal + taxAmountTotal;
-
-  // Auto-calculate line items
-  useEffect(() => {
-    watchItems.forEach((item, index) => {
-      const qty = item.quantity || 0;
-      const rate = item.rate || 0;
-      const discount = item.discount || 0;
-      const taxRate = item.taxRate || 0;
-
-      const lineTotalBeforeTax = (qty * rate) - discount;
-      const taxAmount = (lineTotalBeforeTax * taxRate) / 100;
-      const totalAmount = lineTotalBeforeTax + taxAmount;
-
-      if (item.taxAmount !== taxAmount || item.totalAmount !== totalAmount) {
-        setValue(`items.${index}.taxAmount`, taxAmount);
-        setValue(`items.${index}.totalAmount`, totalAmount);
-      }
-    });
-  }, [watchItems, setValue]);
 
   const handleItemSelect = (index: number, itemId: string) => {
     const selectedItem = inventoryItems.find(i => i.id === itemId);
@@ -106,7 +97,21 @@ export default function NewPurchaseOrderPage() {
         partyName: finalPartyName,
         customerPhone: isWalkIn ? data.vendorPhone : undefined,
         customerAddress: isWalkIn ? data.vendorAddress : undefined,
-        items: data.items.filter(i => i.itemId),
+        items: data.items.filter(i => i.itemId).map(item => {
+          const qty = item.quantity || 0;
+          const rate = item.rate || 0;
+          const discount = item.discount || 0;
+          const taxRate = item.taxRate || 0;
+          const lineTotalBeforeTax = (qty * rate) - discount;
+          const taxAmount = (lineTotalBeforeTax * taxRate) / 100;
+          const totalAmount = lineTotalBeforeTax + taxAmount;
+          return {
+            ...item,
+            taxAmount,
+            totalAmount,
+            netAmount: lineTotalBeforeTax
+          };
+        }),
         subTotal,
         taxAmountTotal,
         discountTotal,
@@ -283,12 +288,22 @@ export default function NewPurchaseOrderPage() {
                     </td>
                     <td className="px-5 py-3">
                       <div className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-white/5 rounded-xl text-slate-400 font-medium min-w-[100px]">
-                        {watchItems[index]?.taxAmount?.toFixed(2) || '0.00'}
+                        {(() => {
+                          const item = watchItems[index];
+                          const lineTotalBeforeTax = ((item?.quantity || 0) * (item?.rate || 0)) - (item?.discount || 0);
+                          const taxAmount = (lineTotalBeforeTax * (item?.taxRate || 0)) / 100;
+                          return taxAmount.toFixed(2);
+                        })()}
                       </div>
                     </td>
                     <td className="px-5 py-3 text-right">
                       <div className="font-bold text-white pr-2 min-w-[100px]">
-                        {watchItems[index]?.totalAmount?.toFixed(2) || '0.00'}
+                        {(() => {
+                           const item = watchItems[index];
+                           const lineTotalBeforeTax = ((item?.quantity || 0) * (item?.rate || 0)) - (item?.discount || 0);
+                           const taxAmount = (lineTotalBeforeTax * (item?.taxRate || 0)) / 100;
+                           return (lineTotalBeforeTax + taxAmount).toFixed(2);
+                        })()}
                       </div>
                     </td>
                     <td className="px-5 py-3 text-center">

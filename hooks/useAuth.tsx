@@ -2,7 +2,7 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 import { onAuthStateChanged, User, signOut as firebaseSignOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase/config';
-import { getDocument, setDocument } from '@/lib/firebase/firestore';
+import { getDocument, setDocument, addDocument } from '@/lib/firebase/firestore';
 
 interface UserProfile {
   id: string;
@@ -48,15 +48,37 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         let userProfile = await getDocument<UserProfile>('users', firebaseUser.uid);
         
         if (!userProfile) {
+          // Auto-create a default business for users skipping the setup flow (e.g. Google Auth)
+          const businessId = await addDocument('businesses', {
+            name: (firebaseUser.displayName?.split(' ')[0] || 'My') + "'s Business",
+            industry: 'other',
+            gstin: null,
+            phone: firebaseUser.phoneNumber || null,
+            ownerId: firebaseUser.uid,
+            createdAt: new Date().toISOString()
+          });
+
           userProfile = {
             id: firebaseUser.uid,
             name: firebaseUser.displayName || '',
             email: firebaseUser.email || '',
-            currentBusinessId: null,
-            businesses: [],
+            currentBusinessId: businessId,
+            businesses: [{ businessId, role: 'owner' }],
             plan: 'free',
             trialExpiresAt: Date.now() + (3 * 24 * 60 * 60 * 1000) // 3 days from now
           };
+          await setDocument('users', firebaseUser.uid, userProfile);
+        } else if (!userProfile.currentBusinessId) {
+          // Fix for existing users who already slipped through without a business
+          const businessId = await addDocument('businesses', {
+            name: (userProfile.name?.split(' ')[0] || 'My') + "'s Business",
+            industry: 'other',
+            ownerId: firebaseUser.uid,
+            createdAt: new Date().toISOString()
+          });
+          userProfile.currentBusinessId = businessId;
+          if (!userProfile.businesses) userProfile.businesses = [];
+          userProfile.businesses.push({ businessId, role: 'owner' });
           await setDocument('users', firebaseUser.uid, userProfile);
         }
         
