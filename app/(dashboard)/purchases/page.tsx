@@ -1,58 +1,62 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import {
   Plus, Search, Bell, Calendar, ChevronDown, Filter,
   TrendingUp, Wallet, Landmark, CheckCircle2, XCircle,
   FileText, UploadCloud, Zap, MoreHorizontal
 } from 'lucide-react';
+import { useTransactionStore } from '@/store/useTransactionStore';
+import { format, startOfMonth, endOfMonth, isWithinInterval } from 'date-fns';
 
 export default function PurchasesPage() {
   const [searchTerm, setSearchTerm] = useState('');
+  const { transactions, isLoading } = useTransactionStore();
 
-  const transactions = [
-    {
-      id: 'PUR-00245',
-      vendor: 'Acme Corp',
-      avatar: 'AC',
-      date: 'Oct 24, 2023',
-      amount: '12,000',
-      gstRate: '18%',
-      itc: 'Eligible',
-      itcStatus: 'success'
-    },
-    {
-      id: 'PUR-00241',
-      vendor: 'Global Tech',
-      avatar: 'GT',
-      date: 'Oct 22, 2023',
-      amount: '45,500',
-      gstRate: '12%',
-      itc: 'Eligible',
-      itcStatus: 'success'
-    },
-    {
-      id: 'PUR-00236',
-      vendor: 'Modern Designs',
-      avatar: 'MD',
-      date: 'Oct 20, 2023',
-      amount: '8,900',
-      gstRate: '5%',
-      itc: 'Ineligible',
-      itcStatus: 'error'
-    },
-    {
-      id: 'PUR-00235',
-      vendor: 'Stationary Hub',
-      avatar: 'SH',
-      date: 'Oct 18, 2023',
-      amount: '2,400',
-      gstRate: '18%',
-      itc: 'Eligible',
-      itcStatus: 'success'
-    }
-  ];
+  const purchaseInvoices = useMemo(() => {
+    return transactions.filter(t => t.type === 'purchase_invoice');
+  }, [transactions]);
+
+  const { filteredPurchases, totalExpensesMonth, pendingPayments, totalITC, upcomingVendors } = useMemo(() => {
+    const today = new Date();
+    const start = startOfMonth(today);
+    const end = endOfMonth(today);
+
+    let expensesMonth = 0;
+    let pending = 0;
+    let itc = 0;
+
+    const vendorsOwed: Record<string, number> = {};
+
+    const filtered = purchaseInvoices.filter(t => {
+      const matchSearch = t.partyName.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                          t.number.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      const txDate = new Date(t.date);
+      if (isWithinInterval(txDate, { start, end })) {
+        expensesMonth += t.grandTotal;
+      }
+
+      const balance = t.grandTotal - (t.amountPaid || 0);
+      if (balance > 0) {
+        pending += balance;
+        vendorsOwed[t.partyName] = (vendorsOwed[t.partyName] || 0) + balance;
+      }
+
+      // Simplified ITC calculation: assuming all tax paid on purchases is eligible ITC for now
+      itc += (t.taxAmountTotal || 0);
+
+      return matchSearch;
+    });
+
+    const upcoming = Object.entries(vendorsOwed)
+      .map(([name, amount]) => ({ name, amount }))
+      .sort((a, b) => b.amount - a.amount)
+      .slice(0, 3);
+
+    return { filteredPurchases: filtered, totalExpensesMonth: expensesMonth, pendingPayments: pending, totalITC: itc, upcomingVendors: upcoming };
+  }, [purchaseInvoices, searchTerm]);
 
   return (
     <div className="space-y-6 text-slate-200 w-full max-w-[1400px] mx-auto pb-8 font-sans">
@@ -82,11 +86,6 @@ export default function PurchasesPage() {
           >
             <Plus className="h-4 w-4 stroke-[3]" /> Add Purchase
           </Link>
-
-          {/* Profile placeholder matches image orange variant */}
-          <div className="h-9 w-9 rounded-full bg-orange-100/10 flex items-center justify-center border border-orange-500/30 shrink-0">
-            <span className="text-orange-300 font-bold text-xs">A</span>
-          </div>
         </div>
       </div>
 
@@ -105,7 +104,7 @@ export default function PurchasesPage() {
           </button>
         </div>
         <div className="text-xs font-semibold tracking-wide text-slate-400">
-          Showing 24 of 128 transactions
+          Showing {filteredPurchases.length} of {purchaseInvoices.length} transactions
         </div>
       </div>
 
@@ -116,13 +115,10 @@ export default function PurchasesPage() {
             <div className="w-10 h-10 rounded-xl bg-[#00ea77]/10 flex items-center justify-center">
               <TrendingUp className="h-5 w-5 text-[#00ea77]" />
             </div>
-            <span className="inline-flex items-center px-2 py-0.5 rounded bg-[#00ea77]/10 text-[#00ea77] text-[10px] uppercase font-bold tracking-wider">
-              +12.5%
-            </span>
           </div>
           <div>
             <p className="text-xs font-semibold text-slate-500 mb-1">Total Expenses (Month)</p>
-            <h3 className="text-3xl font-extrabold text-white tracking-tight">₹4,52,000</h3>
+            <h3 className="text-3xl font-extrabold text-white tracking-tight">₹{totalExpensesMonth.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
           </div>
         </div>
 
@@ -131,13 +127,10 @@ export default function PurchasesPage() {
             <div className="w-10 h-10 rounded-xl bg-yellow-500/10 flex items-center justify-center">
               <Wallet className="h-5 w-5 text-yellow-500" />
             </div>
-            <span className="inline-flex items-center px-2 py-0.5 rounded bg-yellow-500/10 text-yellow-500 text-[10px] uppercase font-bold tracking-wider">
-              +5.2%
-            </span>
           </div>
           <div>
             <p className="text-xs font-semibold text-slate-500 mb-1">Pending Payments</p>
-            <h3 className="text-3xl font-extrabold text-white tracking-tight">₹85,000</h3>
+            <h3 className="text-3xl font-extrabold text-white tracking-tight">₹{pendingPayments.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
           </div>
         </div>
 
@@ -146,13 +139,10 @@ export default function PurchasesPage() {
             <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
               <Landmark className="h-5 w-5 text-blue-500" />
             </div>
-            <span className="inline-flex items-center px-2 py-0.5 rounded bg-red-500/10 text-red-500 text-[10px] uppercase font-bold tracking-wider">
-              -2.1%
-            </span>
           </div>
           <div>
             <p className="text-xs font-semibold text-slate-500 mb-1">GST Input Tax Credit (ITC)</p>
-            <h3 className="text-3xl font-extrabold text-white tracking-tight">₹18,240</h3>
+            <h3 className="text-3xl font-extrabold text-white tracking-tight">₹{totalITC.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
           </div>
         </div>
       </div>
@@ -166,61 +156,58 @@ export default function PurchasesPage() {
                 <tr>
                   <th className="px-6 py-4">VENDOR</th>
                   <th className="px-6 py-4">DATE</th>
-                  <th className="px-6 py-4">AMOUNT</th>
-                  <th className="px-6 py-4">GST RATE</th>
-                  <th className="px-6 py-4">ITC ELIGIBILITY</th>
+                  <th className="px-6 py-4 text-right">AMOUNT</th>
+                  <th className="px-6 py-4 text-center">STATUS</th>
                   <th className="px-6 py-4"></th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#1a231f]">
-                {transactions.map((tx, idx) => (
-                  <tr key={idx} className="hover:bg-[#16221c] transition-colors group cursor-pointer">
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="relative overflow-hidden w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-400 border border-slate-700">
-                          <span className="relative z-10">{tx.avatar}</span>
-                          <FileText className="absolute opacity-10 w-6 h-6 z-0" />
-                        </div>
-                        <div>
-                          <p className="font-bold text-slate-200 group-hover:text-white transition-colors">{tx.vendor}</p>
-                          <p className="text-[10px] font-semibold text-slate-600 mt-0.5 tracking-wide">{tx.id}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 font-semibold text-slate-400 text-xs">
-                      {tx.date.split(',').map((part, i) => (
-                        <span key={i} className="block">{part.trim()}</span>
-                      ))}
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="font-bold text-slate-200 text-sm">₹{tx.amount}</span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="inline-block px-3 py-1 bg-[#1a231f] text-slate-400 text-[10px] font-bold tracking-wider rounded border border-[#232f29]">
-                        {tx.gstRate}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className={`flex items-center gap-2 font-bold text-[11px] uppercase tracking-wider ${tx.itcStatus === 'success' ? 'text-[#00ea77]' : 'text-slate-500'}`}>
-                        {tx.itcStatus === 'success' ? (
-                          <div className="w-4 h-4 rounded-full border border-[#00ea77] flex items-center justify-center">
-                            <CheckCircle2 className="w-3 h-3 fill-[#00ea77] text-[#121c17]" />
-                          </div>
-                        ) : (
-                          <div className="w-4 h-4 rounded-full border border-slate-500 flex items-center justify-center">
-                            <XCircle className="w-3 h-3 text-slate-500" />
-                          </div>
-                        )}
-                        {tx.itc}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <button className="text-slate-600 hover:text-slate-300 transition-colors p-1">
-                        <MoreHorizontal className="w-5 h-5" />
-                      </button>
-                    </td>
+                {isLoading ? (
+                  <tr>
+                    <td colSpan={5} className="py-12 text-center text-slate-500 font-medium">Loading purchases...</td>
                   </tr>
-                ))}
+                ) : filteredPurchases.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="py-12 text-center text-slate-500 font-medium">No purchase bills found.</td>
+                  </tr>
+                ) : (
+                  filteredPurchases.map((tx) => (
+                    <tr key={tx.id} className="hover:bg-[#16221c] transition-colors group cursor-pointer">
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="relative overflow-hidden w-10 h-10 rounded-xl bg-[#23352a] flex items-center justify-center text-xs font-bold text-slate-400 border border-[#2c4033]">
+                            <span className="relative z-10">{tx.partyName.charAt(0).toUpperCase()}</span>
+                          </div>
+                          <div>
+                            <p className="font-bold text-slate-200 group-hover:text-white transition-colors">{tx.partyName}</p>
+                            <p className="text-[10px] font-semibold text-slate-600 mt-0.5 tracking-wide">{tx.number}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 font-semibold text-slate-400 text-xs">
+                        {format(new Date(tx.date), 'dd MMM, yyyy')}
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <span className="font-bold text-slate-200 text-sm">₹{tx.grandTotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                      </td>
+                      <td className="px-6 py-4 text-center">
+                         <span className={`inline-flex py-1 px-2.5 rounded text-[10px] font-bold uppercase tracking-wider
+                          ${tx.status === 'paid' ? 'bg-[#00ea77]/10 text-[#00ea77]' :
+                            tx.status === 'partially_paid' ? 'bg-orange-500/10 text-orange-500' :
+                              tx.status === 'unpaid' ? 'bg-red-500/10 text-red-500' :
+                                'bg-slate-500/10 text-slate-400'}
+                        `}>
+                          {tx.status.replace('_', ' ')}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        <Link href={`/purchases/${tx.id}`} className="text-slate-600 hover:text-slate-300 transition-colors p-1 inline-block">
+                          <MoreHorizontal className="w-5 h-5" />
+                        </Link>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
@@ -240,39 +227,36 @@ export default function PurchasesPage() {
             <div className="space-y-4 mb-6">
               <div className="flex justify-between items-center text-xs">
                 <span className="font-semibold text-slate-500">Upcoming Payments</span>
-                <span className="font-bold text-white">4 Vendors</span>
-              </div>
-              <div className="flex justify-between items-center text-xs">
-                <span className="font-semibold text-slate-500">Next Due Date</span>
-                <span className="font-bold text-orange-400">Oct 28</span>
+                <span className="font-bold text-white">{upcomingVendors.length} Vendors</span>
               </div>
             </div>
 
             <div className="space-y-4 mb-6 pt-2 border-t border-[#1a231f]">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded border border-slate-700 bg-slate-800 flex items-center justify-center text-[9px] font-bold text-slate-400">BT</div>
-                  <span className="text-xs font-bold text-slate-300">Blue Tech</span>
-                </div>
-                <span className="text-xs font-bold text-white">₹12,400</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded border border-slate-700 bg-slate-800 flex items-center justify-center text-[9px] font-bold text-slate-400">SC</div>
-                  <span className="text-xs font-bold text-slate-300">Swift Cloud</span>
-                </div>
-                <span className="text-xs font-bold text-white">₹8,500</span>
-              </div>
+              {upcomingVendors.length === 0 ? (
+                <div className="text-xs text-slate-500 italic">No pending payments.</div>
+              ) : (
+                upcomingVendors.map((vendor, i) => (
+                  <div key={i} className="flex justify-between items-center">
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 rounded border border-[#23352a] bg-[#1a2820] flex items-center justify-center text-[9px] font-bold text-slate-400">
+                        {vendor.name.substring(0,2).toUpperCase()}
+                      </div>
+                      <span className="text-xs font-bold text-slate-300 max-w-[100px] truncate">{vendor.name}</span>
+                    </div>
+                    <span className="text-xs font-bold text-white">₹{vendor.amount.toLocaleString('en-IN')}</span>
+                  </div>
+                ))
+              )}
             </div>
 
-            <button className="w-full py-2.5 bg-[#1a231f] hover:bg-slate-800 text-slate-300 text-xs font-bold tracking-wide rounded-xl transition border border-[#232f29]">
+            <Link href="/reports" className="w-full py-2.5 bg-[#1a231f] hover:bg-slate-800 text-slate-300 text-xs font-bold tracking-wide rounded-xl transition border border-[#232f29] block text-center">
               View Payables
-            </button>
+            </Link>
           </div>
 
           {/* Upload Receipt Card */}
-          <div className="bg-[#121c17] border border-dashed border-[#00ea77]/30 rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-[#00ea77]/5 transition group">
-            <div className="w-10 h-10 rounded-xl bg-[#00ea77]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+          <Link href="/purchases/new" className="bg-[#121c17] border border-dashed border-[#00ea77]/30 rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-[#00ea77]/5 transition group block">
+            <div className="w-10 h-10 rounded-xl bg-[#00ea77]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform mx-auto">
               <UploadCloud className="w-5 h-5 text-[#00ea77]" />
             </div>
             <h4 className="font-bold text-white text-sm mb-1.5">Upload Receipt</h4>
@@ -283,7 +267,7 @@ export default function PurchasesPage() {
               <Zap className="w-3 h-3 fill-current" />
               AUTO-SCAN ENABLED
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

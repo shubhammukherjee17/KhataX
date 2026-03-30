@@ -118,7 +118,7 @@ export function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
             <Link href="/settings" className="flex items-center gap-3 text-[13px] font-bold text-slate-400 hover:text-white transition-colors">
               <Settings className="w-4 h-4 text-slate-500" /> Settings
             </Link>
-            <Link href="#" className="flex items-center gap-3 text-[13px] font-bold text-slate-400 hover:text-white transition-colors">
+            <Link href="/support" className="flex items-center gap-3 text-[13px] font-bold text-slate-400 hover:text-white transition-colors">
               <HelpCircle className="w-4 h-4 text-slate-500" /> Support
             </Link>
           </div>
