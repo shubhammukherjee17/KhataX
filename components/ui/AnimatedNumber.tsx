@@ -15,8 +15,8 @@ export function AnimatedNumber({ value, format = 'decimal', className }: Animate
       className={className}
       format={
         format === 'currency' 
-          ? { style: 'currency', currency: 'INR', minimumFractionDigits: 2 } 
-          : { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+          ? { style: 'currency', currency: 'INR', minimumFractionDigits: 0, maximumFractionDigits: 2 } 
+          : { minimumFractionDigits: 0, maximumFractionDigits: 2 }
       } 
     />
   );

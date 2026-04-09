@@ -173,10 +173,10 @@ export default function InventoryPage() {
                         </span>
                       </td>
                       <td className="px-6 py-4 text-right text-slate-300">
-                        ₹{item.salePrice.toFixed(2)}
+                        ₹{item.salePrice.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                       </td>
                       <td className="px-6 py-4 text-right text-slate-300">
-                        ₹{item.purchasePrice.toFixed(2)}
+                        ₹{item.purchasePrice.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                       </td>
                       <td className="px-6 py-4 text-right">
                         {item.type === 'service' ? (

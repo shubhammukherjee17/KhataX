@@ -81,7 +81,7 @@ export default function PurchaseOrdersPage() {
                       {order.partyName}
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <div className="font-bold text-white">₹{order.grandTotal.toFixed(2)}</div>
+                      <div className="font-bold text-white">₹{order.grandTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</div>
                     </td>
                     <td className="px-6 py-4 text-center">
                       <span className={`inline-flex py-1.5 px-3 rounded-md text-[10px] font-bold uppercase tracking-widest border

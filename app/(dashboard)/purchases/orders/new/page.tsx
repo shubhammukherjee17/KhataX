@@ -293,7 +293,7 @@ export default function NewPurchaseOrderPage() {
                           const item = watchItems[index];
                           const lineTotalBeforeTax = ((item?.quantity || 0) * (item?.rate || 0)) - (item?.discount || 0);
                           const taxAmount = (lineTotalBeforeTax * (item?.taxRate || 0)) / 100;
-                          return taxAmount.toFixed(2);
+                          return taxAmount.toLocaleString('en-IN', { maximumFractionDigits: 2 });
                         })()}
                       </div>
                     </td>
@@ -303,7 +303,7 @@ export default function NewPurchaseOrderPage() {
                            const item = watchItems[index];
                            const lineTotalBeforeTax = ((item?.quantity || 0) * (item?.rate || 0)) - (item?.discount || 0);
                            const taxAmount = (lineTotalBeforeTax * (item?.taxRate || 0)) / 100;
-                           return (lineTotalBeforeTax + taxAmount).toFixed(2);
+                           return (lineTotalBeforeTax + taxAmount).toLocaleString('en-IN', { maximumFractionDigits: 2 });
                         })()}
                       </div>
                     </td>
@@ -341,19 +341,19 @@ export default function NewPurchaseOrderPage() {
             <div className="space-y-4 text-sm relative z-10">
               <div className="flex justify-between text-slate-400 font-medium">
                 <span>Total Value</span>
-                <span className="text-white">₹{subTotal.toFixed(2)}</span>
+                <span className="text-white">₹{subTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between text-slate-400 font-medium">
                 <span>Total Discount</span>
-                <span className="text-red-400">- ₹{discountTotal.toFixed(2)}</span>
+                <span className="text-red-400">- ₹{discountTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between text-slate-400 font-medium">
                 <span>Tax Estimated (GST)</span>
-                <span className="text-white">+ ₹{taxAmountTotal.toFixed(2)}</span>
+                <span className="text-white">+ ₹{taxAmountTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
               </div>
               <div className="pt-4 border-t border-white/5 flex justify-between font-bold text-xl text-white">
                 <span>Order Total</span>
-                <span>₹{grandTotal.toFixed(2)}</span>
+                <span>₹{grandTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
               </div>
             </div>
           </div>

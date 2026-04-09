@@ -175,28 +175,30 @@ export default function InvoiceViewPage() {
 
             {/* Items Table */}
             <div className="mb-10 border border-slate-200 rounded-lg overflow-hidden">
-              <table className="w-full text-left text-sm">
-                <thead className="bg-slate-50 border-b border-slate-200">
-                  <tr>
-                    <th className="px-4 py-3 font-bold text-slate-700">Item Description</th>
-                    <th className="px-4 py-3 font-bold text-slate-700 text-center">Qty</th>
-                    <th className="px-4 py-3 font-bold text-slate-700 text-right">Rate</th>
-                    <th className="px-4 py-3 font-bold text-slate-700 text-center">Tax</th>
-                    <th className="px-4 py-3 font-bold text-slate-700 text-right">Amount</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-200">
-                  {invoice.items.map((item, idx) => (
-                    <tr key={idx}>
-                      <td className="px-4 py-3 font-medium text-slate-900">{item.name}</td>
-                      <td className="px-4 py-3 font-medium text-slate-600 text-center">{item.quantity}</td>
-                      <td className="px-4 py-3 font-medium text-slate-600 text-right">₹{item.rate.toFixed(2)}</td>
-                      <td className="px-4 py-3 font-medium text-slate-600 text-center">{item.taxRate || 0}%</td>
-                      <td className="px-4 py-3 font-bold text-slate-900 text-right">₹{item.totalAmount.toFixed(2)}</td>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm min-w-[600px]">
+                  <thead className="bg-slate-50 border-b border-slate-200">
+                    <tr>
+                      <th className="px-4 py-3 font-bold text-slate-700">Item Description</th>
+                      <th className="px-4 py-3 font-bold text-slate-700 text-center">Qty</th>
+                      <th className="px-4 py-3 font-bold text-slate-700 text-right">Rate</th>
+                      <th className="px-4 py-3 font-bold text-slate-700 text-center">Tax</th>
+                      <th className="px-4 py-3 font-bold text-slate-700 text-right">Amount</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-slate-200">
+                    {invoice.items.map((item, idx) => (
+                      <tr key={idx}>
+                        <td className="px-4 py-3 font-medium text-slate-900">{item.name}</td>
+                        <td className="px-4 py-3 font-medium text-slate-600 text-center">{item.quantity}</td>
+                        <td className="px-4 py-3 font-medium text-slate-600 text-right">₹{item.rate.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</td>
+                        <td className="px-4 py-3 font-medium text-slate-600 text-center">{item.taxRate || 0}%</td>
+                        <td className="px-4 py-3 font-bold text-slate-900 text-right">₹{item.totalAmount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             {/* Totals */}
@@ -204,21 +206,21 @@ export default function InvoiceViewPage() {
               <div className="w-full max-w-xs space-y-3">
                 <div className="flex justify-between text-sm font-medium text-slate-600">
                   <span>Subtotal</span>
-                  <span>₹{invoice.subTotal.toFixed(2)}</span>
+                  <span>₹{invoice.subTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                 </div>
                 {invoice.discountTotal > 0 && (
                    <div className="flex justify-between text-sm font-medium text-slate-600">
                     <span>Discount</span>
-                    <span className="text-red-500">-₹{invoice.discountTotal.toFixed(2)}</span>
+                    <span className="text-red-500">-₹{invoice.discountTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                   </div>
                 )}
                 <div className="flex justify-between text-sm font-medium text-slate-600 pb-3 border-b border-slate-200">
                   <span>Total Tax</span>
-                  <span>₹{invoice.taxAmountTotal.toFixed(2)}</span>
+                  <span>₹{invoice.taxAmountTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                 </div>
                 <div className="flex justify-between text-xl font-black text-slate-900 pt-1">
                   <span>Total Due</span>
-                  <span>₹{invoice.grandTotal.toFixed(2)}</span>
+                  <span>₹{invoice.grandTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                 </div>
               </div>
             </div>
@@ -252,15 +254,15 @@ export default function InvoiceViewPage() {
             <div className="mt-6 space-y-3 pt-6 border-t border-[#1a231f]">
               <div className="flex justify-between">
                 <span className="text-sm text-slate-400">Total Amount</span>
-                <span className="text-sm font-bold text-white">₹{invoice.grandTotal.toFixed(2)}</span>
+                <span className="text-sm font-bold text-white">₹{invoice.grandTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-slate-400">Amount Paid</span>
-                <span className="text-sm font-bold text-[#00ea77]">₹{invoice.amountPaid.toFixed(2)}</span>
+                <span className="text-sm font-bold text-[#00ea77]">₹{invoice.amountPaid.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-slate-400">Balance Due</span>
-                <span className="text-sm font-bold text-red-400">₹{balanceDue.toFixed(2)}</span>
+                <span className="text-sm font-bold text-red-400">₹{balanceDue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
               </div>
             </div>
 
@@ -285,14 +287,14 @@ export default function InvoiceViewPage() {
               
               <div className="bg-white p-3 rounded-xl shadow-[0_0_20px_rgba(0,234,119,0.1)] inline-block">
                 <QRCodeSVG 
-                  value={`upi://pay?pa=${business.upiId}&pn=${encodeURIComponent(business.name)}&am=${balanceDue.toFixed(2)}&cu=INR&tn=${encodeURIComponent(`Invoice ${invoice.number}`)}`} 
+                  value={`upi://pay?pa=${business.upiId}&pn=${encodeURIComponent(business.name)}&am=${Number(balanceDue.toFixed(2))}&cu=INR&tn=${encodeURIComponent(`Invoice ${invoice.number}`)}`} 
                   size={160} 
                   level="H"
                   includeMargin={false}
                 />
               </div>
               
-              <p className="text-xs font-bold text-slate-300 mt-4 tracking-wider uppercase">₹{balanceDue.toFixed(2)}</p>
+              <p className="text-xs font-bold text-slate-300 mt-4 tracking-wider uppercase">₹{balanceDue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
               <div className="flex flex-wrap gap-2 items-center justify-center mt-3">
                 <span className="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-bold text-slate-400">GPay</span>
                 <span className="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-bold text-slate-400">PhonePe</span>

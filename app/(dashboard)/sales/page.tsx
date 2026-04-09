@@ -40,7 +40,7 @@ export default function SalesPage() {
           <div>
             <p className="text-[10px] font-bold tracking-wider text-slate-500 uppercase">Total Sales (MTD)</p>
             <p className="text-2xl font-extrabold text-white">
-              ₹{salesInvoices.reduce((sum, t) => sum + t.grandTotal, 0).toFixed(2)}
+              ₹{salesInvoices.reduce((sum, t) => sum + t.grandTotal, 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
             </p>
           </div>
         </div>
@@ -51,7 +51,7 @@ export default function SalesPage() {
           <div>
             <p className="text-[10px] font-bold tracking-wider text-slate-500 uppercase">Total Received</p>
             <p className="text-2xl font-extrabold text-white">
-              ₹{salesInvoices.reduce((sum, t) => sum + t.amountPaid, 0).toFixed(2)}
+              ₹{salesInvoices.reduce((sum, t) => sum + t.amountPaid, 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
             </p>
           </div>
         </div>
@@ -62,7 +62,7 @@ export default function SalesPage() {
           <div>
             <p className="text-[10px] font-bold tracking-wider text-slate-500 uppercase">Total Pending</p>
             <p className="text-2xl font-extrabold text-white">
-              ₹{salesInvoices.reduce((sum, t) => sum + (t.grandTotal - t.amountPaid), 0).toFixed(2)}
+              ₹{salesInvoices.reduce((sum, t) => sum + (t.grandTotal - t.amountPaid), 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
             </p>
           </div>
         </div>
@@ -117,9 +117,9 @@ export default function SalesPage() {
                       {invoice.partyName}
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <div className="text-white font-bold text-sm">₹{invoice.grandTotal.toFixed(2)}</div>
+                      <div className="text-white font-bold text-sm">₹{invoice.grandTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</div>
                       {invoice.amountPaid > 0 && invoice.status !== 'paid' && (
-                        <div className="text-[10px] font-bold text-[#00ea77] uppercase tracking-wider mt-1">Recv: ₹{invoice.amountPaid.toFixed(2)}</div>
+                        <div className="text-[10px] font-bold text-[#00ea77] uppercase tracking-wider mt-1">Recv: ₹{invoice.amountPaid.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</div>
                       )}
                     </td>
                     <td className="px-6 py-4 text-center">
@@ -132,20 +132,22 @@ export default function SalesPage() {
                         {invoice.status.replace('_', ' ')}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-right">
-                      <Link href={`/sales/${invoice.id}`} className="text-slate-500 hover:text-[#00ea77] p-2 inline-block transition-colors rounded-lg hover:bg-[#00ea77]/10" title="View details">
-                        <Eye className="h-4 w-4" />
-                      </Link>
-                      <button
-                        onClick={() => {
-                          import('@/lib/pdf/generateInvoice').then((mod) => {
-                            mod.generateInvoicePDF(invoice, { name: 'My Business' });
-                          });
-                        }}
-                        className="text-slate-500 hover:text-[#00ea77] p-2 ml-1 inline-block transition-colors rounded-lg hover:bg-[#00ea77]/10" title="Download PDF"
-                      >
-                        <Download className="h-4 w-4" />
-                      </button>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center justify-end gap-1">
+                        <Link href={`/sales/${invoice.id}`} className="text-slate-500 hover:text-[#00ea77] p-2 transition-colors rounded-lg hover:bg-[#00ea77]/10 flex items-center justify-center border border-transparent" title="View details">
+                          <Eye className="h-4 w-4" />
+                        </Link>
+                        <button
+                          onClick={() => {
+                            import('@/lib/pdf/generateInvoice').then((mod) => {
+                              mod.generateInvoicePDF(invoice, { name: 'My Business' });
+                            });
+                          }}
+                          className="text-slate-500 hover:text-[#00ea77] p-2 transition-colors rounded-lg hover:bg-[#00ea77]/10 flex items-center justify-center border border-transparent" title="Download PDF"
+                        >
+                          <Download className="h-4 w-4" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}

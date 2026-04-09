@@ -169,7 +169,7 @@ export default function MarginCalculatorPage() {
                         <div className="text-center mb-10">
                             <p className="text-slate-500 font-bold uppercase tracking-widest text-[10px] mb-2">Recommended Selling Price (inc. GST)</p>
                             <div className="flex items-center justify-center text-5xl font-extrabold tracking-tight text-[#00ea77]">
-                                <span className="text-3xl mr-1 opacity-50">₹</span>{targetSellingPrice.toFixed(2)}
+                                <span className="text-3xl mr-1 opacity-50">₹</span>{targetSellingPrice.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                             </div>
                             <p className="text-[#00ea77]/80 text-sm mt-3 font-bold">Yields exactly {expectedMargin}% margin per item.</p>
                         </div>
@@ -177,11 +177,11 @@ export default function MarginCalculatorPage() {
                         <div className="grid grid-cols-2 gap-4 border-t border-white/5 pt-8">
                             <div>
                                 <p className="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Base Cost (No GST)</p>
-                                <p className="font-bold text-lg text-white">₹{costWithoutGst.toFixed(2)}</p>
+                                <p className="font-bold text-lg text-white">₹{costWithoutGst.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
                             </div>
                             <div>
                                 <p className="text-slate-500 text-[10px] font-bold uppercase tracking-wider mb-1">Profit per Item</p>
-                                <p className="font-bold text-lg text-[#00ea77]">₹{marginValue.toFixed(2)}</p>
+                                <p className="font-bold text-lg text-[#00ea77]">₹{marginValue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
                             </div>
                         </div>
 
@@ -205,7 +205,7 @@ export default function MarginCalculatorPage() {
                                             <p className="font-bold mb-1 border-b border-orange-500/20 pb-1 inline-block">Warning: Low Profitability</p>
                                             <p className="mt-1 leading-snug font-medium">
                                                 Giving {schemeGiven} free item(s) drops your margin to {effectiveMarginWithScheme.toFixed(1)}%.
-                                                To keep your {expectedMargin}% margin with this scheme, price the item at <strong className="text-white">₹{adjustedSellingPriceWithScheme.toFixed(2)}</strong>.
+                                                To keep your {expectedMargin}% margin with this scheme, price the item at <strong className="text-white">₹{adjustedSellingPriceWithScheme.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</strong>.
                                             </p>
                                         </div>
                                     )}

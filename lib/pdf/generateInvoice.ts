@@ -67,10 +67,10 @@ export async function generateInvoicePDF(invoice: Transaction, businessProfile: 
     const tableBody = invoice.items.map(item => [
         item.name,
         item.quantity.toString(),
-        `Rs. ${item.rate.toFixed(2)}`,
+        `Rs. ${item.rate.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`,
         item.discount ? `${item.discount}%` : '-',
         `${item.taxRate || 0}%`,
-        `Rs. ${item.totalAmount.toFixed(2)}`
+        `Rs. ${item.totalAmount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`
     ]);
 
     autoTable(doc, {
@@ -101,16 +101,16 @@ export async function generateInvoicePDF(invoice: Transaction, businessProfile: 
     const lastAutoTable = (doc as any).lastAutoTable;
     const finalY = (lastAutoTable && lastAutoTable.finalY ? lastAutoTable.finalY : 150) + 10;
 
-    const rightColX = pageWidth - 60;
+    const rightColX = pageWidth - 75;
     const amountsX = pageWidth - 14;
 
     // Subtotal
     addText('Subtotal:', rightColX, finalY, 10, 'left');
-    addText(`Rs. ${invoice.subTotal.toFixed(2)}`, amountsX, finalY, 10, 'right');
+    addText(`Rs. ${invoice.subTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`, amountsX, finalY, 10, 'right');
 
     // Tax Total
     addText('Total Tax:', rightColX, finalY + 8, 10, 'left');
-    addText(`Rs. ${invoice.taxAmountTotal.toFixed(2)}`, amountsX, finalY + 8, 10, 'right');
+    addText(`Rs. ${invoice.taxAmountTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`, amountsX, finalY + 8, 10, 'right');
 
     // Ground Total Line
     doc.setDrawColor(0, 0, 0);
@@ -119,7 +119,7 @@ export async function generateInvoicePDF(invoice: Transaction, businessProfile: 
 
     // Grand Total
     addText('Grand Total:', rightColX, finalY + 20, 12, 'left', true);
-    addText(`Rs. ${invoice.grandTotal.toFixed(2)}`, amountsX, finalY + 20, 12, 'right', true);
+    addText(`Rs. ${invoice.grandTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`, amountsX, finalY + 20, 12, 'right', true);
 
     // Status Stamp
     if (invoice.status === 'paid') {

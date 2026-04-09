@@ -118,7 +118,7 @@ export default function PurchasesPage() {
           </div>
           <div>
             <p className="text-xs font-semibold text-slate-500 mb-1">Total Expenses (Month)</p>
-            <h3 className="text-3xl font-extrabold text-white tracking-tight">₹{totalExpensesMonth.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+            <h3 className="text-3xl font-extrabold text-white tracking-tight">₹{totalExpensesMonth.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</h3>
           </div>
         </div>
 
@@ -130,7 +130,7 @@ export default function PurchasesPage() {
           </div>
           <div>
             <p className="text-xs font-semibold text-slate-500 mb-1">Pending Payments</p>
-            <h3 className="text-3xl font-extrabold text-white tracking-tight">₹{pendingPayments.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+            <h3 className="text-3xl font-extrabold text-white tracking-tight">₹{pendingPayments.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</h3>
           </div>
         </div>
 
@@ -142,7 +142,7 @@ export default function PurchasesPage() {
           </div>
           <div>
             <p className="text-xs font-semibold text-slate-500 mb-1">GST Input Tax Credit (ITC)</p>
-            <h3 className="text-3xl font-extrabold text-white tracking-tight">₹{totalITC.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+            <h3 className="text-3xl font-extrabold text-white tracking-tight">₹{totalITC.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</h3>
           </div>
         </div>
       </div>
@@ -188,7 +188,7 @@ export default function PurchasesPage() {
                         {format(new Date(tx.date), 'dd MMM, yyyy')}
                       </td>
                       <td className="px-6 py-4 text-right">
-                        <span className="font-bold text-slate-200 text-sm">₹{tx.grandTotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
+                        <span className="font-bold text-slate-200 text-sm">₹{tx.grandTotal.toLocaleString('en-IN', { minimumFractionDigits: 0 })}</span>
                       </td>
                       <td className="px-6 py-4 text-center">
                          <span className={`inline-flex py-1 px-2.5 rounded text-[10px] font-bold uppercase tracking-wider

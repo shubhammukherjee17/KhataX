@@ -93,7 +93,7 @@ export default function PartiesPage() {
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className={`font-bold text-base ${party.currentBalance > 0 ? 'text-[#00ea77]' : party.currentBalance < 0 ? 'text-red-500' : 'text-slate-400'}`}>
-                        ₹{Math.abs(party.currentBalance).toFixed(2)}
+                        ₹{Math.abs(party.currentBalance).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                       </div>
                       <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mt-0.5 block">
                         {party.currentBalance > 0 ? 'To Pay' : party.currentBalance < 0 ? 'To Receive' : 'Settled'}

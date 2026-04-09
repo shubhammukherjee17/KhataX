@@ -95,7 +95,7 @@ export default function NewSalePage() {
       const newReceivable = currentReceivable + grandTotal - (data.amountPaid || 0);
 
       if (newReceivable > selectedParty.creditLimit) {
-        useNotificationStore.getState().addNotification(`Cannot create invoice. Credit limit of ₹${selectedParty.creditLimit} will be exceeded.\nCurrent Owed: ₹${currentReceivable.toFixed(2)}\nNew Invoice: ₹${grandTotal.toFixed(2)}`, 'error');
+        useNotificationStore.getState().addNotification(`Cannot create invoice. Credit limit of ₹${selectedParty.creditLimit} will be exceeded.\nCurrent Owed: ₹${currentReceivable.toLocaleString('en-IN', { maximumFractionDigits: 2 })}\nNew Invoice: ₹${grandTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`, 'error');
         return;
       }
     }
@@ -315,7 +315,7 @@ export default function NewSalePage() {
                           const item = watchItems[index];
                           const lineTotalBeforeTax = ((item?.quantity || 0) * (item?.rate || 0)) - (item?.discount || 0);
                           const taxAmount = (lineTotalBeforeTax * (item?.taxRate || 0)) / 100;
-                          return taxAmount.toFixed(2);
+                          return taxAmount.toLocaleString('en-IN', { maximumFractionDigits: 2 });
                         })()}
                       </div>
                     </td>
@@ -325,7 +325,7 @@ export default function NewSalePage() {
                            const item = watchItems[index];
                            const lineTotalBeforeTax = ((item?.quantity || 0) * (item?.rate || 0)) - (item?.discount || 0);
                            const taxAmount = (lineTotalBeforeTax * (item?.taxRate || 0)) / 100;
-                           return (lineTotalBeforeTax + taxAmount).toFixed(2);
+                           return (lineTotalBeforeTax + taxAmount).toLocaleString('en-IN', { maximumFractionDigits: 2 });
                         })()}
                       </div>
                     </td>

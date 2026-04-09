@@ -412,7 +412,7 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto relative">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto relative">
               {/* Plan 1 */}
               <div className="bg-[#111] border border-white/10 rounded-3xl p-8 flex flex-col">
                 <p className="text-xs font-bold tracking-widest text-slate-500 uppercase mb-2">ESSENTIAL</p>

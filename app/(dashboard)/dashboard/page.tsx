@@ -180,7 +180,7 @@ export default function DashboardPage() {
             <div className="space-y-1 z-10">
               <p className="text-[10px] uppercase tracking-[0.2em] font-extrabold text-[#00ea77]">Net Liquidity</p>
               <h2 className="text-5xl font-black tracking-tighter text-white">
-                ₹{totalLiquidity.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                ₹{totalLiquidity.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
               </h2>
             </div>
             <div className="w-10 h-10 rounded-xl bg-[#27272a] flex items-center justify-center z-10">
@@ -243,7 +243,7 @@ export default function DashboardPage() {
           <div>
             <p className="text-[10px] uppercase font-bold text-[#a1a1aa] tracking-widest">Daily Revenue</p>
             <p className="text-2xl font-black text-white mt-0.5">
-              ₹{todayRevenue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              ₹{todayRevenue.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
             </p>
           </div>
         </div>
@@ -269,7 +269,7 @@ export default function DashboardPage() {
           <div>
             <p className="text-[10px] uppercase font-bold text-[#a1a1aa] tracking-widest">Total Expenses</p>
             <p className="text-2xl font-black text-white mt-0.5">
-              ₹{totalExpenseMonth.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              ₹{totalExpenseMonth.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
             </p>
           </div>
         </div>
@@ -306,7 +306,7 @@ export default function DashboardPage() {
                 
                 <div className="text-right flex flex-col items-end gap-1">
                   <p className={`text-sm font-black ${tx.isDebit ? 'text-red-500' : 'text-[#00ea77]'}`}>
-                    {tx.isDebit ? '-' : '+'}₹{tx.amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    {tx.isDebit ? '-' : '+'}₹{tx.amount.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
                   </p>
                   <span className={`text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded ${
                     tx.isDebit ? 'bg-red-500/10 text-red-500' : 'bg-[#00ea77]/10 text-[#00ea77]'

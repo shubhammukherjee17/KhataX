@@ -50,7 +50,7 @@ export default function BankingPage() {
             <Building2 className="h-5 w-5" />
             <h3 className="text-[10px] font-bold tracking-wider uppercase">Total Bank Balance</h3>
           </div>
-          <p className="text-3xl font-extrabold">₹{totalBankBalance.toFixed(2)}</p>
+          <p className="text-3xl font-extrabold">₹{totalBankBalance.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
         </div>
 
         <div className="bg-[#111] border border-white/10 rounded-2xl p-6 text-white shadow-sm relative overflow-hidden group hover:border-[#00ea77]/30 transition-all">
@@ -58,7 +58,7 @@ export default function BankingPage() {
             <Wallet className="h-5 w-5" />
             <h3 className="text-[10px] font-bold tracking-wider uppercase">Cash in Hand</h3>
           </div>
-          <p className="text-3xl font-extrabold">₹{totalCashBalance.toFixed(2)}</p>
+          <p className="text-3xl font-extrabold">₹{totalCashBalance.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
         </div>
       </div>
 
@@ -110,7 +110,7 @@ export default function BankingPage() {
                     </td>
                     <td className="px-6 py-4 text-right">
                       <span className={`font-bold text-base ${account.currentBalance < 0 ? 'text-red-500' : 'text-[#00ea77]'}`}>
-                        ₹{account.currentBalance.toFixed(2)}
+                        ₹{account.currentBalance.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">

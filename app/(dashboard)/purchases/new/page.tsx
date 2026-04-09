@@ -396,7 +396,7 @@ export default function NewPurchasePage() {
                           const item = watchItems[index];
                           const lineTotalBeforeTax = ((item?.quantity || 0) * (item?.rate || 0)) - (item?.discount || 0);
                           const taxAmount = (lineTotalBeforeTax * (item?.taxRate || 0)) / 100;
-                          return taxAmount.toFixed(2);
+                          return taxAmount.toLocaleString('en-IN', { maximumFractionDigits: 2 });
                         })()}
                       </div>
                     </td>
@@ -406,7 +406,7 @@ export default function NewPurchasePage() {
                            const item = watchItems[index];
                            const lineTotalBeforeTax = ((item?.quantity || 0) * (item?.rate || 0)) - (item?.discount || 0);
                            const taxAmount = (lineTotalBeforeTax * (item?.taxRate || 0)) / 100;
-                           return (lineTotalBeforeTax + taxAmount).toFixed(2);
+                           return (lineTotalBeforeTax + taxAmount).toLocaleString('en-IN', { maximumFractionDigits: 2 });
                         })()}
                       </div>
                     </td>

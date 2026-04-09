@@ -97,11 +97,11 @@ export default function RecordPaymentPage() {
           <div className="mb-8 p-4 bg-[#0a0a0a] border border-white/5 rounded-xl flex items-center justify-between">
             <div>
               <p className="text-xs font-bold tracking-wider text-slate-500 uppercase mb-1">Balance Due</p>
-              <p className="text-2xl font-bold text-red-400">₹{balanceDue.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-red-400">₹{balanceDue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
             </div>
             <div className="text-right">
               <p className="text-xs font-bold tracking-wider text-slate-500 uppercase mb-1">Invoice Total</p>
-              <p className="text-lg font-bold text-white">₹{invoice?.grandTotal.toFixed(2)}</p>
+              <p className="text-lg font-bold text-white">₹{invoice?.grandTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
             </div>
           </div>
 

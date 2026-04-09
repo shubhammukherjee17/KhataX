@@ -196,16 +196,16 @@ export default function ReportsPage() {
                 <div className="space-y-4">
                   <div className="flex justify-between items-center py-2 border-b border-white/5">
                     <span className="text-slate-400 font-bold text-sm">Total Sales Revenue</span>
-                    <span className="font-extrabold text-white text-base">₹{sales.toFixed(2)}</span>
+                    <span className="font-extrabold text-white text-base">₹{sales.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-white/5">
                     <span className="text-slate-400 font-bold text-sm">Cost of Goods (Purchases)</span>
-                    <span className="font-extrabold text-white text-base">₹{purchases.toFixed(2)}</span>
+                    <span className="font-extrabold text-white text-base">₹{purchases.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                   </div>
                   <div className="flex justify-between items-center py-4 border-t-2 border-white/10">
                     <span className="font-extrabold text-white text-lg tracking-wider uppercase">Gross Profit</span>
                     <span className={`font-extrabold text-lg ${grossProfit >= 0 ? 'text-[#00ea77]' : 'text-red-500'}`}>
-                      ₹{grossProfit.toFixed(2)}
+                      ₹{grossProfit.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                     </span>
                   </div>
                 </div>
@@ -219,7 +219,7 @@ export default function ReportsPage() {
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#333" />
                       <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 12, fontWeight: 'bold'}} />
                       <YAxis axisLine={false} tickLine={false} tickFormatter={(val) => `₹${val}`} tick={{fill: '#94a3b8', fontSize: 12, fontWeight: 'bold'}} />
-                      <Tooltip formatter={(value) => `₹${Number(value).toFixed(2)}`} cursor={{ fill: 'rgba(255,255,255,0.05)' }} contentStyle={{backgroundColor: '#111', borderColor: 'rgba(255,255,255,0.1)', color: '#fff', borderRadius: '12px', fontWeight: 'bold'}} />
+                      <Tooltip formatter={(value) => `₹${Number(value).toLocaleString('en-IN', { maximumFractionDigits: 2 })}`} cursor={{ fill: 'rgba(255,255,255,0.05)' }} contentStyle={{backgroundColor: '#111', borderColor: 'rgba(255,255,255,0.1)', color: '#fff', borderRadius: '12px', fontWeight: 'bold'}} />
                       <Bar dataKey="amount" radius={[4, 4, 0, 0]} maxBarSize={60} />
                     </BarChart>
                   </ResponsiveContainer>
@@ -238,13 +238,13 @@ export default function ReportsPage() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-5 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
                   <p className="text-[10px] text-blue-400 font-bold uppercase tracking-wider">Outward Supplies (Sales)</p>
-                  <p className="text-2xl font-extrabold text-blue-500 mt-1">₹{sales.toFixed(2)}</p>
-                  <p className="text-xs font-bold text-blue-400/80 mt-2">Output Tax: ₹{outputGST.toFixed(2)}</p>
+                  <p className="text-2xl font-extrabold text-blue-500 mt-1">₹{sales.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
+                  <p className="text-xs font-bold text-blue-400/80 mt-2">Output Tax: ₹{outputGST.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
                 </div>
                 <div className="p-5 bg-orange-500/10 border border-orange-500/20 rounded-2xl">
                   <p className="text-[10px] text-orange-400 font-bold uppercase tracking-wider">Inward Supplies (Purchases)</p>
-                  <p className="text-2xl font-extrabold text-orange-500 mt-1">₹{purchases.toFixed(2)}</p>
-                  <p className="text-xs font-bold text-orange-400/80 mt-2">Input Tax Credit (ITC): ₹{inputGST.toFixed(2)}</p>
+                  <p className="text-2xl font-extrabold text-orange-500 mt-1">₹{purchases.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
+                  <p className="text-xs font-bold text-orange-400/80 mt-2">Input Tax Credit (ITC): ₹{inputGST.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
                 </div>
               </div>
 
@@ -254,7 +254,7 @@ export default function ReportsPage() {
                     {gstLiability > 0 ? 'Net GST Payable' : 'Net ITC Available'}
                   </p>
                   <p className={`text-2xl font-extrabold mt-1 ${gstLiability > 0 ? 'text-orange-500' : 'text-[#00ea77]'}`}>
-                    ₹{Math.abs(gstLiability).toFixed(2)}
+                    ₹{Math.abs(gstLiability).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                   </p>
                 </div>
                 <FileText className={`h-8 w-8 opacity-50 ${gstLiability > 0 ? 'text-orange-500' : 'text-[#00ea77]'}`} />
@@ -272,7 +272,7 @@ export default function ReportsPage() {
                 <div className="text-right">
                   <p className="text-[10px] uppercase tracking-wider font-bold text-slate-500">Total Valuation</p>
                   <p className="text-2xl font-extrabold text-[#00ea77]">
-                    ₹{items.filter(i => i.type === 'product').reduce((sum, i) => sum + (i.currentStock * i.purchasePrice), 0).toFixed(2)}
+                    ₹{items.filter(i => i.type === 'product').reduce((sum, i) => sum + (i.currentStock * i.purchasePrice), 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                   </p>
                 </div>
               </div>
@@ -294,9 +294,9 @@ export default function ReportsPage() {
                         <td className={`px-6 py-4 text-right font-bold text-sm ${item.currentStock <= 0 ? 'text-red-500' : 'text-white'}`}>
                           {item.currentStock} {item.unit}
                         </td>
-                        <td className="px-6 py-4 text-right text-slate-300 font-bold text-sm">₹{item.purchasePrice.toFixed(2)}</td>
+                        <td className="px-6 py-4 text-right text-slate-300 font-bold text-sm">₹{item.purchasePrice.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</td>
                         <td className="px-6 py-4 text-right font-extrabold text-[#00ea77] text-sm">
-                          ₹{(item.currentStock * item.purchasePrice).toFixed(2)}
+                          ₹{(item.currentStock * item.purchasePrice).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                         </td>
                       </tr>
                     ))}
@@ -318,12 +318,12 @@ export default function ReportsPage() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-5 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
                   <p className="text-[10px] text-blue-400 font-bold tracking-wider uppercase">Total Receivables</p>
-                  <p className="text-2xl font-extrabold text-blue-500 mt-1">₹{totalReceivables.toFixed(2)}</p>
+                  <p className="text-2xl font-extrabold text-blue-500 mt-1">₹{totalReceivables.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
                   <p className="text-xs font-bold text-blue-400/80 mt-2">Money you will get from Customers</p>
                 </div>
                 <div className="p-5 bg-orange-500/10 border border-orange-500/20 rounded-2xl">
                   <p className="text-[10px] text-orange-400 font-bold tracking-wider uppercase">Total Payables</p>
-                  <p className="text-2xl font-extrabold text-orange-500 mt-1">₹{totalPayables.toFixed(2)}</p>
+                  <p className="text-2xl font-extrabold text-orange-500 mt-1">₹{totalPayables.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
                   <p className="text-xs font-bold text-orange-400/80 mt-2">Money you owe to Suppliers</p>
                 </div>
               </div>
@@ -338,7 +338,7 @@ export default function ReportsPage() {
                       .map(p => (
                         <div key={p.id} className="flex justify-between items-center text-sm">
                           <span className="font-bold text-slate-300">{p.name}</span>
-                          <span className="font-extrabold text-blue-500">₹{Math.abs(p.currentBalance).toFixed(2)}</span>
+                          <span className="font-extrabold text-blue-500">₹{Math.abs(p.currentBalance).toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                         </div>
                       ))}
                     {parties.filter(p => p.type === 'customer' && p.currentBalance < 0).length === 0 && (
@@ -355,7 +355,7 @@ export default function ReportsPage() {
                       .map(p => (
                         <div key={p.id} className="flex justify-between items-center text-sm">
                           <span className="font-bold text-slate-300">{p.name}</span>
-                          <span className="font-extrabold text-orange-500">₹{p.currentBalance.toFixed(2)}</span>
+                          <span className="font-extrabold text-orange-500">₹{p.currentBalance.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                         </div>
                       ))}
                     {parties.filter(p => p.type === 'vendor' && p.currentBalance > 0).length === 0 && (
@@ -377,7 +377,7 @@ export default function ReportsPage() {
                 <div className="text-right">
                   <p className="text-[10px] uppercase font-bold tracking-wider text-slate-500">Capital Blocked</p>
                   <p className="text-2xl font-extrabold text-red-500">
-                    ₹{deadStockValue.toFixed(2)}
+                    ₹{deadStockValue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                   </p>
                 </div>
               </div>
@@ -404,9 +404,9 @@ export default function ReportsPage() {
                           <td className="px-6 py-4 text-right text-orange-500 font-extrabold text-sm">
                             {item.currentStock} {item.unit}
                           </td>
-                          <td className="px-6 py-4 text-right text-slate-300 font-bold text-sm">₹{item.purchasePrice.toFixed(2)}</td>
+                          <td className="px-6 py-4 text-right text-slate-300 font-bold text-sm">₹{item.purchasePrice.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</td>
                           <td className="px-6 py-4 text-right font-extrabold text-red-500 text-sm">
-                            ₹{(item.currentStock * item.purchasePrice).toFixed(2)}
+                            ₹{(item.currentStock * item.purchasePrice).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                           </td>
                         </tr>
                       ))
@@ -427,7 +427,7 @@ export default function ReportsPage() {
                 <div className="text-right">
                   <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Total B2B Sales</p>
                   <p className="text-2xl font-extrabold text-blue-500">
-                    ₹{sales.toFixed(2)}
+                    ₹{sales.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                   </p>
                 </div>
               </div>
@@ -454,7 +454,7 @@ export default function ReportsPage() {
                             {party.invoices}
                           </td>
                           <td className="px-6 py-4 text-right font-extrabold text-white text-sm">
-                            ₹{party.total.toFixed(2)}
+                            ₹{party.total.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                           </td>
                         </tr>
                       ))
@@ -496,7 +496,7 @@ export default function ReportsPage() {
                             {item.quantity}
                           </td>
                           <td className="px-6 py-4 text-right font-extrabold text-white text-sm">
-                            ₹{item.revenue.toFixed(2)}
+                            ₹{item.revenue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                           </td>
                         </tr>
                       ))
