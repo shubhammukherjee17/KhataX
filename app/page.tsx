@@ -328,7 +328,7 @@ export default function LandingPage() {
         </section>
 
         {/* AI Assistant Section */}
-        <section className="py-32 bg-[#111] border-y border-white/5 relative overflow-hidden">
+        <section id="ai" className="py-32 bg-[#111] border-y border-white/5 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#00ea77]/5 rounded-full blur-[100px] pointer-events-none"></div>
           <div className="max-w-7xl mx-auto px-6 relative z-10">
             <div className="mb-16">
@@ -537,34 +537,35 @@ export default function LandingPage() {
             <div>
               <h4 className="font-semibold text-white mb-6">Product</h4>
               <ul className="space-y-4 text-sm text-slate-400">
-                <li><Link href="#" className="hover:text-[#00ea77] transition">Features</Link></li>
-                <li><Link href="#" className="hover:text-[#00ea77] transition">AI Assistant</Link></li>
-                <li><Link href="#" className="hover:text-[#00ea77] transition">Integrations</Link></li>
-                <li><Link href="#" className="hover:text-[#00ea77] transition">Security</Link></li>
+                <li><Link href="#features" className="hover:text-[#00ea77] transition">Features</Link></li>
+                <li><Link href="#ai" className="hover:text-[#00ea77] transition">AI Assistant</Link></li>
+                <li><Link href="/integrations" className="hover:text-[#00ea77] transition">Integrations</Link></li>
+                <li><Link href="/security" className="hover:text-[#00ea77] transition">Security</Link></li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold text-white mb-6">Resources</h4>
               <ul className="space-y-4 text-sm text-slate-400">
-                <li><Link href="#" className="hover:text-[#00ea77] transition">GST Guide</Link></li>
-                <li><Link href="#" className="hover:text-[#00ea77] transition">Help Center</Link></li>
-                <li><Link href="#" className="hover:text-[#00ea77] transition">API Docs</Link></li>
-                <li><Link href="#" className="hover:text-[#00ea77] transition">Community</Link></li>
+                <li><Link href="/gst-guide" className="hover:text-[#00ea77] transition">GST Guide</Link></li>
+                <li><Link href="/help-center" className="hover:text-[#00ea77] transition">Help Center</Link></li>
+                <li><Link href="/api-docs" className="hover:text-[#00ea77] transition">API Docs</Link></li>
+                <li><Link href="/community" className="hover:text-[#00ea77] transition">Community</Link></li>
               </ul>
             </div>
 
             <div className="col-span-2 md:col-span-4 lg:col-span-1">
               <h4 className="font-semibold text-white mb-6">Newsletter</h4>
               <p className="text-sm text-slate-400 mb-4">Get the latest updates right to your inbox.</p>
-              <form className="flex gap-2">
+              <form className="flex gap-2" onSubmit={(e) => { e.preventDefault(); alert("Successfully subscribed to KhataX insights!"); e.currentTarget.reset(); }}>
                 <input 
                   type="email" 
+                  required
                   suppressHydrationWarning
                   placeholder="Email address" 
                   className="bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-sm w-full focus:outline-none focus:border-[#00ea77]/50"
                 />
-                <button type="button" className="bg-[#00ea77] text-black px-4 rounded-lg flex items-center justify-center hover:bg-[#00c563] transition shrink-0">
+                <button type="submit" className="bg-[#00ea77] text-black px-4 rounded-lg flex items-center justify-center hover:bg-[#00c563] transition shrink-0">
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </form>
@@ -574,9 +575,9 @@ export default function LandingPage() {
           <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/10 text-xs text-slate-500 gap-4">
             <p>© 2026 KhataX Technologies Pvt. Ltd. All rights reserved.</p>
             <div className="flex gap-6">
-              <Link href="#" className="hover:text-white transition">Terms of Service</Link>
-              <Link href="#" className="hover:text-white transition">Privacy Policy</Link>
-              <Link href="#" className="hover:text-white transition">Refund Policy</Link>
+              <Link href="/terms-of-service" className="hover:text-white transition">Terms of Service</Link>
+              <Link href="/privacy-policy" className="hover:text-white transition">Privacy Policy</Link>
+              <Link href="/refund-policy" className="hover:text-white transition">Refund Policy</Link>
             </div>
           </div>
         </div>
