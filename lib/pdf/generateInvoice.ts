@@ -1,9 +1,9 @@
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 import { Transaction } from '@/types';
 import { format } from 'date-fns';
 
-export async function generateInvoicePDF(invoice: Transaction, businessProfile: { name?: string; gstin?: string; address?: string; logoBase64?: string } | undefined | null) {
+export async function generateInvoicePDF(invoice: Transaction, businessProfile: { name?: string; gstin?: string; address?: string; logoBase64?: string } | undefined | null, action: 'save' | 'blob' = 'save'): Promise<Blob | void> {
     // Initialize A4 PDF
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
@@ -73,8 +73,7 @@ export async function generateInvoicePDF(invoice: Transaction, businessProfile: 
         `Rs. ${item.totalAmount.toFixed(2)}`
     ]);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (doc as jsPDF & { autoTable: (options: any) => void }).autoTable({
+    autoTable(doc, {
         startY: 80,
         head: tableHead,
         body: tableBody,
@@ -99,7 +98,8 @@ export async function generateInvoicePDF(invoice: Transaction, businessProfile: 
     });
 
     // --- TOTALS SECTION ---
-    const finalY = (doc as jsPDF & { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 10;
+    const lastAutoTable = (doc as any).lastAutoTable;
+    const finalY = (lastAutoTable && lastAutoTable.finalY ? lastAutoTable.finalY : 150) + 10;
 
     const rightColX = pageWidth - 60;
     const amountsX = pageWidth - 14;
@@ -134,6 +134,11 @@ export async function generateInvoicePDF(invoice: Transaction, businessProfile: 
     doc.setFontSize(8);
     doc.text('This is a computer-generated invoice and requires no signature.', pageWidth / 2, pageHeight - 10, { align: 'center' });
 
-    // Save the PDF
-    doc.save(`${invoice.number}_${invoice.partyName.replace(/\s+/g, '_')}.pdf`);
+    // Return Blob or Save the PDF
+    if (action === 'blob') {
+        return doc.output('blob');
+    } else {
+        const safePartyName = (invoice.partyName || 'Party').replace(/\s+/g, '_');
+        doc.save(`${invoice.number}_${safePartyName}.pdf`);
+    }
 }

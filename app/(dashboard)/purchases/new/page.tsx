@@ -9,6 +9,7 @@ import { Transaction, TransactionItem } from '@/types';
 import { ArrowLeft, Plus, Trash2, Save, Sparkles, Loader2, ImagePlus } from 'lucide-react';
 import { format } from 'date-fns';
 import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
+import { useNotificationStore } from '@/store/useNotificationStore';
 
 type InvoiceFormData = {
   partyId: string;
@@ -107,7 +108,7 @@ export default function NewPurchasePage() {
         });
         
         if (res.status === 403) {
-          alert("⚠️ API Permissions Denied!\n\nYour Firebase key cannot process AI features. Please get a free key from Google AI Studio, add 'GEMINI_API_KEY=your_key' to your .env file, and restart the server.");
+          useNotificationStore.getState().addNotification("⚠️ API Permissions Denied! Your Firebase key cannot process AI features. Please get a free key from Google AI Studio, add 'GEMINI_API_KEY=your_key' to your .env file, and restart the server.", 'error');
           setIsScanning(false);
           return;
         }
@@ -143,14 +144,14 @@ export default function NewPurchasePage() {
       reader.readAsDataURL(file);
     } catch (e) {
       console.error(e);
-      alert("Failed to scan receipt intelligently.");
+      useNotificationStore.getState().addNotification("Failed to scan receipt intelligently.", 'error');
       setIsScanning(false);
     }
   };
 
   const onSubmit = async (data: InvoiceFormData) => {
     if (data.items.length === 0 || !data.items[0].itemId) {
-      alert("Please add at least one item");
+      useNotificationStore.getState().addNotification("Please add at least one item", 'warning');
       return;
     }
 
@@ -203,10 +204,11 @@ export default function NewPurchasePage() {
       }
 
       // OPTIONAL TODO: trigger stock updates here using a Firebase Edge function or batch writes.
+      useNotificationStore.getState().addNotification('Purchase Bill saved successfully!', 'success');
       router.push('/purchases');
     } catch (error) {
       console.error("Error saving bill:", error);
-      alert("Failed to save purchase bill.");
+      useNotificationStore.getState().addNotification("Failed to save purchase bill.", 'error');
       setIsSubmitting(false);
     }
   };

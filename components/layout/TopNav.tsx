@@ -3,6 +3,9 @@
 import { Bell, Search, Plus, Menu } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
+import { useNotificationStore } from '@/store/useNotificationStore';
+import { NotificationTray } from '@/components/ui/NotificationTray';
 
 interface TopNavProps {
   onMenuClick: () => void;
@@ -11,6 +14,10 @@ interface TopNavProps {
 export function TopNav({ onMenuClick }: TopNavProps) {
   const pathname = usePathname();
   const isDashboard = pathname === '/dashboard' || pathname === '/';
+  
+  const [isTrayOpen, setIsTrayOpen] = useState(false);
+  const { notifications } = useNotificationStore();
+  const unreadCount = notifications.filter(n => !n.isRead).length;
 
   return (
     <header className={`flex h-16 lg:h-20 shrink-0 items-center justify-between border-b border-white/10 bg-[#0a0a0a] px-4 lg:px-8 z-10 ${isDashboard ? 'lg:hidden border-transparent' : ''}`}>
@@ -36,11 +43,18 @@ export function TopNav({ onMenuClick }: TopNavProps) {
 
       {/* Right Actions */}
       {!isDashboard && (
-        <div className="flex items-center gap-3 lg:gap-6">
-          <button className="text-slate-500 hover:text-white transition-colors relative mt-1 hidden sm:block">
+        <div className="flex items-center gap-3 lg:gap-6 relative">
+          <button 
+            onClick={() => setIsTrayOpen(!isTrayOpen)}
+            className="text-slate-500 hover:text-white transition-colors relative mt-1 hidden sm:block"
+          >
             <Bell className="h-5 w-5" />
-            <span className="absolute 0 top-0 right-0 flex h-2 w-2 items-center justify-center rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
+            {unreadCount > 0 && (
+              <span className="absolute 0 top-0 right-0 flex h-2 w-2 items-center justify-center rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
+            )}
           </button>
+          
+          <NotificationTray isOpen={isTrayOpen} onClose={() => setIsTrayOpen(false)} />
 
           <Link
             href="/sales/new"

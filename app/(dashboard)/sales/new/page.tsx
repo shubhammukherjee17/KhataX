@@ -10,6 +10,7 @@ import { Transaction, TransactionItem } from '@/types';
 import { ArrowLeft, Plus, Trash2, Save } from 'lucide-react';
 import { format } from 'date-fns';
 import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
+import { useNotificationStore } from '@/store/useNotificationStore';
 
 type InvoiceFormData = {
   partyId: string;
@@ -80,7 +81,7 @@ export default function NewSalePage() {
 
   const onSubmit = async (data: InvoiceFormData) => {
     if (data.items.length === 0 || !data.items[0].itemId) {
-      alert("Please add at least one item");
+      useNotificationStore.getState().addNotification("Please add at least one item", 'warning');
       return;
     }
 
@@ -94,7 +95,7 @@ export default function NewSalePage() {
       const newReceivable = currentReceivable + grandTotal - (data.amountPaid || 0);
 
       if (newReceivable > selectedParty.creditLimit) {
-        alert(`Cannot create invoice. Credit limit of ₹${selectedParty.creditLimit} will be exceeded.\nCurrent Owed: ₹${currentReceivable.toFixed(2)}\nNew Invoice: ₹${grandTotal.toFixed(2)}`);
+        useNotificationStore.getState().addNotification(`Cannot create invoice. Credit limit of ₹${selectedParty.creditLimit} will be exceeded.\nCurrent Owed: ₹${currentReceivable.toFixed(2)}\nNew Invoice: ₹${grandTotal.toFixed(2)}`, 'error');
         return;
       }
     }
@@ -138,10 +139,11 @@ export default function NewSalePage() {
       };
 
       await addTransaction(transactionData);
+      useNotificationStore.getState().addNotification('Invoice created successfully.', 'success');
       router.push('/sales');
     } catch (error) {
       console.error("Error creating invoice:", error);
-      alert("Failed to create invoice.");
+      useNotificationStore.getState().addNotification("Failed to create invoice.", 'error');
       setIsSubmitting(false);
     }
   };

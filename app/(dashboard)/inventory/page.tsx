@@ -5,22 +5,24 @@ import { useMasterDataStore } from '@/store/useMasterDataStore';
 import { useAuth } from '@/hooks/useAuth';
 import { Item } from '@/types';
 import { Plus, Search, Edit, Trash2, X, AlertTriangle, ArrowRightLeft, Database } from 'lucide-react';
-import { useForm } from 'react-hook-form';
 import { GodownManager } from '@/components/inventory/GodownManager';
 import { StockTransferForm } from '@/components/inventory/StockTransferForm';
+import { useNotificationStore } from '@/store/useNotificationStore';
+import { useRouter } from 'next/navigation';
 
 type InventoryTab = 'items' | 'godowns' | 'transfers';
 
 export default function InventoryPage() {
-  const { items, godowns, isLoading, addItem, updateItem, deleteItem, adjustStock, setBusinessId } = useMasterDataStore();
+  const { items, godowns, isLoading, deleteItem, adjustStock, setBusinessId } = useMasterDataStore();
   const { businessId } = useAuth();
+  const { addNotification } = useNotificationStore();
+  const router = useRouter();
 
   useEffect(() => {
     setBusinessId(businessId);
   }, [businessId, setBusinessId]);
+  
   const [activeTab, setActiveTab] = useState<InventoryTab>('items');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingItem, setEditingItem] = useState<Item | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
   // Adjustment Modal State
@@ -33,35 +35,9 @@ export default function InventoryPage() {
   const [adjGodownId, setAdjGodownId] = useState('');
   const [isAdjusting, setIsAdjusting] = useState(false);
 
-  const { register, handleSubmit, reset, watch } = useForm<Omit<Item, 'id' | 'currentStock'>>();
-
-  const itemType = watch('type', 'product');
-
   const filteredItems = items.filter(i =>
     i.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  const openAddModal = () => {
-    setEditingItem(null);
-    reset({
-      type: 'product',
-      name: '',
-      description: '',
-      unit: 'PCS',
-      purchasePrice: 0,
-      salePrice: 0,
-      taxRate: 18,
-      openingStock: 0,
-      lowStockAlertLimit: 5
-    });
-    setIsModalOpen(true);
-  };
-
-  const openEditModal = (item: Item) => {
-    setEditingItem(item);
-    reset(item);
-    setIsModalOpen(true);
-  };
 
   const openAdjModal = (item: Item) => {
     setAdjustingItem(item);
@@ -81,31 +57,19 @@ export default function InventoryPage() {
     try {
       await adjustStock(adjustingItem.id, adjType, adjQty, adjReason, adjNotes, adjGodownId || undefined);
       setIsAdjModalOpen(false);
+      addNotification('Stock adjusted successfully', 'success');
     } catch (error) {
       console.error(error);
-      alert("Failed to adjust stock");
+      addNotification("Failed to adjust stock", 'error');
     } finally {
       setIsAdjusting(false);
-    }
-  };
-
-  const onSubmit = async (data: Omit<Item, 'id' | 'currentStock'>) => {
-    try {
-      if (editingItem) {
-        await updateItem(editingItem.id, data);
-      } else {
-        await addItem(data);
-      }
-      setIsModalOpen(false);
-    } catch (error) {
-      console.error("Error saving item:", error);
-      alert("Failed to save item.");
     }
   };
 
   const handleDelete = async (id: string, name: string) => {
     if (confirm(`Are you sure you want to delete ${name}?`)) {
       await deleteItem(id);
+      addNotification(`Item ${name} deleted successfully`, 'success');
     }
   };
 
@@ -118,7 +82,7 @@ export default function InventoryPage() {
         </div>
         {activeTab === 'items' && (
           <button
-            onClick={openAddModal}
+            onClick={() => router.push('/inventory/new')}
             className="flex items-center gap-2 bg-[#00ea77] text-black font-bold px-4 py-2 rounded-xl hover:bg-[#00c563] transition shadow-[0_0_15px_rgba(0,234,119,0.2)]"
           >
             <Plus className="h-4 w-4 stroke-[3]" /> Add Item
@@ -179,7 +143,7 @@ export default function InventoryPage() {
           ) : filteredItems.length === 0 ? (
             <div className="p-16 text-center text-slate-500">
               <p className="font-medium">No inventory items found.</p>
-              <button onClick={openAddModal} className="text-[#00ea77] font-bold hover:text-[#00c563] mt-2 inline-block">
+              <button onClick={() => router.push('/inventory/new')} className="text-[#00ea77] font-bold hover:text-[#00c563] mt-2 inline-block">
                 Add your first product or service
               </button>
             </div>
@@ -244,7 +208,7 @@ export default function InventoryPage() {
                             <ArrowRightLeft className="h-4 w-4" />
                           </button>
                         )}
-                        <button onClick={() => openEditModal(item)} className="text-slate-500 hover:text-[#00ea77] p-2 transition-colors rounded-lg hover:bg-[#00ea77]/10">
+                        <button onClick={() => router.push(`/inventory/${item.id}`)} className="text-slate-500 hover:text-[#00ea77] p-2 transition-colors rounded-lg hover:bg-[#00ea77]/10">
                           <Edit className="h-4 w-4" />
                         </button>
                         <button onClick={() => handleDelete(item.id, item.name)} className="text-slate-500 hover:text-red-500 p-2 ml-1 transition-colors rounded-lg hover:bg-red-500/10">
@@ -260,157 +224,7 @@ export default function InventoryPage() {
         </div>
       )}
 
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="bg-[#111] border border-white/10 rounded-2xl shadow-2xl shadow-black/50 w-full max-w-2xl overflow-hidden max-h-[90vh] flex flex-col">
-            <div className="px-6 py-5 border-b border-white/5 flex justify-between items-center bg-[#0a0a0a]">
-              <h2 className="text-lg font-bold text-white">{editingItem ? 'Edit Item' : 'Add New Item'}</h2>
-              <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-white transition-colors bg-white/5 p-1.5 rounded-lg hover:bg-white/10">
-                <X className="h-5 w-5" />
-              </button>
-            </div>
 
-            <div className="p-6 overflow-y-auto">
-              <form id="item-form" onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Item Type *</label>
-                    <div className="flex bg-[#0a0a0a] border border-white/5 p-1 rounded-xl">
-                      <label className={`flex-1 text-center py-2 text-sm font-bold rounded-lg cursor-pointer transition-all ${itemType === 'product' ? 'bg-[#00ea77]/10 text-[#00ea77] shadow-sm' : 'text-slate-500 hover:text-white'}`}>
-                        <input type="radio" value="product" {...register("type")} className="sr-only" />
-                        Product
-                      </label>
-                      <label className={`flex-1 text-center py-2 text-sm font-bold rounded-lg cursor-pointer transition-all ${itemType === 'service' ? 'bg-[#00ea77]/10 text-[#00ea77] shadow-sm' : 'text-slate-500 hover:text-white'}`}>
-                        <input type="radio" value="service" {...register("type")} className="sr-only" />
-                        Service
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Item Name *</label>
-                    <input
-                      {...register("name", { required: true })}
-                      placeholder="e.g. Dell Monitor 24 inch"
-                      className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
-                    />
-                  </div>
-
-                  <div className="space-y-2 md:col-span-2">
-                    <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Description</label>
-                    <textarea
-                      {...register("description")}
-                      rows={2}
-                      className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 resize-none"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Unit</label>
-                    <select
-                      {...register("unit")}
-                      className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
-                    >
-                      <option value="PCS">Pieces (PCS)</option>
-                      <option value="KG">Kilograms (KG)</option>
-                      <option value="LTR">Liters (LTR)</option>
-                      <option value="BOX">Boxes (BOX)</option>
-                      <option value="MTR">Meters (MTR)</option>
-                      <option value="HRS">Hours (HRS)</option>
-                    </select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Tax Rate (GST %)</label>
-                    <select
-                      {...register("taxRate", { valueAsNumber: true })}
-                      className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
-                    >
-                      <option value={0}>Exempt (0%)</option>
-                      <option value={5}>5%</option>
-                      <option value={12}>12%</option>
-                      <option value={18}>18%</option>
-                      <option value={28}>28%</option>
-                    </select>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Sale Price *</label>
-                    <div className="relative">
-                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold">₹</span>
-                      <input
-                        type="number"
-                        step="0.01"
-                        {...register("salePrice", { required: true, valueAsNumber: true })}
-                        placeholder="0.00"
-                        className="w-full pl-10 pr-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Purchase Price *</label>
-                    <div className="relative">
-                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold">₹</span>
-                      <input
-                        type="number"
-                        step="0.01"
-                        {...register("purchasePrice", { required: true, valueAsNumber: true })}
-                        placeholder="0.00"
-                        className="w-full pl-10 pr-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
-                      />
-                    </div>
-                  </div>
-
-                  {itemType === 'product' && (
-                    <>
-                      <div className="space-y-2">
-                        <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Opening Stock</label>
-                        <input
-                          type="number"
-                          {...register("openingStock", { valueAsNumber: true })}
-                          placeholder="0"
-                          disabled={!!editingItem} // typically you don't edit opening stock directly later
-                          className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 disabled:opacity-50"
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Low Stock Alert Limit</label>
-                        <input
-                          type="number"
-                          {...register("lowStockAlertLimit", { valueAsNumber: true })}
-                          placeholder="5"
-                          className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
-                        />
-                      </div>
-                    </>
-                  )}
-                </div>
-
-              </form>
-            </div>
-
-            <div className="px-6 py-5 border-t border-white/5 bg-[#0a0a0a] flex justify-end gap-3 rounded-b-2xl">
-              <button
-                type="button"
-                onClick={() => setIsModalOpen(false)}
-                className="px-6 py-2.5 text-sm font-bold text-slate-300 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                form="item-form"
-                className="px-6 py-2.5 text-sm font-bold text-black bg-[#00ea77] rounded-xl hover:bg-[#00c563] transition-colors shadow-[0_0_15px_rgba(0,234,119,0.2)]"
-              >
-                Save Item
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Stock Adjustment Modal */}
       {isAdjModalOpen && adjustingItem && (

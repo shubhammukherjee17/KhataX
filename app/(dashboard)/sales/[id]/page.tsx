@@ -6,17 +6,18 @@ import { useTransactionStore } from '@/store/useTransactionStore';
 import { useAuth } from '@/hooks/useAuth';
 import { getDocument } from '@/lib/firebase/firestore';
 import { generateInvoicePDF } from '@/lib/pdf/generateInvoice';
-import { ArrowLeft, Download, Printer, QrCode } from 'lucide-react';
+import { ArrowLeft, Download, Printer, QrCode, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import { format } from 'date-fns';
 import { QRCodeSVG } from 'qrcode.react';
 import { Business } from '@/types';
+import { useNotificationStore } from '@/store/useNotificationStore';
 
 export default function InvoiceViewPage() {
   const params = useParams();
   const router = useRouter();
   const { profile } = useAuth();
-  const { transactions, isLoading } = useTransactionStore();
+  const { transactions, isLoading, updateTransaction } = useTransactionStore();
   const [isGenerating, setIsGenerating] = useState(false);
 
   const invoiceId = params.id as string;
@@ -47,13 +48,73 @@ export default function InvoiceViewPage() {
     return <div className="p-8 text-center text-slate-500">Loading invoice...</div>;
   }
 
+  const handleRecordPayment = async () => {
+    if (balanceDue <= 0) {
+      useNotificationStore.getState().addNotification('Invoice is already fully paid.', 'info');
+      return;
+    }
+
+    const amountStr = window.prompt(`Enter amount to record (Max: ₹${balanceDue.toFixed(2)}):`, balanceDue.toFixed(2));
+    if (amountStr === null) return;
+    
+    const amount = parseFloat(amountStr);
+    if (isNaN(amount) || amount <= 0) {
+      useNotificationStore.getState().addNotification('Invalid amount entered.', 'error');
+      return;
+    }
+    
+    if (amount > balanceDue) {
+      useNotificationStore.getState().addNotification('Amount cannot exceed the balance due.', 'error');
+      return;
+    }
+    
+    const newAmountPaid = invoice.amountPaid + amount;
+    const newStatus = newAmountPaid >= invoice.grandTotal ? 'paid' : 'partially_paid';
+    
+    try {
+      await updateTransaction(invoice.id, {
+        amountPaid: newAmountPaid,
+        status: newStatus
+      });
+      useNotificationStore.getState().addNotification('Payment recorded successfully.', 'success');
+    } catch (e) {
+      console.error('Failed to record payment', e);
+      useNotificationStore.getState().addNotification('Failed to record payment.', 'error');
+    }
+  };
+
   const handleDownload = async () => {
     try {
       setIsGenerating(true);
       await generateInvoicePDF(invoice, business || { name: profile?.name || 'My Business' });
     } catch (error) {
       console.error('Failed to generate PDF', error);
-      alert('Failed to generate PDF');
+      useNotificationStore.getState().addNotification('Failed to generate PDF', 'error');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleShare = async () => {
+    try {
+      setIsGenerating(true);
+      const blob = await generateInvoicePDF(invoice, business || { name: profile?.name || 'My Business' }, 'blob') as Blob;
+      
+      const safePartyName = (invoice.partyName || 'Party').replace(/\s+/g, '_');
+      const file = new File([blob], `${invoice.number}_${safePartyName}.pdf`, { type: 'application/pdf' });
+      
+      if (navigator.share && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          title: `Invoice ${invoice.number}`,
+          text: `Here is the invoice ${invoice.number} from ${business?.name || profile?.name || 'our business'}.`,
+          files: [file]
+        });
+      } else {
+        useNotificationStore.getState().addNotification('Sharing files is not supported on this device/browser. Please download the PDF and share manually.', 'warning');
+      }
+    } catch (error) {
+      console.error('Failed to share PDF', error);
+      useNotificationStore.getState().addNotification('Failed to share PDF', 'error');
     } finally {
       setIsGenerating(false);
     }
@@ -76,6 +137,13 @@ export default function InvoiceViewPage() {
             className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-[#121c17] hover:bg-[#1a231f] text-white border border-[#1a231f] px-4 py-2.5 rounded-lg transition-colors text-sm font-bold"
           >
             <Printer className="w-4 h-4" /> Print
+          </button>
+          <button 
+            onClick={handleShare}
+            disabled={isGenerating}
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-[#121c17] hover:bg-[#1a231f] text-white border border-[#1a231f] px-4 py-2.5 rounded-lg transition-colors text-sm font-bold disabled:opacity-50"
+          >
+            <Share2 className="w-4 h-4" /> Share
           </button>
           <button 
             onClick={handleDownload}
@@ -222,8 +290,12 @@ export default function InvoiceViewPage() {
               </div>
             </div>
 
-            <button className="w-full mt-6 bg-[#0b2217] text-[#00ea77] border border-[#00ea77]/20 hover:bg-[#00ea77]/10 py-2.5 rounded-lg text-sm font-bold transition-colors">
-              Record Payment
+            <button 
+              onClick={handleRecordPayment}
+              disabled={balanceDue <= 0}
+              className="w-full mt-6 bg-[#0b2217] text-[#00ea77] border border-[#00ea77]/20 hover:bg-[#00ea77]/10 py-2.5 rounded-lg text-sm font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {balanceDue <= 0 ? 'Fully Paid' : 'Record Payment'}
             </button>
           </div>
           

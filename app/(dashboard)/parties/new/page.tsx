@@ -1,23 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { useMasterDataStore } from '@/store/useMasterDataStore';
 import { useNotificationStore } from '@/store/useNotificationStore';
 import { Party } from '@/types';
 import { ArrowLeft, Save } from 'lucide-react';
 
-export default function EditPartyPage() {
+export default function NewPartyPage() {
   const router = useRouter();
-  const params = useParams();
-  const { parties, updateParty, isLoading } = useMasterDataStore();
+  const { addParty } = useMasterDataStore();
   const { addNotification } = useNotificationStore();
-  const [initLoading, setInitLoading] = useState(true);
 
-  const partyId = params.id as string;
-
-  const { register, handleSubmit, reset, formState: { isSubmitting } } = useForm<Omit<Party, 'id' | 'currentBalance'>>({
+  const { register, handleSubmit, formState: { isSubmitting } } = useForm<Omit<Party, 'id' | 'currentBalance'>>({
     defaultValues: {
       type: 'customer',
       name: '',
@@ -32,33 +27,16 @@ export default function EditPartyPage() {
     }
   });
 
-  useEffect(() => {
-    if (!isLoading) {
-      const party = parties.find(p => p.id === partyId);
-      if (party) {
-        reset(party);
-        setInitLoading(false);
-      } else {
-        addNotification("Party not found", "error");
-        router.push('/parties');
-      }
-    }
-  }, [isLoading, parties, partyId, reset, router, addNotification]);
-
   const onSubmit = async (data: Omit<Party, 'id' | 'currentBalance'>) => {
     try {
-      await updateParty(partyId, data);
-      addNotification('Party updated successfully', 'success');
+      await addParty(data);
+      addNotification('Party created successfully', 'success');
       router.push('/parties');
     } catch (error) {
       console.error("Error saving party:", error);
-      addNotification("Failed to update party.", 'error');
+      addNotification("Failed to save party.", 'error');
     }
   };
-
-  if (initLoading) {
-    return <div className="p-8 text-center text-slate-500 font-medium">Loading party...</div>;
-  }
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 pb-24">
@@ -70,7 +48,7 @@ export default function EditPartyPage() {
           <ArrowLeft className="h-5 w-5" />
         </button>
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-white">Edit Party</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-white">Add New Party</h1>
         </div>
       </div>
 
@@ -211,7 +189,7 @@ export default function EditPartyPage() {
               className="px-6 py-2.5 flex items-center gap-2 text-sm font-bold text-black bg-[#00ea77] rounded-xl hover:bg-[#00c563] disabled:opacity-50 transition-colors shadow-[0_0_15px_rgba(0,234,119,0.2)]"
             >
               <Save className="h-4 w-4" />
-              {isSubmitting ? 'Saving...' : 'Update Party'}
+              {isSubmitting ? 'Saving...' : 'Save Party'}
             </button>
           </div>
         </div>

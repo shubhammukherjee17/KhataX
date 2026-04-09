@@ -9,6 +9,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { Transaction, TransactionItem } from '@/types';
 import { ArrowLeft, Plus, Trash2, Save, Send } from 'lucide-react';
 import { format } from 'date-fns';
+import { useNotificationStore } from '@/store/useNotificationStore';
 
 type POFormData = {
   partyId: string;
@@ -77,7 +78,7 @@ export default function NewPurchaseOrderPage() {
 
   const onSubmit = async (data: POFormData) => {
     if (data.items.length === 0 || !data.items[0].itemId) {
-      alert("Please add at least one item");
+      useNotificationStore.getState().addNotification("Please add at least one item", 'warning');
       return;
     }
 
@@ -121,11 +122,11 @@ export default function NewPurchaseOrderPage() {
       };
 
       await addTransaction(transactionData);
-
+      useNotificationStore.getState().addNotification("Purchase Order created successfully.", 'success');
       router.push('/purchases/orders');
     } catch (error) {
       console.error("Error saving PO:", error);
-      alert("Failed to save Purchase Order.");
+      useNotificationStore.getState().addNotification("Failed to save Purchase Order.", 'error');
       setIsSubmitting(false);
     }
   };
