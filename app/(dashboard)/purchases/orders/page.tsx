@@ -93,19 +93,21 @@ export default function PurchaseOrdersPage() {
                         {order.status.replace('_', ' ')}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-right">
-                      {order.status !== 'fully_billed' && order.status !== 'cancelled' && (
-                        <Link
-                          href={`/purchases/new?fromPo=${order.id}`}
-                          className="text-[#00ea77] hover:text-[#00c563] p-1 inline-flex items-center gap-1 border border-[#00ea77]/20 bg-[#00ea77]/5 px-2.5 py-1 rounded-md mr-2 uppercase text-[10px] font-bold tracking-widest transition-colors hover:bg-[#00ea77]/10"
-                          title="Convert to Bill"
-                        >
-                          <FileDiff className="h-3 w-3" /> Convert
-                        </Link>
-                      )}
-                      <button className="text-slate-400 hover:text-white p-2 transition-colors rounded-lg hover:bg-white/10" title="View details">
-                        <Eye className="h-4 w-4" />
-                      </button>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center justify-end gap-2">
+                        {order.status !== 'fully_billed' && order.status !== 'cancelled' && (
+                          <Link
+                            href={`/purchases/new?fromPo=${order.id}`}
+                            className="text-[#00ea77] hover:text-[#00c563] inline-flex items-center gap-1 border border-[#00ea77]/20 bg-[#00ea77]/5 px-2.5 py-1 rounded-md uppercase text-[10px] font-bold tracking-widest transition-colors hover:bg-[#00ea77]/10"
+                            title="Convert to Bill"
+                          >
+                            <FileDiff className="h-3 w-3" /> Convert
+                          </Link>
+                        )}
+                        <button className="text-slate-400 hover:text-white p-2 flex items-center justify-center transition-colors rounded-lg hover:bg-white/10" title="View details">
+                          <Eye className="h-4 w-4" />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
