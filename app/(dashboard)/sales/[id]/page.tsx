@@ -48,39 +48,13 @@ export default function InvoiceViewPage() {
     return <div className="p-8 text-center text-slate-500">Loading invoice...</div>;
   }
 
-  const handleRecordPayment = async () => {
+  const handleRecordPayment = () => {
     if (balanceDue <= 0) {
       useNotificationStore.getState().addNotification('Invoice is already fully paid.', 'info');
       return;
     }
-
-    const amountStr = window.prompt(`Enter amount to record (Max: ₹${balanceDue.toFixed(2)}):`, balanceDue.toFixed(2));
-    if (amountStr === null) return;
     
-    const amount = parseFloat(amountStr);
-    if (isNaN(amount) || amount <= 0) {
-      useNotificationStore.getState().addNotification('Invalid amount entered.', 'error');
-      return;
-    }
-    
-    if (amount > balanceDue) {
-      useNotificationStore.getState().addNotification('Amount cannot exceed the balance due.', 'error');
-      return;
-    }
-    
-    const newAmountPaid = invoice.amountPaid + amount;
-    const newStatus = newAmountPaid >= invoice.grandTotal ? 'paid' : 'partially_paid';
-    
-    try {
-      await updateTransaction(invoice.id, {
-        amountPaid: newAmountPaid,
-        status: newStatus
-      });
-      useNotificationStore.getState().addNotification('Payment recorded successfully.', 'success');
-    } catch (e) {
-      console.error('Failed to record payment', e);
-      useNotificationStore.getState().addNotification('Failed to record payment.', 'error');
-    }
+    router.push(`/sales/${invoiceId}/payment/new`);
   };
 
   const handleDownload = async () => {
