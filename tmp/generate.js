@@ -24,7 +24,7 @@ pages.forEach(page => {
   if (!fs.existsSync(pageDir)) {
     fs.mkdirSync(pageDir, { recursive: true });
   }
-
+  
   const content = `import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 

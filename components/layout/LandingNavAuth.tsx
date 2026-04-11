@@ -2,9 +2,10 @@
 
 import Link from 'next/link';
 import { useAuth } from '@/hooks/useAuth';
+import { LogOut } from 'lucide-react';
 
 export function LandingNavAuth({ isMobile }: { isMobile?: boolean }) {
-  const { user, profile, loading } = useAuth();
+  const { user, profile, loading, logout } = useAuth();
 
   if (loading) {
     return (
@@ -32,6 +33,10 @@ export function LandingNavAuth({ isMobile }: { isMobile?: boolean }) {
           </div>
           <span className="pr-1 text-slate-100">{profile?.name || 'Account'}</span>
         </Link>
+        <button onClick={logout} className={`flex items-center gap-1.5 text-sm font-medium text-slate-400 hover:text-red-500 transition ${!isMobile ? 'hidden sm:flex' : 'text-xl'}`}>
+          <LogOut className="w-4 h-4" />
+          Logout
+        </button>
       </div>
     );
   }
