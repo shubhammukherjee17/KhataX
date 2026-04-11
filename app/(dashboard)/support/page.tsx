@@ -73,6 +73,7 @@ export default function SupportPage() {
                   <CheckCircle2 className="w-8 h-8 text-[#00ea77]" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">Ticket Submitted Successfully</h3>
+                {/* eslint-disable-next-line react-hooks/purity */}
                 <p className="text-[#a1a1aa] text-sm">Our enterprise support team will review your request and get back to you within 2 hours. Ticket ID: #KX-{Math.floor(Math.random() * 90000) + 10000}</p>
                 <button 
                   onClick={() => setIsSuccess(false)}

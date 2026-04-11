@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     }
 
     const data = await response.json();
-    let replyText = data.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
+    const replyText = data.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
     
     let parsedData = {};
     try {
