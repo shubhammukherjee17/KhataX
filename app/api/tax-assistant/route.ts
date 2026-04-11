@@ -76,7 +76,7 @@ export async function POST(req: Request) {
       }
     };
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -94,7 +94,8 @@ export async function POST(req: Request) {
     }
 
     const data = await response.json();
-    const replyText = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't process your tax data right now.";
+    let replyText = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't process your tax data right now.";
+    replyText = replyText.replace(/\*/g, '');
 
     return NextResponse.json({ reply: replyText });
   } catch (error) {
