@@ -55,7 +55,7 @@ export default function DashboardPage() {
 
     // 2. Daily Revenue
     let dailyRev = 0;
-    
+
     // 3. Open Invoices
     let openInvCount = 0;
 
@@ -97,12 +97,12 @@ export default function DashboardPage() {
       .map(tx => {
         let isDebit = false; // Money going OUT (our perspective)
         let amount = tx.grandTotal;
-        
+
         if (tx.type === 'purchase_invoice' || tx.type === 'payment_out') {
           isDebit = true;
           amount = tx.type === 'payment_out' ? tx.grandTotal : tx.grandTotal;
         }
-        
+
         let txTypeLabel = '';
         if (tx.type === 'sale_invoice') txTypeLabel = 'Sale Invoice';
         else if (tx.type === 'purchase_invoice') txTypeLabel = 'Purchase Bill';
@@ -112,7 +112,7 @@ export default function DashboardPage() {
         else if (tx.type === 'estimate') txTypeLabel = 'Estimate';
 
         const partyName = tx.partyName || 'Unknown';
-        
+
         // Friendly time string
         const diffHours = Math.floor((today.getTime() - new Date(tx.date).getTime()) / (1000 * 60 * 60));
         let timeStr = '';
@@ -173,7 +173,7 @@ export default function DashboardPage() {
 
       {/* Row 1: Liquidity & Predictive */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         {/* Left: Net Liquidity Card (Span 2) */}
         <div className="lg:col-span-2 bg-[#18181b] rounded-2xl p-8 border border-[#27272a] shadow-lg relative overflow-hidden group">
           <div className="flex justify-between items-start">
@@ -187,14 +187,14 @@ export default function DashboardPage() {
               <TrendingUp className="w-5 h-5 text-[#a1a1aa]" />
             </div>
           </div>
-          
+
           {/* Liquidity Mini Chart */}
           <div className="h-32 mt-12 flex items-end gap-3 z-10 relative px-2">
             {chartData.map((val, idx) => {
               const isLast = idx === chartData.length - 1;
               return (
                 <div key={idx} className="flex-1 flex justify-center group-hover:scale-[1.02] transition-transform">
-                  <div 
+                  <div
                     className={`w-full max-w-[48px] rounded-t-sm transition-all duration-500 ease-out ${isLast ? 'bg-[#00ea77] shadow-[0_0_30px_rgba(0,234,119,0.3)]' : 'bg-[#27272a]'}`}
                     style={{ height: `${val}%` }}
                   ></div>
@@ -202,7 +202,7 @@ export default function DashboardPage() {
               );
             })}
           </div>
-          
+
           {/* Subtle Background glow */}
           <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#00ea77]/5 rounded-full blur-[80px] pointer-events-none"></div>
         </div>
@@ -213,7 +213,7 @@ export default function DashboardPage() {
             <Sparkles className="w-5 h-5 text-[#00ea77]" />
             <h3 className="text-sm font-extrabold text-white">Predictive Analysis</h3>
           </div>
-          
+
           <p className="text-[#a1a1aa] text-sm leading-relaxed mb-auto">
             Cash flow optimization detected.<br />
             Reducing inventory lag could yield <span className="text-[#00ea77] font-bold">+12.4%</span> margin by Q4.
@@ -234,7 +234,7 @@ export default function DashboardPage() {
 
       {/* Row 2: 3 KPI Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
+
         {/* Daily Revenue */}
         <div className="bg-[#18181b] rounded-2xl p-6 border border-[#27272a] flex items-center gap-5 shadow-sm hover:border-[#3f3f46] transition-colors">
           <div className="w-12 h-12 rounded-xl bg-[#00ea77]/10 flex flex-shrink-0 items-center justify-center">
@@ -284,7 +284,7 @@ export default function DashboardPage() {
             View Archive
           </Link>
         </div>
-        
+
         <div className="divide-y divide-[#27272a]">
           {recentTransactions.length === 0 ? (
             <div className="p-8 text-center text-[#a1a1aa] text-sm font-medium">No recent transactions.</div>
@@ -303,14 +303,13 @@ export default function DashboardPage() {
                     <p className="text-xs font-medium text-[#a1a1aa] mt-0.5">{tx.subtitle}</p>
                   </div>
                 </div>
-                
+
                 <div className="text-right flex flex-col items-end gap-1">
                   <p className={`text-sm font-black ${tx.isDebit ? 'text-red-500' : 'text-[#00ea77]'}`}>
                     {tx.isDebit ? '-' : '+'}₹{tx.amount.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
                   </p>
-                  <span className={`text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded ${
-                    tx.isDebit ? 'bg-red-500/10 text-red-500' : 'bg-[#00ea77]/10 text-[#00ea77]'
-                  }`}>
+                  <span className={`text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded ${tx.isDebit ? 'bg-red-500/10 text-red-500' : 'bg-[#00ea77]/10 text-[#00ea77]'
+                    }`}>
                     {tx.statusBadge}
                   </span>
                 </div>
