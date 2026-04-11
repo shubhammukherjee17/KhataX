@@ -1,18 +1,18 @@
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Cpu, Smartphone, Database, Workflow } from 'lucide-react';
 
 export const metadata = {
   title: 'Integrations | KhataX',
-  description: 'Connect KhataX with your favorite tools.',
+  description: 'Connect KhataX with Banking endpoints and legacy ERP databases.',
 };
 
-export default function integrationsPage() {
+export default function IntegrationsPage() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-[#00ea77]/30 selection:text-white font-sans flex flex-col">
-      <header className="p-6 border-b border-white/10 flex items-center justify-between">
+      <header className="p-6 border-b border-white/10 flex items-center justify-between z-10 relative bg-[#0a0a0a]">
         <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <div className="w-8 h-8 rounded bg-[#00ea77] flex items-center justify-center">
-            <div className="w-2.5 h-2.5 bg-black rounded-sm"></div>
+             <div className="w-2.5 h-2.5 bg-black rounded-sm"></div>
           </div>
           <span className="font-bold text-xl tracking-tight">KhataX</span>
         </Link>
@@ -22,32 +22,39 @@ export default function integrationsPage() {
       </header>
       
       <main className="flex-1 flex flex-col items-center p-12 lg:p-24 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#00ea77]/5 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00ea77]/5 rounded-full blur-[150px] pointer-events-none"></div>
         
-        <div className="max-w-4xl w-full relative z-10">
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-6">Integrations</h1>
-          <p className="text-xl text-[#00ea77] mb-12">Connect KhataX with your favorite tools.</p>
-          
-          <div className="bg-[#111] border border-white/10 rounded-3xl p-8 md:p-12 prose prose-invert max-w-none">
-            <p className="text-slate-400 text-lg leading-relaxed mb-6">
-              Welcome to the Integrations page for KhataX. This page outlines our comprehensive platform capabilities and guidelines tailored for Indian SMBs.
-            </p>
-            <div className="h-px w-full bg-white/10 my-8"></div>
-            <h2 className="text-2xl font-bold text-white mb-4">Our Commitment</h2>
-            <p className="text-slate-400 leading-relaxed mb-6">
-              At KhataX, we are building the definitive financial operating system for businesses. We ensure that our infrastructure meets the highest standards of reliability, security, and compliance.
-            </p>
-            <div className="p-6 rounded-2xl bg-[#00ea77]/5 border border-[#00ea77]/20 text-[#00ea77] font-medium">
-              This section is currently being updated by our designated authorities. Specific sub-clauses and detailed documentation will be propagated here soon.
-            </div>
+        <div className="max-w-5xl w-full relative z-10">
+          <div className="text-center mb-16">
+            <h1 className="text-5xl font-extrabold mb-6">Seamless Integrations</h1>
+            <p className="text-xl text-slate-400 max-w-2xl mx-auto">Extend KhataX beyond the dashboard. Sync your financial data organically with banking APIs and existing enterprise software.</p>
           </div>
           
-          <div className="mt-12 text-center">
-            <Link 
-              href="/" 
-              className="inline-flex items-center gap-2 px-8 py-3 bg-[#00ea77] text-black rounded-xl font-bold hover:bg-[#00c563] transition-colors"
-            >
-              Return Home
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            <div className="bg-[#111] p-8 border border-white/10 rounded-2xl">
+              <Cpu className="w-8 h-8 text-[#00ea77] mb-4" />
+              <h3 className="text-xl font-bold mb-2">Tally ERP Migration</h3>
+              <p className="text-sm text-slate-400">Import your legacy master files, party ledgers, and existing inventory configurations structurally via our Tally XML Bridge.</p>
+            </div>
+            <div className="bg-[#111] p-8 border border-white/10 rounded-2xl">
+              <Database className="w-8 h-8 text-[#00ea77] mb-4" />
+              <h3 className="text-xl font-bold mb-2">Open Banking Sync</h3>
+              <p className="text-sm text-slate-400">Connect strictly via secure Open Banking APIs (ICICI, HDFC, SBI) to auto-reconcile cleared payments securely.</p>
+            </div>
+            <div className="bg-[#111] p-8 border border-white/10 rounded-2xl">
+              <Smartphone className="w-8 h-8 text-[#00ea77] mb-4" />
+              <h3 className="text-xl font-bold mb-2">WhatsApp Business API</h3>
+              <p className="text-sm text-slate-400">Automate your Overdue recovery pipelines. Blast dynamic PDF links directly into your customers' WhatsApp structurally.</p>
+            </div>
+          </div>
+
+          <div className="bg-[#18181b] p-10 rounded-3xl border border-white/10 flex flex-col md:flex-row items-center justify-between gap-8">
+            <div>
+              <h2 className="text-3xl font-bold mb-3 flex items-center gap-3"><Workflow className="text-[#00ea77]" /> Need a custom webhook?</h2>
+              <p className="text-slate-400">Our Enterprise team executes custom Node.js middleware for specific franchise supply chains.</p>
+            </div>
+            <Link href="/" className="px-8 py-4 bg-[#00ea77] text-black rounded-xl font-bold hover:bg-[#00c563] transition whitespace-nowrap">
+              Contact Enterprise Sales
             </Link>
           </div>
         </div>

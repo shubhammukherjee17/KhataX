@@ -536,21 +536,61 @@ export default function LandingPage() {
 
             <div>
               <h4 className="font-semibold text-white mb-6">Product</h4>
-              <ul className="space-y-4 text-sm text-slate-400">
-                <li><Link href="#features" className="hover:text-[#00ea77] transition">Features</Link></li>
-                <li><Link href="#ai" className="hover:text-[#00ea77] transition">AI Assistant</Link></li>
-                <li><Link href="/integrations" className="hover:text-[#00ea77] transition">Integrations</Link></li>
-                <li><Link href="/security" className="hover:text-[#00ea77] transition">Security</Link></li>
+              <ul className="space-y-5 text-sm">
+                <li>
+                  <Link href="#features" className="group block">
+                    <span className="text-slate-400 group-hover:text-[#00ea77] transition block">Features & Tools</span>
+                    <span className="text-[11px] text-slate-600 mt-1 block">Explore our core ERP modules</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#ai" className="group block">
+                    <span className="text-slate-400 group-hover:text-[#00ea77] transition block">KhataX AI Suite</span>
+                    <span className="text-[11px] text-slate-600 mt-1 block">Tax Assistant & Intelligence</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/integrations" className="group block">
+                    <span className="text-slate-400 group-hover:text-[#00ea77] transition block">Live Integrations</span>
+                    <span className="text-[11px] text-slate-600 mt-1 block">Banking & Payment protocols</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/security" className="group block">
+                    <span className="text-slate-400 group-hover:text-[#00ea77] transition block">Enterprise Security</span>
+                    <span className="text-[11px] text-slate-600 mt-1 block">End-to-end Vault encryption</span>
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold text-white mb-6">Resources</h4>
-              <ul className="space-y-4 text-sm text-slate-400">
-                <li><Link href="/gst-guide" className="hover:text-[#00ea77] transition">GST Guide</Link></li>
-                <li><Link href="/help-center" className="hover:text-[#00ea77] transition">Help Center</Link></li>
-                <li><Link href="/api-docs" className="hover:text-[#00ea77] transition">API Docs</Link></li>
-                <li><Link href="/community" className="hover:text-[#00ea77] transition">Community</Link></li>
+              <ul className="space-y-5 text-sm">
+                <li>
+                  <Link href="/gst-guide" className="group block">
+                    <span className="text-slate-400 group-hover:text-[#00ea77] transition block">GST Compliance Guide</span>
+                    <span className="text-[11px] text-slate-600 mt-1 block">Filing & tax slab tutorials</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/help-center" className="group block">
+                    <span className="text-slate-400 group-hover:text-[#00ea77] transition block">Support Center</span>
+                    <span className="text-[11px] text-slate-600 mt-1 block">24/7 technical assistance</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/api-docs" className="group block">
+                    <span className="text-slate-400 group-hover:text-[#00ea77] transition block">Developer API Docs</span>
+                    <span className="text-[11px] text-slate-600 mt-1 block">Headless REST endpoints</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/community" className="group block">
+                    <span className="text-slate-400 group-hover:text-[#00ea77] transition block">KhataX Community</span>
+                    <span className="text-[11px] text-slate-600 mt-1 block">Connect with business owners</span>
+                  </Link>
+                </li>
               </ul>
             </div>
 

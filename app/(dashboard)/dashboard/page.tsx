@@ -40,10 +40,6 @@ export default function DashboardPage() {
       liquidity += acc.currentBalance;
     });
 
-    // We can also add outstanding receivables to Liquidity depending on accounting view,
-    // but typically Net Liquidity = Cash + Bank
-    // For effect, we will just use the sum of bank/cash accounts.
-    // If it's zero, we'll try to calculate a generic one based on transactions to look good.
     if (liquidity === 0 && transactions.length > 0) {
       // Fallback pseudo-liquidity if they haven't set up bank accounts
       let calculated = 0;
@@ -162,16 +158,6 @@ export default function DashboardPage() {
       });
     }
 
-    const isChartFlat = dynamicChartData.every(d => d.Revenue === 0 && d.Expenses === 0);
-    
-    if (isChartFlat) {
-      dynamicChartData.forEach((d, i) => {
-         const mockRev = [1200, 2100, 800, 3200, 1500, 2800, 4100];
-         const mockExp = [800, 1100, 400, 2100, 1000, 1500, 2200];
-         d.Revenue = mockRev[i];
-         d.Expenses = mockExp[i];
-      });
-    }
 
     let totalSalesVolume = 0;
     let totalPurchasesVolume = 0;
