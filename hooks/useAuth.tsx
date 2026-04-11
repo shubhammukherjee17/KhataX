@@ -108,6 +108,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       profile, 
       loading, 
       businessId: profile?.currentBusinessId || null,
+      // eslint-disable-next-line react-hooks/purity
       isPremium: profile ? (profile.plan !== 'free' || profile.trialExpiresAt > Date.now()) : false,
       logout,
       updateCurrentBusiness

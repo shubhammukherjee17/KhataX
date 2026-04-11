@@ -162,11 +162,8 @@ export default function DashboardPage() {
       });
     }
 
-    // Check if dynamic chart data is completely flat (no transactions in last 7 days)
     const isChartFlat = dynamicChartData.every(d => d.Revenue === 0 && d.Expenses === 0);
     
-    // If flat, provide simulated visual sparkline data to keep the dashboard looking premium 
-    // instead of an empty black box, but keep the values small to indicate it's a baseline.
     if (isChartFlat) {
       dynamicChartData.forEach((d, i) => {
          const mockRev = [1200, 2100, 800, 3200, 1500, 2800, 4100];
@@ -176,12 +173,11 @@ export default function DashboardPage() {
       });
     }
 
-    // 7. Transaction Distribution (PieChart)
     let totalSalesVolume = 0;
     let totalPurchasesVolume = 0;
 
     transactions.forEach(tx => {
-      const amt = tx.grandTotal; // Use grandTotal for actual volume booked
+      const amt = tx.grandTotal;
       if (tx.type === 'sale_invoice' || tx.type === 'payment_in') {
          totalSalesVolume += amt;
       } else if (tx.type === 'purchase_invoice' || tx.type === 'payment_out') {
@@ -194,7 +190,6 @@ export default function DashboardPage() {
       { name: 'Expenses', value: totalPurchasesVolume }
     ];
 
-    // 8. Top Parties by Volume (BarChart)
     const partyVolumes: Record<string, number> = {};
     transactions.forEach(tx => {
        if (tx.partyName) {
@@ -389,7 +384,7 @@ export default function DashboardPage() {
                     <Tooltip 
                       contentStyle={{ backgroundColor: '#18181b', borderColor: '#27272a', borderRadius: '8px', color: '#fff', fontSize: '12px', fontWeight: 'bold' }}
                       itemStyle={{ color: '#fff' }}
-                      formatter={(value: number) => `₹${value.toLocaleString('en-IN')}`}
+                      formatter={(value: any) => `₹${Number(value).toLocaleString('en-IN')}`}
                     />
                     <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '12px', fontWeight: 'bold', color: '#a1a1aa' }}/>
                   </PieChart>
@@ -413,7 +408,7 @@ export default function DashboardPage() {
                     <Tooltip 
                       cursor={{ fill: '#27272a', opacity: 0.4 }}
                       contentStyle={{ backgroundColor: '#18181b', borderColor: '#27272a', borderRadius: '8px', color: '#fff', fontSize: '12px', fontWeight: 'bold' }}
-                      formatter={(value: number) => [`₹${value.toLocaleString('en-IN')}`, 'Volume']}
+                      formatter={(value: any) => [`₹${Number(value).toLocaleString('en-IN')}`, 'Volume']}
                     />
                     <Bar dataKey="volume" fill="#00ea77" radius={[0, 4, 4, 0]} barSize={20}>
                        {

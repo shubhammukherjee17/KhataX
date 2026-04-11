@@ -98,7 +98,7 @@ export async function generateInvoicePDF(invoice: Transaction, businessProfile: 
     });
 
     // --- TOTALS SECTION ---
-    const lastAutoTable = (doc as any).lastAutoTable;
+    const lastAutoTable = (doc as unknown as { lastAutoTable?: { finalY?: number } }).lastAutoTable;
     const finalY = (lastAutoTable && lastAutoTable.finalY ? lastAutoTable.finalY : 150) + 10;
 
     const rightColX = pageWidth - 75;

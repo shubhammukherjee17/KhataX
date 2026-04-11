@@ -3,7 +3,7 @@
 import { useNotificationStore } from '@/store/useNotificationStore';
 import { Bell, CheckCircle2, AlertTriangle, Info, XCircle, Trash2, X } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 export function NotificationTray({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) {
   const { notifications, markAsRead, markAllAsRead, clearAll, removeNotification } = useNotificationStore();
@@ -76,7 +76,7 @@ export function NotificationTray({ isOpen, onClose }: { isOpen: boolean, onClose
         {notifications.length === 0 ? (
           <div className="p-8 text-center flex flex-col items-center text-slate-500">
             <Bell className="w-12 h-12 mb-3 text-slate-600 opacity-50" />
-            <p className="text-sm font-medium">You're all caught up!</p>
+            <p className="text-sm font-medium">You&apos;re all caught up!</p>
           </div>
         ) : (
           <div className="divide-y divide-white/5">
