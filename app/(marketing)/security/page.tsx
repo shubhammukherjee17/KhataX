@@ -26,25 +26,25 @@ export default function SecurityPage() {
         
         <div className="max-w-4xl w-full relative z-10 text-center">
           <Shield className="w-16 h-16 text-[#00ea77] mx-auto mb-6" />
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-6">Enterprise Security Vaults</h1>
-          <p className="text-xl text-slate-400 mb-12">Engineered strictly against top-tier financial compliances. Your ledger array is mathematically locked.</p>
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-6">Enterprise-Grade Security</h1>
+          <p className="text-xl text-slate-400 mb-12">Built to meet top-tier financial compliance standards. Your data is always protected and secure.</p>
           
           <div className="grid md:grid-cols-2 gap-6 text-left mb-12">
             <div className="bg-[#111] p-8 border border-white/10 rounded-3xl">
               <Lock className="w-8 h-8 text-white mb-4" />
-              <h3 className="text-xl font-bold mb-2">AES-256 Encryption</h3>
-              <p className="text-sm text-slate-400">All data generated iteratively across invoices, receipts, and JSON payloads is strictly locked at rest and in transit via SHA-256 and SSL/TLS standards.</p>
+              <h3 className="text-xl font-bold mb-2">Industry-Standard Encryption</h3>
+              <p className="text-sm text-slate-400">All your financial data, including invoices and receipts, is encrypted both at rest and in transit using industry-standard protocols to ensure maximum security.</p>
             </div>
             <div className="bg-[#111] p-8 border border-white/10 rounded-3xl">
               <FileKey className="w-8 h-8 text-white mb-4" />
               <h3 className="text-xl font-bold mb-2">Role-Based Access</h3>
-              <p className="text-sm text-slate-400">Enterprise owners possess granular matrix controls over staff capabilities preventing destructive mutations or sensitive reporting leaks.</p>
+              <p className="text-sm text-slate-400">Business owners have full control over what their staff can see and do, ensuring sensitive financial information remains restricted to authorized personnel only.</p>
             </div>
           </div>
 
           <div className="p-8 border-2 border-[#00ea77]/30 bg-[#00ea77]/5 rounded-3xl text-left">
-             <h2 className="text-2xl font-bold text-white mb-4">Infrastructure Specs</h2>
-             <p className="text-slate-300 leading-relaxed max-w-2xl">KhataX relies natively on Google Cloud Firebase architectures ensuring 99.99% uptime with geometric geographical backups mapped entirely out of redundant servers located strictly in Mumbai (asia-south1) for uncompromising Indian Data Residency constraints.</p>
+             <h2 className="text-2xl font-bold text-white mb-4">Reliable Infrastructure</h2>
+             <p className="text-slate-300 leading-relaxed max-w-2xl">KhataX is hosted on robust cloud infrastructure, ensuring 99.99% uptime. To comply with data residency requirements, all Indian user data is securely backed up and stored in servers located within India.</p>
           </div>
         </div>
       </main>

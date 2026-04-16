@@ -1,9 +1,22 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Manrope, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/hooks/useAuth";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"],
+  variable: '--font-inter',
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: '--font-manrope',
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: '--font-space-grotesk',
+});
 
 export const metadata: Metadata = {
   title: "KhataX - Business Management",
@@ -17,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased text-white selection:bg-[#00ea77] selection:text-black bg-[#0a0a0a]`}>
+      <body className={`${inter.variable} ${manrope.variable} ${spaceGrotesk.variable} ${inter.className} antialiased text-white selection:bg-[#00FFA3] selection:text-black bg-[#0A0A0A]`}>
         <AuthProvider>
           {children}
         </AuthProvider>

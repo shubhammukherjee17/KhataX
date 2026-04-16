@@ -41,21 +41,21 @@ export default function HelpCenterPage() {
             <div className="bg-[#111] border border-white/10 rounded-3xl p-8 hover:border-[#00ea77]/50 transition cursor-pointer">
               <BookOpen className="text-[#00ea77] w-8 h-8 mb-4" />
               <h3 className="text-xl font-bold mb-2">Getting Started</h3>
-              <p className="text-sm text-slate-400">Everything you need to successfully setup your Cloud Vault, add items, and create your first invoice.</p>
+              <p className="text-sm text-slate-400">Everything you need to successfully setup your account, add your first items, and create an invoice.</p>
             </div>
             <div className="bg-[#111] border border-white/10 rounded-3xl p-8 hover:border-[#00ea77]/50 transition cursor-pointer">
-              <ShieldCheck className="text-blue-500 w-8 h-8 mb-4" />
+              <ShieldCheck className="text-[#00ea77] w-8 h-8 mb-4" />
               <h3 className="text-xl font-bold mb-2">Account & Billing</h3>
-              <p className="text-sm text-slate-400">Manage your Pro/Enterprise subscription, modify owner roles, and review statement charges.</p>
+              <p className="text-sm text-slate-400">Manage your Pro or Enterprise plan, update billing details, and review your past invoices.</p>
             </div>
           </div>
 
           <div className="bg-gradient-to-r from-[#18181b] to-[#111] border border-white/10 rounded-3xl p-10 flex flex-col items-center text-center">
-            <Clock className="w-10 h-10 text-yellow-500 mb-4" />
-            <h2 className="text-2xl font-bold mb-2">Enterprise Support Line</h2>
-            <p className="text-slate-400 max-w-xl mb-6">Our system architects natively monitor all Enterprise Vaults for latency drops. For immediate engineering intervention, use the Portal in your Dashboard.</p>
+            <Clock className="w-10 h-10 text-[#00ea77] mb-4" />
+            <h2 className="text-2xl font-bold mb-2">24/7 Support Team</h2>
+            <p className="text-slate-400 max-w-xl mb-6">Need help with something else? Our dedicated support team is available around the clock to assist you with any questions or issues.</p>
             <Link href="/dashboard" className="px-6 py-3 bg-white text-black font-bold rounded-xl hover:bg-slate-200 transition">
-              Open Support Ticket
+              Contact Support
             </Link>
           </div>
         </div>

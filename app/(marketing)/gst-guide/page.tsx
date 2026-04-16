@@ -22,39 +22,39 @@ export default function GSTGuidePage() {
       </header>
       
       <main className="flex-1 flex flex-col items-center p-12 lg:p-24 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#00ea77]/5 rounded-full blur-[120px] pointer-events-none"></div>
         
         <div className="max-w-4xl w-full relative z-10">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-6">GST Compliance Guide</h1>
-          <p className="text-xl text-[#00ea77] mb-12">Navigating the Indian Taxation System with KhataX Intelligence.</p>
+          <p className="text-xl text-[#00ea77] mb-12">Navigating the Indian Taxation System with KhataX.</p>
           
           <div className="bg-[#111] border border-white/10 rounded-3xl p-8 md:p-12 mb-8">
-            <h2 className="text-2xl font-bold flex items-center gap-3 mb-6"><FileText className="text-purple-500" /> Automated GSTIN Resolution</h2>
+            <h2 className="text-2xl font-bold flex items-center gap-3 mb-6"><FileText className="text-[#00ea77]" /> Automated GST Calculation</h2>
             <p className="text-slate-400 leading-relaxed mb-6">
-              The Indian Goods and Services Tax implies a massive computational load on distributors who have hundreds of daily invoices. KhataX automates this mathematically by linking the <strong>HSN Configuration</strong> directly to your inventory setup.
+              Managing Goods and Services Tax can be complex for businesses with high invoice volumes. KhataX simplifies this by automatically applying the correct taxes based on your item <strong>HSN/SAC codes</strong> and customer state.
             </p>
             
-            <h3 className="text-lg font-bold text-white mb-4">How KhataX Parses Tax Logic:</h3>
+            <h3 className="text-lg font-bold text-white mb-4">How Tax Calculation Works:</h3>
             <ul className="space-y-4 text-slate-400 mb-8">
                <li className="flex gap-3">
                  <CheckCircle2 className="w-5 h-5 text-[#00ea77] shrink-0" />
-                 <span><strong>Intrastate Recognition:</strong> If your business state matches your customer's state, KhataX dynamically splits the GST into CGST and SGST on the PDF export natively.</span>
+                 <span><strong>Intrastate Sales:</strong> If you're selling within the same state, KhataX automatically splits the applicable tax into CGST and SGST on your invoices.</span>
                </li>
                <li className="flex gap-3">
                  <CheckCircle2 className="w-5 h-5 text-[#00ea77] shrink-0" />
-                 <span><strong>Interstate Recognition:</strong> If you are shipping out of state, KhataX consolidates the tax string into an IGST block.</span>
+                 <span><strong>Interstate Sales:</strong> When generating invoices for customers outside your state, KhataX seamlessly applies the unified IGST.</span>
                </li>
                <li className="flex gap-3">
                  <CheckCircle2 className="w-5 h-5 text-[#00ea77] shrink-0" />
-                 <span><strong>Input Tax Credit (ITC):</strong> By utilizing the KhataX AI Receipt Scanner, your purchases are aggressively logged, preserving your ITC and netting your monthly payout accurately.</span>
+                 <span><strong>Input Tax Credit (ITC):</strong> By accurately tracking all your business expenses and purchases, KhataX helps ensure you claim your correct Input Tax Credit during filing.</span>
                </li>
             </ul>
 
-            <div className="bg-yellow-500/10 border border-yellow-500/20 p-6 rounded-2xl flex gap-4 items-start">
-               <AlertTriangle className="text-yellow-500 w-6 h-6 shrink-0 mt-1" />
+            <div className="bg-[#00ea77]/5 border border-[#00ea77]/20 p-6 rounded-2xl flex gap-4 items-start">
+               <AlertTriangle className="text-[#00ea77] w-6 h-6 shrink-0 mt-1" />
                <div>
-                  <h4 className="font-bold text-yellow-500">A Note on E-Invoicing</h4>
-                  <p className="text-sm text-yellow-500/80 mt-1">If your business aggregates over ₹5 Crore in annual turnover, you are mandated by the NIC for E-invoicing (IRN). KhataX Enterprise contains the B2B E-invoice JSON generator embedded natively.</p>
+                  <h4 className="font-bold text-[#00ea77]">A Note on E-Invoicing</h4>
+                  <p className="text-sm text-[#00ea77]/80 mt-1">If your business exceeds the ₹5 Crore annual turnover threshold, you are required to generate E-invoices. Our Enterprise plan fully supports one-click B2B E-invoicing and IRN generation.</p>
                </div>
             </div>
           </div>

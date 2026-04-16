@@ -27,22 +27,22 @@ export default function TermsOfServicePage() {
         <div className="max-w-4xl w-full relative z-10">
           <div className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-slate-300 mb-6 uppercase tracking-widest">Legal Document</div>
           <h1 className="text-4xl md:text-5xl font-extrabold mb-6">Terms of Service</h1>
-          <p className="text-lg text-slate-400 mb-12 border-b border-white/10 pb-8">Last Updated: April 11, 2026. These terms govern mathematically precisely how you are permitted to implement the KhataX Cloud Suite.</p>
+          <p className="text-lg text-slate-400 mb-12 border-b border-white/10 pb-8">Last Updated: April 11, 2026. These terms govern your use of the KhataX platform and services.</p>
           
           <div className="prose prose-invert prose-lg max-w-none text-slate-300">
-            <h2 className="text-2xl font-bold text-white mb-4">1. Licensing Engine</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">1. License and Usage</h2>
             <p className="mb-6">
-              When you initialize a subscription matrix, KhataX grants you a non-exclusive, tightly revocable digital license to operate the Dashboard locally for your business organization.
+              When you subscribe to KhataX, we grant you a non-exclusive, revocable license to use our application for your business accounting and management needs.
             </p>
             
-            <h2 className="text-2xl font-bold text-white mb-4">2. Accurate Accounting Bounds</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">2. Accuracy of Information</h2>
             <p className="mb-6">
-              The AI computations and Tax Assistant outputs are highly sophisticated models rendering suggestions based on raw data inputs. KhataX Technologies does NOT assume strict legal liabilities for miscalculated tax file generations if the localized vendor raw inputs are mathematically flawed.
+              While our AI and tax assistance tools are designed to provide helpful suggestions, they rely on the accuracy of the data you input. KhataX is not legally liable for any tax miscalculations or business losses resulting from incorrect data entry.
             </p>
 
-            <h2 className="text-2xl font-bold text-white mb-4">3. Prohibited Modulations</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">3. Prohibited Activities</h2>
             <p className="mb-6">
-              Users strictly may not reverse-engineer, deploy localized network attacks, or extract the API endpoints natively via bypassing the front-end routing gates to exploit external databases. Violation triggers an automatic localized block.
+              Users may not reverse-engineer the platform, attempt to breach our security systems, or use the service for any illegal activities. Any violation of these terms may result in the suspension of your account.
             </p>
           </div>
         </div>

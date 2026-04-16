@@ -25,9 +25,9 @@ export default function ApiDocsPage() {
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#00ea77]/5 rounded-full blur-[120px] pointer-events-none"></div>
         
         <div className="max-w-4xl w-full relative z-10">
-          <div className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-[#00ea77] mb-6">REST API V2.0</div>
+          <div className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-[#00ea77] mb-6">REST API</div>
           <h1 className="text-4xl md:text-5xl font-extrabold mb-6">Developer API Docs</h1>
-          <p className="text-xl text-slate-400 mb-12">Integrate KhataX's ledger engine programmatically into your existing IT infrastructure using our secure Headless REST endpoints.</p>
+          <p className="text-xl text-slate-400 mb-12">Connect KhataX with your existing software suite and build custom tools using our secure developer API.</p>
           
           <div className="bg-[#111] border border-white/10 rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl font-bold text-white mb-6">Core Capabilities</h2>
@@ -35,35 +35,35 @@ export default function ApiDocsPage() {
             <div className="grid md:grid-cols-2 gap-6 mb-12">
                <div className="p-6 rounded-2xl bg-[#18181b] border border-white/5">
                  <Code className="text-[#00ea77] w-6 h-6 mb-4" />
-                 <h3 className="font-bold mb-2">Automated Invoicing APIs</h3>
-                 <p className="text-sm text-slate-400">Trigger invoice generation from your proprietary POS systems. Pass the parameters via JSON and receive a signed `pdf_url` instantly.</p>
+                 <h3 className="font-bold mb-2">Invoice Generation</h3>
+                 <p className="text-sm text-slate-400">Automatically create invoices directly from your own billing or POS systems using our robust API endpoints.</p>
                </div>
                <div className="p-6 rounded-2xl bg-[#18181b] border border-white/5">
                  <Database className="text-[#00ea77] w-6 h-6 mb-4" />
                  <h3 className="font-bold mb-2">Inventory Sync</h3>
-                 <p className="text-sm text-slate-400">Synchronize your local godown ERP with KhataX securely. Live Webhook listeners for stock reduction events across all nodes.</p>
+                 <p className="text-sm text-slate-400">Keep your stock numbers updated across all your platforms simultaneously by syncing directly with KhataX.</p>
                </div>
                <div className="p-6 rounded-2xl bg-[#18181b] border border-white/5">
                  <Lock className="text-[#00ea77] w-6 h-6 mb-4" />
-                 <h3 className="font-bold mb-2">Stateless Auth (JWT)</h3>
-                 <p className="text-sm text-slate-400">All Enterprise API calls are secured via rotating JWT protocols natively synced with your Firebase Authentication layers.</p>
+                 <h3 className="font-bold mb-2">Secure Authentication</h3>
+                 <p className="text-sm text-slate-400">All API requests rely on standard, secure token-based authentication to ensure your business data is always safe.</p>
                </div>
                <div className="p-6 rounded-2xl bg-[#18181b] border border-white/5">
                  <Zap className="text-[#00ea77] w-6 h-6 mb-4" />
-                 <h3 className="font-bold mb-2">GraphQL Alpha</h3>
-                 <p className="text-sm text-slate-400">Reduce over-fetching with our new GraphQL endpoints designed for custom Dashboard aggregations and metric plotting.</p>
+                 <h3 className="font-bold mb-2">Comprehensive Data Access</h3>
+                 <p className="text-sm text-slate-400">Easily export or query your financial data for running deep custom reports outside of the KhataX interface.</p>
                </div>
             </div>
 
-            <h2 className="text-2xl font-bold text-white mb-4">Authentication Header</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">Authentication Example</h2>
             <div className="bg-black p-4 rounded-xl border border-white/10 mb-8 font-mono text-sm text-green-400 overflow-x-auto">
-              curl -X GET "https://api.khatax.com/v2/transactions" \<br />
-              -H "Authorization: Bearer YOUR_ENTERPRISE_API_KEY" \<br />
+              curl -X GET "https://api.khatax.com/v1/transactions" \<br />
+              -H "Authorization: Bearer YOUR_API_KEY" \<br />
               -H "Content-Type: application/json"
             </div>
 
             <p className="text-slate-400 leading-relaxed mb-6">
-              Our API is currently in Closed Beta for Enterprise clients. If you are on an Enterprise Vault plan, reach out to your Account Manager for the exact Swagger definitions and Sandbox Vault API keys.
+              Our API is currently available exclusively for Enterprise customers. To get your access keys and official API documentation, please reach out to our enterprise support team.
             </p>
           </div>
           

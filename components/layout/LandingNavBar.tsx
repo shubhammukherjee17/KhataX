@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import logo from '@/app/icon.png';
 import { Menu, X } from 'lucide-react';
 import { LandingNavAuth } from './LandingNavAuth';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -20,9 +22,7 @@ export function LandingNavBar() {
     <nav className="sticky top-0 z-50 border-b border-white/5 bg-[#0a0a0a]/80 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-[#00ea77] flex items-center justify-center">
-            <div className="w-3 h-3 bg-black rounded-sm"></div>
-          </div>
+          <Image src={logo} alt="KhataX Logo" width={32} height={32} className="rounded-lg object-contain" />
           <span className="font-bold text-xl tracking-tight text-white">KhataX</span>
         </div>
         {/* Desktop Links */}

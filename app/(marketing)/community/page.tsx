@@ -22,38 +22,38 @@ export default function CommunityPage() {
       </header>
       
       <main className="flex-1 flex flex-col items-center p-12 lg:p-24 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[150px] pointer-events-none"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00ea77]/5 rounded-full blur-[150px] pointer-events-none"></div>
         
         <div className="max-w-4xl w-full relative z-10 text-center">
-          <div className="mx-auto w-16 h-16 rounded-full bg-blue-500/10 flex items-center justify-center mb-6">
-            <Users className="w-8 h-8 text-blue-500" />
+          <div className="mx-auto w-16 h-16 rounded-full bg-[#00ea77]/10 flex items-center justify-center mb-6">
+            <Users className="w-8 h-8 text-[#00ea77]" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-6">The KhataX Network</h1>
-          <p className="text-xl text-slate-400 mb-12 max-w-2xl mx-auto">Join India's fastest-growing ecosystem of wholesalers, distributors, and business owners scaling their operations mathematically.</p>
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-6">The KhataX Community</h1>
+          <p className="text-xl text-slate-400 mb-12 max-w-2xl mx-auto">Join India's fastest-growing ecosystem of wholesalers, distributors, and business owners who are scaling their businesses together.</p>
           
           <div className="grid md:grid-cols-3 gap-6 mb-12 text-left">
-             <div className="bg-[#111] p-8 border border-white/10 rounded-3xl hover:border-blue-500/50 transition">
+             <div className="bg-[#111] p-8 border border-white/10 rounded-3xl hover:border-[#00ea77]/30 transition">
                <Globe className="w-8 h-8 text-[#00ea77] mb-4" />
-               <h3 className="text-xl font-bold text-white mb-2">10,000+ Founders</h3>
-               <p className="text-sm text-slate-400">Network with distributors across 15+ states sharing localized insights and supply-chain logistics advice.</p>
+               <h3 className="text-xl font-bold text-white mb-2">10,000+ Businesses</h3>
+               <p className="text-sm text-slate-400">Connect with fellow business owners from across the country to share insights and discuss market trends.</p>
              </div>
-             <div className="bg-[#111] p-8 border border-white/10 rounded-3xl hover:border-blue-500/50 transition">
-               <MessageSquare className="w-8 h-8 text-blue-500 mb-4" />
-               <h3 className="text-xl font-bold text-white mb-2">Private Discord</h3>
-               <p className="text-sm text-slate-400">Get direct access to our product engineering team. Shape the roadmap by voting on features.</p>
+             <div className="bg-[#111] p-8 border border-white/10 rounded-3xl hover:border-[#00ea77]/30 transition">
+               <MessageSquare className="w-8 h-8 text-[#00ea77] mb-4" />
+               <h3 className="text-xl font-bold text-white mb-2">Exclusive Forums</h3>
+               <p className="text-sm text-slate-400">Chat directly with our team, give feedback on new features, and vote on what we should build next.</p>
              </div>
-             <div className="bg-[#111] p-8 border border-white/10 rounded-3xl hover:border-blue-500/50 transition">
-               <Award className="w-8 h-8 text-yellow-500 mb-4" />
-               <h3 className="text-xl font-bold text-white mb-2">Ambassador Events</h3>
-               <p className="text-sm text-slate-400">Attend exclusive physical meetups in Tier-1 and Tier-2 cities hosted by the KhataX executive team.</p>
+             <div className="bg-[#111] p-8 border border-white/10 rounded-3xl hover:border-[#00ea77]/30 transition">
+               <Award className="w-8 h-8 text-[#00ea77] mb-4" />
+               <h3 className="text-xl font-bold text-white mb-2">Local Meetups</h3>
+               <p className="text-sm text-slate-400">Attend community events in your city to network with other KhataX users and learn industry best practices.</p>
              </div>
           </div>
 
-          <div className="bg-gradient-to-r from-blue-900/20 to-[#00ea77]/10 p-12 border border-white/10 rounded-3xl">
-            <h2 className="text-2xl font-bold text-white mb-4">Ready to Network?</h2>
-            <p className="text-slate-300 mb-8 max-w-xl mx-auto">Active KhataX Pro subscribers are automatically invited to the master Discord channel via their verified email address.</p>
-            <button className="px-8 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-500 transition-colors">
-              Claim Community Access
+          <div className="bg-gradient-to-r from-[#00ea77]/5 to-[#00ea77]/10 p-12 border border-white/10 rounded-3xl">
+            <h2 className="text-2xl font-bold text-white mb-4">Ready to Join?</h2>
+            <p className="text-slate-300 mb-8 max-w-xl mx-auto">Active KhataX Pro subscribers receive a direct invitation to our exclusive community forum via email.</p>
+            <button className="px-8 py-3 bg-[#00ea77] text-black rounded-xl font-bold hover:bg-[#00c563] transition-colors">
+              Join the Community
             </button>
           </div>
         </div>
