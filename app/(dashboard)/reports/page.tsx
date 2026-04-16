@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import NumberFlow from '@number-flow/react';
 import { useTransactionStore } from '@/store/useTransactionStore';
 import { useMasterDataStore } from '@/store/useMasterDataStore';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -18,14 +19,14 @@ export default function ReportsPage() {
   if (!isPremium) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-        <div className="w-16 h-16 rounded-full bg-[#00FFA3]/10 flex items-center justify-center mb-6">
-          <Lock className="w-8 h-8 text-[#00FFA3]" />
+        <div className="w-16 h-16 rounded-full bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mb-6">
+          <Lock className="w-8 h-8 text-brand-primary" />
         </div>
-        <h2 className="text-2xl font-bold text-white mb-2">Premium Feature Locked</h2>
-        <p className="text-slate-400 max-w-md mb-8">
+        <h2 className="text-2xl font-heading font-semibold text-white mb-2">Premium Feature Locked</h2>
+        <p className="text-zinc-500 font-medium max-w-md mb-8">
           Detailed business reporting, GST reconciliation, and stock analytics are available exclusively for Premium subscribers.
         </p>
-        <Link href="/#pricing" className="bg-[#00FFA3] text-black px-8 py-3 rounded-full font-bold hover:bg-[#00ffa3]/90 transition shadow-[0_0_20px_rgba(0,234,119,0.2)]">
+        <Link href="/#pricing" className="bg-brand-primary text-black px-8 py-3 rounded-full font-heading font-semibold hover:bg-brand-primary/90 transition-all active:scale-[0.98] shadow-sm">
           Upgrade to Professional
         </Link>
       </div>
@@ -121,59 +122,59 @@ export default function ReportsPage() {
   const salesByItem = Object.values(salesByItemRaw).sort((a, b) => b.revenue - a.revenue);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-[1400px] mx-auto pb-12 w-full pt-4">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-white">Reports Center</h1>
-          <p className="text-sm font-semibold text-slate-400">View performance, compliance, and stock reports.</p>
+          <h1 className="text-3xl font-heading font-semibold tracking-tight text-white leading-tight">Reports Center</h1>
+          <p className="text-sm font-medium text-zinc-400 mt-1">View performance, compliance, and stock reports.</p>
         </div>
         <button
-          className="flex items-center gap-2 bg-[#111] border border-white/10 text-white font-bold px-4 py-2 rounded-xl hover:bg-white/5 hover:border-[#00FFA3]/50 transition shadow-sm"
+          className="flex items-center gap-2 bg-white/[0.02] border border-white/[0.04] text-white font-heading font-semibold px-4 py-2.5 rounded-xl hover:bg-white/[0.04] transition-all shadow-sm active:scale-[0.98]"
         >
           <Download className="h-4 w-4" /> Export PDF
         </button>
       </div>
 
-      <div className="flex bg-[#111] rounded-2xl p-1.5 border border-white/10 w-fit shadow-sm overflow-x-auto max-w-full">
+      <div className="flex bg-[#0A0A0A] rounded-2xl p-1.5 border border-white/[0.04] w-fit shadow-sm overflow-x-auto max-w-full gap-1">
         <button
           onClick={() => setActiveTab('pnl')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'pnl' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] tracking-widest font-bold transition-all whitespace-nowrap uppercase ${activeTab === 'pnl' ? 'bg-[#00FFA3]/10 text-brand-primary' : 'text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.02]'}`}
         >
           <TrendingUp className="h-4 w-4" /> Profit & Loss
         </button>
         <button
           onClick={() => setActiveTab('outstanding')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'outstanding' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] tracking-widest font-bold transition-all whitespace-nowrap uppercase ${activeTab === 'outstanding' ? 'bg-[#00FFA3]/10 text-brand-primary' : 'text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.02]'}`}
         >
           <FileText className="h-4 w-4" /> Outstanding
         </button>
         <button
           onClick={() => setActiveTab('gst')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'gst' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] tracking-widest font-bold transition-all whitespace-nowrap uppercase ${activeTab === 'gst' ? 'bg-[#00FFA3]/10 text-brand-primary' : 'text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.02]'}`}
         >
           <FileText className="h-4 w-4" /> GST (GSTR-3B)
         </button>
         <button
           onClick={() => setActiveTab('stock')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'stock' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] tracking-widest font-bold transition-all whitespace-nowrap uppercase ${activeTab === 'stock' ? 'bg-[#00FFA3]/10 text-brand-primary' : 'text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.02]'}`}
         >
           <PieChart className="h-4 w-4" /> Stock Summary
         </button>
         <button
           onClick={() => setActiveTab('dead_stock')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'dead_stock' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] tracking-widest font-bold transition-all whitespace-nowrap uppercase ${activeTab === 'dead_stock' ? 'bg-[#00FFA3]/10 text-brand-primary' : 'text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.02]'}`}
         >
           <TrendingUp className="h-4 w-4" /> Dead Stock
         </button>
         <button
           onClick={() => setActiveTab('sales_party')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'sales_party' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] tracking-widest font-bold transition-all whitespace-nowrap uppercase ${activeTab === 'sales_party' ? 'bg-[#00FFA3]/10 text-brand-primary' : 'text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.02]'}`}
         >
           <Users className="h-4 w-4" /> Party Sales
         </button>
         <button
           onClick={() => setActiveTab('sales_item')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'sales_item' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] tracking-widest font-bold transition-all whitespace-nowrap uppercase ${activeTab === 'sales_item' ? 'bg-[#00FFA3]/10 text-brand-primary' : 'text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.02]'}`}
         >
           <Package className="h-4 w-4" /> Item Sales
         </button>
@@ -187,25 +188,25 @@ export default function ReportsPage() {
         <div className="grid gap-6">
           {activeTab === 'pnl' && (
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-[#111] p-6 rounded-2xl border border-white/10 shadow-sm space-y-6">
+              <div className="bg-[#0A0A0A] p-8 rounded-2xl border border-white/[0.04] shadow-sm space-y-8">
                 <div>
-                  <h2 className="text-lg font-bold text-white">Income Statement</h2>
-                  <p className="text-sm font-semibold text-slate-400">For the month of {format(currentDate, 'MMMM yyyy')}</p>
+                  <h2 className="text-xl font-heading font-semibold text-white">Income Statement</h2>
+                  <p className="text-[10px] font-mono font-semibold uppercase tracking-[0.2em] text-zinc-500 mt-1">For {format(currentDate, 'MMMM yyyy')}</p>
                 </div>
 
                 <div className="space-y-4">
-                  <div className="flex justify-between items-center py-2 border-b border-white/5">
-                    <span className="text-slate-400 font-bold text-sm">Total Sales Revenue</span>
-                    <span className="font-heading font-bold text-white text-base">₹{sales.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
+                  <div className="flex justify-between items-center py-2.5 border-b border-white/[0.04]">
+                    <span className="text-zinc-400 font-medium text-sm">Total Sales Revenue</span>
+                    <span className="font-semibold text-white text-base flex items-center"><span>₹</span><NumberFlow value={sales} format={{ maximumFractionDigits: 2 }} /></span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b border-white/5">
-                    <span className="text-slate-400 font-bold text-sm">Cost of Goods (Purchases)</span>
-                    <span className="font-heading font-bold text-white text-base">₹{purchases.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
+                  <div className="flex justify-between items-center py-2.5 border-b border-white/[0.04]">
+                    <span className="text-zinc-400 font-medium text-sm">Cost of Goods (Purchases)</span>
+                    <span className="font-semibold text-white text-base flex items-center"><span>₹</span><NumberFlow value={purchases} format={{ maximumFractionDigits: 2 }} /></span>
                   </div>
-                  <div className="flex justify-between items-center py-4 border-t-2 border-white/10">
-                    <span className="font-heading font-bold text-white text-lg tracking-wider uppercase">Gross Profit</span>
-                    <span className={`font-heading font-bold text-lg ${grossProfit >= 0 ? 'text-[#00FFA3]' : 'text-red-500'}`}>
-                      ₹{grossProfit.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
+                  <div className="flex justify-between items-center py-5 border-t border-white/[0.08]">
+                    <span className="font-semibold text-white text-sm tracking-wider uppercase font-mono">Gross Profit</span>
+                    <span className={`font-semibold text-xl flex items-center ${grossProfit >= 0 ? 'text-brand-primary' : 'text-red-500'}`}>
+                      <span>₹</span><NumberFlow value={grossProfit} format={{ maximumFractionDigits: 2 }} />
                     </span>
                   </div>
                 </div>
@@ -229,57 +230,57 @@ export default function ReportsPage() {
           )}
 
           {activeTab === 'gst' && (
-            <div className="bg-[#111] p-6 rounded-2xl border border-white/10 shadow-sm space-y-6 max-w-3xl">
+            <div className="bg-[#0A0A0A] p-6 rounded-2xl border border-white/[0.04] shadow-sm space-y-6 max-w-3xl">
               <div>
-                <h2 className="text-lg font-bold text-white">GSTR-3B Summary Estimate</h2>
-                <p className="text-sm font-semibold text-slate-400">For the month of {format(currentDate, 'MMMM yyyy')}</p>
+                <h2 className="text-xl font-heading font-semibold text-white">GSTR-3B Summary Estimate</h2>
+                <p className="text-[10px] uppercase font-mono font-semibold tracking-[0.2em] text-zinc-500 mt-1">For {format(currentDate, 'MMMM yyyy')}</p>
               </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-5 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
-                  <p className="text-[10px] text-blue-400 font-bold uppercase tracking-wider">Outward Supplies (Sales)</p>
-                  <p className="text-2xl font-heading font-bold text-blue-500 mt-1">₹{sales.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
-                  <p className="text-xs font-bold text-blue-400/80 mt-2">Output Tax: ₹{outputGST.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
+                <div className="p-6 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
+                  <p className="text-[9px] text-blue-400 font-mono font-semibold uppercase tracking-[0.2em]">Outward Supplies (Sales)</p>
+                  <p className="text-2xl font-semibold text-blue-500 mt-2 flex items-center"><span>₹</span><NumberFlow value={sales} format={{ maximumFractionDigits: 2 }} /></p>
+                  <p className="text-[11px] font-semibold text-blue-400/80 mt-3 flex gap-1">Output Tax: <span>₹</span><NumberFlow value={outputGST} format={{ maximumFractionDigits: 2 }}/></p>
                 </div>
-                <div className="p-5 bg-orange-500/10 border border-orange-500/20 rounded-2xl">
-                  <p className="text-[10px] text-orange-400 font-bold uppercase tracking-wider">Inward Supplies (Purchases)</p>
-                  <p className="text-2xl font-heading font-bold text-orange-500 mt-1">₹{purchases.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
-                  <p className="text-xs font-bold text-orange-400/80 mt-2">Input Tax Credit (ITC): ₹{inputGST.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
+                <div className="p-6 bg-orange-500/10 border border-orange-500/20 rounded-2xl">
+                  <p className="text-[9px] text-orange-400 font-mono font-semibold uppercase tracking-[0.2em]">Inward Supplies (Purchases)</p>
+                  <p className="text-2xl font-semibold text-orange-500 mt-2 flex items-center"><span>₹</span><NumberFlow value={purchases} format={{ maximumFractionDigits: 2 }} /></p>
+                  <p className="text-[11px] font-semibold text-orange-400/80 mt-3 flex gap-1">ITC Base: <span>₹</span><NumberFlow value={inputGST} format={{ maximumFractionDigits: 2 }}/></p>
                 </div>
               </div>
 
-              <div className={`p-5 rounded-2xl border flex justify-between items-center ${gstLiability > 0 ? 'bg-orange-500/10 border-orange-500/20' : 'bg-[#00FFA3]/10 border-[#00FFA3]/20'}`}>
+              <div className={`p-6 rounded-2xl border flex justify-between items-center ${gstLiability > 0 ? 'bg-orange-500/10 border-orange-500/20' : 'bg-brand-primary/10 border-brand-primary/20'}`}>
                 <div>
-                  <p className={`text-[10px] font-bold uppercase tracking-wider ${gstLiability > 0 ? 'text-orange-400' : 'text-[#00FFA3]'}`}>
+                  <p className={`text-[9px] font-mono font-semibold uppercase tracking-[0.2em] ${gstLiability > 0 ? 'text-orange-400' : 'text-brand-primary'}`}>
                     {gstLiability > 0 ? 'Net GST Payable' : 'Net ITC Available'}
                   </p>
-                  <p className={`text-2xl font-heading font-bold mt-1 ${gstLiability > 0 ? 'text-orange-500' : 'text-[#00FFA3]'}`}>
-                    ₹{Math.abs(gstLiability).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
+                  <p className={`text-2xl font-semibold mt-2 flex items-center ${gstLiability > 0 ? 'text-orange-500' : 'text-brand-primary'}`}>
+                    <span>₹</span><NumberFlow value={Math.abs(gstLiability)} format={{ maximumFractionDigits: 2 }} />
                   </p>
                 </div>
-                <FileText className={`h-8 w-8 opacity-50 ${gstLiability > 0 ? 'text-orange-500' : 'text-[#00FFA3]'}`} />
+                <FileText className={`h-8 w-8 opacity-50 ${gstLiability > 0 ? 'text-orange-500' : 'text-brand-primary'}`} />
               </div>
             </div>
           )}
 
           {activeTab === 'stock' && (
-            <div className="bg-[#111] p-6 rounded-2xl border border-white/10 shadow-sm">
-              <div className="flex justify-between items-end mb-6">
+            <div className="bg-[#0A0A0A] p-6 rounded-2xl border border-white/[0.04] shadow-sm">
+              <div className="flex justify-between items-end mb-6 border-b border-white/[0.04] pb-4">
                 <div>
-                  <h2 className="text-lg font-bold text-white">Stock Valuation Summary</h2>
-                  <p className="text-sm font-semibold text-slate-400">Real-time inventory worth</p>
+                  <h2 className="text-xl font-heading font-semibold text-white">Stock Valuation Summary</h2>
+                  <p className="text-[10px] font-mono font-semibold uppercase tracking-[0.2em] text-zinc-500 mt-1">Real-time inventory worth</p>
                 </div>
-                <div className="text-right">
-                  <p className="text-[10px] uppercase tracking-wider font-bold text-slate-500">Total Valuation</p>
-                  <p className="text-2xl font-heading font-bold text-[#00FFA3]">
-                    ₹{items.filter(i => i.type === 'product').reduce((sum, i) => sum + (i.currentStock * i.purchasePrice), 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
+                <div className="text-right flex flex-col justify-end">
+                  <p className="text-[9px] uppercase tracking-[0.2em] font-mono font-semibold text-zinc-500">Total Valuation</p>
+                  <p className="text-2xl font-semibold text-brand-primary flex items-center justify-end mt-1">
+                    <span>₹</span><NumberFlow value={items.filter(i => i.type === 'product').reduce((sum, i) => sum + (i.currentStock * i.purchasePrice), 0)} format={{ maximumFractionDigits: 2 }} />
                   </p>
                 </div>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left font-medium">
-                  <thead className="bg-[#0a0a0a]/50 text-[10px] uppercase font-bold tracking-wider text-slate-500 border-b border-white/5">
+                  <thead className="bg-transparent text-[9px] uppercase font-mono font-semibold tracking-[0.2em] text-zinc-500 border-b border-white/[0.04]">
                     <tr>
                       <th className="px-6 py-4">Product Name</th>
                       <th className="px-6 py-4 text-right">In Stock Qty</th>
@@ -287,16 +288,16 @@ export default function ReportsPage() {
                       <th className="px-6 py-4 text-right">Stock Value</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5">
+                  <tbody className="divide-y divide-white/[0.04]">
                     {items.filter(i => i.type === 'product').map((item) => (
-                      <tr key={item.id} className="hover:bg-white/5 transition-colors group">
-                        <td className="px-6 py-4 font-bold text-white text-sm">{item.name}</td>
-                        <td className={`px-6 py-4 text-right font-bold text-sm ${item.currentStock <= 0 ? 'text-red-500' : 'text-white'}`}>
-                          {item.currentStock} {item.unit}
+                      <tr key={item.id} className="hover:bg-white/[0.02] transition-colors group">
+                        <td className="px-6 py-4 font-semibold text-white text-sm">{item.name}</td>
+                        <td className={`px-6 py-4 text-right font-semibold text-sm ${item.currentStock <= 0 ? 'text-red-500' : 'text-white'}`}>
+                          <NumberFlow value={item.currentStock} /> {item.unit}
                         </td>
-                        <td className="px-6 py-4 text-right text-slate-300 font-bold text-sm">₹{item.purchasePrice.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</td>
-                        <td className="px-6 py-4 text-right font-heading font-bold text-[#00FFA3] text-sm">
-                          ₹{(item.currentStock * item.purchasePrice).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
+                        <td className="px-6 py-4 text-right text-zinc-300 font-semibold text-sm flex justify-end items-center"><span>₹</span><NumberFlow value={item.purchasePrice} format={{ maximumFractionDigits: 2 }} /></td>
+                        <td className="px-6 py-4 text-right font-semibold text-brand-primary text-sm">
+                          <div className="flex justify-end items-center"><span>₹</span><NumberFlow value={(item.currentStock * item.purchasePrice)} format={{ maximumFractionDigits: 2 }} /></div>
                         </td>
                       </tr>
                     ))}
@@ -307,59 +308,59 @@ export default function ReportsPage() {
           )}
 
           {activeTab === 'outstanding' && (
-            <div className="bg-[#111] p-6 rounded-2xl border border-white/10 shadow-sm space-y-6">
-              <div className="flex justify-between items-end mb-6">
+            <div className="bg-[#0A0A0A] p-6 rounded-2xl border border-white/[0.04] shadow-sm space-y-8">
+              <div className="flex justify-between items-end mb-2 border-b border-white/[0.04] pb-4">
                 <div>
-                  <h2 className="text-lg font-bold text-white">Outstanding Summary</h2>
-                  <p className="text-sm font-semibold text-slate-400">Amount to Receive vs Amount to Pay</p>
+                  <h2 className="text-xl font-heading font-semibold text-white">Outstanding Summary</h2>
+                  <p className="text-[10px] font-mono font-semibold uppercase tracking-[0.2em] text-zinc-500 mt-1">Amount to Receive vs Amount to Pay</p>
                 </div>
               </div>
 
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="p-5 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
-                  <p className="text-[10px] text-blue-400 font-bold tracking-wider uppercase">Total Receivables</p>
-                  <p className="text-2xl font-heading font-bold text-blue-500 mt-1">₹{totalReceivables.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
-                  <p className="text-xs font-bold text-blue-400/80 mt-2">Money you will get from Customers</p>
+                <div className="p-6 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
+                  <p className="text-[9px] text-blue-400 font-mono font-semibold tracking-[0.2em] uppercase">Total Receivables</p>
+                  <p className="text-2xl font-semibold text-blue-500 mt-2 flex items-center"><span>₹</span><NumberFlow value={totalReceivables} format={{ maximumFractionDigits: 2 }} /></p>
+                  <p className="text-[11px] font-semibold text-blue-400/80 mt-3">Money you will get from Customers</p>
                 </div>
-                <div className="p-5 bg-orange-500/10 border border-orange-500/20 rounded-2xl">
-                  <p className="text-[10px] text-orange-400 font-bold tracking-wider uppercase">Total Payables</p>
-                  <p className="text-2xl font-heading font-bold text-orange-500 mt-1">₹{totalPayables.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
-                  <p className="text-xs font-bold text-orange-400/80 mt-2">Money you owe to Suppliers</p>
+                <div className="p-6 bg-orange-500/10 border border-orange-500/20 rounded-2xl">
+                  <p className="text-[9px] text-orange-400 font-mono font-semibold tracking-[0.2em] uppercase">Total Payables</p>
+                  <p className="text-2xl font-semibold text-orange-500 mt-2 flex items-center"><span>₹</span><NumberFlow value={totalPayables} format={{ maximumFractionDigits: 2 }} /></p>
+                  <p className="text-[11px] font-semibold text-orange-400/80 mt-3">Money you owe to Suppliers</p>
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-6 pt-4">
-                <div>
-                  <h3 className="font-bold text-white mb-3 border-b border-white/5 pb-2">Top Debtors (To Receive)</h3>
-                  <div className="space-y-3">
+              <div className="grid md:grid-cols-2 gap-8 pt-4">
+                <div className="bg-white/[0.02] p-5 rounded-2xl border border-white/[0.04]">
+                  <h3 className="font-semibold text-white mb-4 border-b border-white/[0.04] pb-3 text-sm">Top Debtors (To Receive)</h3>
+                  <div className="space-y-4">
                     {parties.filter(p => p.type === 'customer' && p.currentBalance < 0)
                       .sort((a, b) => Math.abs(b.currentBalance) - Math.abs(a.currentBalance))
                       .slice(0, 5)
                       .map(p => (
                         <div key={p.id} className="flex justify-between items-center text-sm">
-                          <span className="font-bold text-slate-300">{p.name}</span>
-                          <span className="font-heading font-bold text-blue-500">₹{Math.abs(p.currentBalance).toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
+                          <span className="font-semibold text-zinc-300">{p.name}</span>
+                          <span className="font-semibold text-blue-500 flex items-center"><span>₹</span><NumberFlow value={Math.abs(p.currentBalance)} format={{ maximumFractionDigits: 2 }} /></span>
                         </div>
                       ))}
                     {parties.filter(p => p.type === 'customer' && p.currentBalance < 0).length === 0 && (
-                      <div className="text-sm font-semibold text-slate-500 italic">No outstanding receivables.</div>
+                      <div className="text-[11px] font-mono font-semibold tracking-widest uppercase text-zinc-500 italic">No outstanding receivables.</div>
                     )}
                   </div>
                 </div>
-                <div>
-                  <h3 className="font-bold text-white mb-3 border-b border-white/5 pb-2">Top Creditors (To Pay)</h3>
-                  <div className="space-y-3">
+                <div className="bg-white/[0.02] p-5 rounded-2xl border border-white/[0.04]">
+                  <h3 className="font-semibold text-white mb-4 border-b border-white/[0.04] pb-3 text-sm">Top Creditors (To Pay)</h3>
+                  <div className="space-y-4">
                     {parties.filter(p => p.type === 'vendor' && p.currentBalance > 0)
                       .sort((a, b) => b.currentBalance - a.currentBalance)
                       .slice(0, 5)
                       .map(p => (
                         <div key={p.id} className="flex justify-between items-center text-sm">
-                          <span className="font-bold text-slate-300">{p.name}</span>
-                          <span className="font-heading font-bold text-orange-500">₹{p.currentBalance.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
+                          <span className="font-semibold text-zinc-300">{p.name}</span>
+                          <span className="font-semibold text-orange-500 flex items-center"><span>₹</span><NumberFlow value={p.currentBalance} format={{ maximumFractionDigits: 2 }} /></span>
                         </div>
                       ))}
                     {parties.filter(p => p.type === 'vendor' && p.currentBalance > 0).length === 0 && (
-                      <div className="text-sm font-semibold text-slate-500 italic">No outstanding payables.</div>
+                      <div className="text-[11px] font-mono font-semibold tracking-widest uppercase text-zinc-500 italic">No outstanding payables.</div>
                     )}
                   </div>
                 </div>
@@ -368,23 +369,23 @@ export default function ReportsPage() {
           )}
 
           {activeTab === 'dead_stock' && (
-            <div className="bg-[#111] p-6 rounded-2xl border border-white/10 shadow-sm">
-              <div className="flex justify-between items-end mb-6">
+            <div className="bg-[#0A0A0A] p-6 rounded-2xl border border-white/[0.04] shadow-sm">
+              <div className="flex justify-between items-end mb-6 border-b border-white/[0.04] pb-4">
                 <div>
-                  <h2 className="text-lg font-bold text-white">Dead Stock Report</h2>
-                  <p className="text-sm font-semibold text-slate-400">Items with &gt;0 stock but no sales in the last 30 days.</p>
+                  <h2 className="text-xl font-heading font-semibold text-white">Dead Stock Report</h2>
+                  <p className="text-[10px] font-mono font-semibold uppercase tracking-[0.2em] text-zinc-500 mt-1">Items with &gt;0 stock but no sales in the last 30 days.</p>
                 </div>
-                <div className="text-right">
-                  <p className="text-[10px] uppercase font-bold tracking-wider text-slate-500">Capital Blocked</p>
-                  <p className="text-2xl font-heading font-bold text-red-500">
-                    ₹{deadStockValue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
+                <div className="text-right flex flex-col justify-end">
+                  <p className="text-[9px] uppercase font-mono font-semibold tracking-[0.2em] text-zinc-500">Capital Blocked</p>
+                  <p className="text-2xl font-semibold text-red-500 flex items-center justify-end mt-1">
+                    <span>₹</span><NumberFlow value={deadStockValue} format={{ maximumFractionDigits: 2 }} />
                   </p>
                 </div>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left font-medium">
-                  <thead className="bg-[#0a0a0a]/50 text-[10px] uppercase font-bold tracking-wider text-slate-500 border-b border-white/5">
+                  <thead className="bg-transparent text-[9px] uppercase font-mono font-semibold tracking-[0.2em] text-zinc-500 border-b border-white/[0.04]">
                     <tr>
                       <th className="px-6 py-4">Product Name</th>
                       <th className="px-6 py-4 text-right">In Stock Qty</th>
@@ -392,21 +393,21 @@ export default function ReportsPage() {
                       <th className="px-6 py-4 text-right">Blocked Capital</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5">
+                  <tbody className="divide-y divide-white/[0.04]">
                     {deadStockItems.length === 0 ? (
                       <tr>
-                        <td colSpan={4} className="px-6 py-8 text-center font-bold text-slate-500">No dead stock found. Great inventory management!</td>
+                        <td colSpan={4} className="px-6 py-8 text-center font-semibold text-[11px] font-mono tracking-widest uppercase text-zinc-500">No dead stock found. Great inventory management!</td>
                       </tr>
                     ) : (
                       deadStockItems.map((item) => (
-                        <tr key={item.id} className="hover:bg-white/5 transition-colors group">
-                          <td className="px-6 py-4 font-bold text-white text-sm">{item.name}</td>
-                          <td className="px-6 py-4 text-right text-orange-500 font-heading font-bold text-sm">
-                            {item.currentStock} {item.unit}
+                        <tr key={item.id} className="hover:bg-white/[0.02] transition-colors group">
+                          <td className="px-6 py-4 font-semibold text-white text-sm">{item.name}</td>
+                          <td className="px-6 py-4 text-right text-orange-500 font-semibold text-sm">
+                            <NumberFlow value={item.currentStock} /> {item.unit}
                           </td>
-                          <td className="px-6 py-4 text-right text-slate-300 font-bold text-sm">₹{item.purchasePrice.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</td>
-                          <td className="px-6 py-4 text-right font-heading font-bold text-red-500 text-sm">
-                            ₹{(item.currentStock * item.purchasePrice).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
+                          <td className="px-6 py-4 text-right text-zinc-400 font-semibold text-sm flex items-center justify-end"><span>₹</span><NumberFlow value={item.purchasePrice} format={{ maximumFractionDigits: 2 }} /></td>
+                          <td className="px-6 py-4 text-right font-semibold text-red-500 text-sm">
+                            <div className="flex items-center justify-end"><span>₹</span><NumberFlow value={(item.currentStock * item.purchasePrice)} format={{ maximumFractionDigits: 2 }} /></div>
                           </td>
                         </tr>
                       ))
@@ -418,43 +419,43 @@ export default function ReportsPage() {
           )}
 
           {activeTab === 'sales_party' && (
-            <div className="bg-[#111] p-6 rounded-2xl border border-white/10 shadow-sm">
-              <div className="flex justify-between items-end mb-6">
+            <div className="bg-[#0A0A0A] p-6 rounded-2xl border border-white/[0.04] shadow-sm">
+              <div className="flex justify-between items-end mb-6 border-b border-white/[0.04] pb-4">
                 <div>
-                  <h2 className="text-lg font-bold text-white">Sales by Retailer</h2>
-                  <p className="text-sm font-semibold text-slate-400">For the month of {format(currentDate, 'MMMM yyyy')}</p>
+                  <h2 className="text-xl font-heading font-semibold text-white">Sales by Retailer</h2>
+                  <p className="text-[10px] font-mono font-semibold uppercase tracking-[0.2em] text-zinc-500 mt-1">For {format(currentDate, 'MMMM yyyy')}</p>
                 </div>
-                <div className="text-right">
-                  <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Total B2B Sales</p>
-                  <p className="text-2xl font-heading font-bold text-blue-500">
-                    ₹{sales.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
+                <div className="text-right flex flex-col justify-end">
+                  <p className="text-[9px] text-zinc-500 font-mono uppercase font-semibold tracking-[0.2em]">Total B2B Sales</p>
+                  <p className="text-2xl font-semibold text-blue-500 flex items-center justify-end mt-1">
+                    <span>₹</span><NumberFlow value={sales} format={{ maximumFractionDigits: 2 }} />
                   </p>
                 </div>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left font-medium">
-                  <thead className="bg-[#0a0a0a]/50 text-[10px] uppercase font-bold tracking-wider text-slate-500 border-b border-white/5">
+                  <thead className="bg-transparent text-[9px] uppercase font-mono font-semibold tracking-[0.2em] text-zinc-500 border-b border-white/[0.04]">
                     <tr>
                       <th className="px-6 py-4">Retailer Name</th>
                       <th className="px-6 py-4 text-center">Invoices count</th>
                       <th className="px-6 py-4 text-right">Total Revenue Generated</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5">
+                  <tbody className="divide-y divide-white/[0.04]">
                     {salesByParty.length === 0 ? (
                       <tr>
-                        <td colSpan={3} className="px-6 py-8 text-center font-bold text-slate-500">No B2B sales data for this period.</td>
+                        <td colSpan={3} className="px-6 py-8 text-center text-[11px] font-mono tracking-widest font-semibold uppercase text-zinc-500">No B2B sales data for this period.</td>
                       </tr>
                     ) : (
                       salesByParty.map((party, idx) => (
-                        <tr key={idx} className="hover:bg-white/5 transition-colors group">
-                          <td className="px-6 py-4 font-bold text-white text-sm">{party.name}</td>
-                          <td className="px-6 py-4 text-center text-slate-400 font-bold text-sm">
-                            {party.invoices}
+                        <tr key={idx} className="hover:bg-white/[0.02] transition-colors group">
+                          <td className="px-6 py-4 font-semibold text-white text-sm">{party.name}</td>
+                          <td className="px-6 py-4 text-center text-zinc-400 font-semibold text-sm">
+                            <NumberFlow value={party.invoices} />
                           </td>
-                          <td className="px-6 py-4 text-right font-heading font-bold text-white text-sm">
-                            ₹{party.total.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
+                          <td className="px-6 py-4 text-right font-semibold text-white text-sm">
+                            <div className="flex items-center justify-end"><span>₹</span><NumberFlow value={party.total} format={{ maximumFractionDigits: 2 }} /></div>
                           </td>
                         </tr>
                       ))
@@ -466,37 +467,37 @@ export default function ReportsPage() {
           )}
 
           {activeTab === 'sales_item' && (
-            <div className="bg-[#111] p-6 rounded-2xl border border-white/10 shadow-sm">
-              <div className="flex justify-between items-end mb-6">
+            <div className="bg-[#0A0A0A] p-6 rounded-2xl border border-white/[0.04] shadow-sm">
+              <div className="flex justify-between items-end mb-6 border-b border-white/[0.04] pb-4">
                 <div>
-                  <h2 className="text-lg font-bold text-white">Sales by Item</h2>
-                  <p className="text-sm font-semibold text-slate-400">For the month of {format(currentDate, 'MMMM yyyy')}</p>
+                  <h2 className="text-xl font-heading font-semibold text-white">Sales by Item</h2>
+                  <p className="text-[10px] font-mono font-semibold uppercase tracking-[0.2em] text-zinc-500 mt-1">For {format(currentDate, 'MMMM yyyy')}</p>
                 </div>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="w-full text-left font-medium">
-                  <thead className="bg-[#0a0a0a]/50 text-[10px] uppercase font-bold tracking-wider text-slate-500 border-b border-white/5">
+                  <thead className="bg-transparent text-[9px] uppercase font-mono font-semibold tracking-[0.2em] text-zinc-500 border-b border-white/[0.04]">
                     <tr>
                       <th className="px-6 py-4">Item Name</th>
                       <th className="px-6 py-4 text-center">Quantity Sold</th>
                       <th className="px-6 py-4 text-right">Revenue Generated</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5">
+                  <tbody className="divide-y divide-white/[0.04]">
                     {salesByItem.length === 0 ? (
                       <tr>
-                        <td colSpan={3} className="px-6 py-8 text-center font-bold text-slate-500">No item sales data for this period.</td>
+                        <td colSpan={3} className="px-6 py-8 text-center text-[11px] font-mono tracking-widest font-semibold uppercase text-zinc-500">No item sales data for this period.</td>
                       </tr>
                     ) : (
                       salesByItem.map((item, idx) => (
-                        <tr key={idx} className="hover:bg-white/5 transition-colors group">
-                          <td className="px-6 py-4 font-bold text-white text-sm">{item.name}</td>
-                          <td className="px-6 py-4 text-center text-slate-400 font-bold text-sm">
-                            {item.quantity}
+                        <tr key={idx} className="hover:bg-white/[0.02] transition-colors group">
+                          <td className="px-6 py-4 font-semibold text-white text-sm">{item.name}</td>
+                          <td className="px-6 py-4 text-center text-zinc-400 font-semibold text-sm">
+                            <NumberFlow value={item.quantity} />
                           </td>
-                          <td className="px-6 py-4 text-right font-heading font-bold text-white text-sm">
-                            ₹{item.revenue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
+                          <td className="px-6 py-4 text-right font-semibold text-white text-sm">
+                            <div className="flex items-center justify-end"><span>₹</span><NumberFlow value={item.revenue} format={{ maximumFractionDigits: 2 }} /></div>
                           </td>
                         </tr>
                       ))

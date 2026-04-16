@@ -111,9 +111,9 @@ export function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         <div className="p-4 space-y-6">
           <Link
             href="/sales/new"
-            className="flex w-full items-center justify-center gap-2 bg-brand-primary text-black font-heading font-bold px-4 py-3 rounded-xl hover:bg-brand-primary/90 transition-all shadow-[0_0_15px_rgba(0,255,163,0.2)] active:scale-[0.98]"
+            className="flex w-full items-center justify-center gap-2 bg-white/[0.04] text-white font-heading font-medium px-4 py-2.5 rounded-xl border border-white/[0.08] hover:bg-white/[0.08] transition-all active:scale-[0.98] mt-2 group"
           >
-            <Plus className="h-5 w-5" strokeWidth={2.5} /> New Transaction
+            <Plus className="h-4 w-4 text-brand-primary group-hover:scale-110 transition-transform" strokeWidth={3} /> New Transaction
           </Link>
 
           <div className="flex flex-col gap-3 px-4 pb-4">
