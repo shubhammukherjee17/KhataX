@@ -72,7 +72,7 @@ export default function PurchasesPage() {
               placeholder="Search transactions, vendors or amounts..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-11 pr-4 py-2 bg-[#121c17] border border-[#1a231f] rounded-full text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#00ea77]/50 focus:ring-1 focus:ring-[#00ea77]/50 transition-colors"
+              className="w-full pl-11 pr-4 py-2 bg-[#121c17] border border-[#1a231f] rounded-full text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#00FFA3]/50 focus:ring-1 focus:ring-[#00FFA3]/50 transition-colors"
             />
           </div>
 
@@ -82,7 +82,7 @@ export default function PurchasesPage() {
 
           <Link
             href="/purchases/new"
-            className="flex items-center gap-2 bg-[#00ea77] text-[#0b110e] px-4 py-2 rounded-full font-bold text-sm hover:bg-[#00ea77]/90 transition-all shadow-[0_0_15px_rgba(0,234,119,0.2)]"
+            className="flex items-center gap-2 bg-[#00FFA3] text-[#0b110e] px-4 py-2 rounded-full font-bold text-sm hover:bg-[#00FFA3]/90 transition-all shadow-[0_0_15px_rgba(0,234,119,0.2)]"
           >
             <Plus className="h-4 w-4 stroke-[3]" /> Add Purchase
           </Link>
@@ -110,15 +110,15 @@ export default function PurchasesPage() {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div className="bg-[#121c17] rounded-2xl border border-[#1a231f] p-5 relative overflow-hidden group hover:border-[#00ea77]/30 transition-all">
+        <div className="bg-[#121c17] rounded-2xl border border-[#1a231f] p-5 relative overflow-hidden group hover:border-[#00FFA3]/30 transition-all">
           <div className="flex justify-between items-start mb-6">
-            <div className="w-10 h-10 rounded-xl bg-[#00ea77]/10 flex items-center justify-center">
-              <TrendingUp className="h-5 w-5 text-[#00ea77]" />
+            <div className="w-10 h-10 rounded-xl bg-[#00FFA3]/10 flex items-center justify-center">
+              <TrendingUp className="h-5 w-5 text-[#00FFA3]" />
             </div>
           </div>
           <div>
             <p className="text-xs font-semibold text-slate-500 mb-1">Total Expenses (Month)</p>
-            <h3 className="text-3xl font-extrabold text-white tracking-tight">₹{totalExpensesMonth.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</h3>
+            <h3 className="text-3xl font-heading font-bold text-white tracking-tight">₹{totalExpensesMonth.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</h3>
           </div>
         </div>
 
@@ -130,7 +130,7 @@ export default function PurchasesPage() {
           </div>
           <div>
             <p className="text-xs font-semibold text-slate-500 mb-1">Pending Payments</p>
-            <h3 className="text-3xl font-extrabold text-white tracking-tight">₹{pendingPayments.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</h3>
+            <h3 className="text-3xl font-heading font-bold text-white tracking-tight">₹{pendingPayments.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</h3>
           </div>
         </div>
 
@@ -142,7 +142,7 @@ export default function PurchasesPage() {
           </div>
           <div>
             <p className="text-xs font-semibold text-slate-500 mb-1">GST Input Tax Credit (ITC)</p>
-            <h3 className="text-3xl font-extrabold text-white tracking-tight">₹{totalITC.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</h3>
+            <h3 className="text-3xl font-heading font-bold text-white tracking-tight">₹{totalITC.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</h3>
           </div>
         </div>
       </div>
@@ -192,7 +192,7 @@ export default function PurchasesPage() {
                       </td>
                       <td className="px-6 py-4 text-center">
                          <span className={`inline-flex py-1 px-2.5 rounded text-[10px] font-bold uppercase tracking-wider
-                          ${tx.status === 'paid' ? 'bg-[#00ea77]/10 text-[#00ea77]' :
+                          ${tx.status === 'paid' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' :
                             tx.status === 'partially_paid' ? 'bg-orange-500/10 text-orange-500' :
                               tx.status === 'unpaid' ? 'bg-red-500/10 text-red-500' :
                                 'bg-slate-500/10 text-slate-400'}
@@ -218,8 +218,8 @@ export default function PurchasesPage() {
           {/* Quick Summary Card */}
           <div className="bg-[#121c17] border border-[#1a231f] rounded-2xl p-6">
             <h3 className="flex items-center gap-2 text-white font-bold text-sm tracking-wide mb-6">
-              <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-[#00ea77]/10">
-                <TrendingUp className="w-4 h-4 text-[#00ea77]" />
+              <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-[#00FFA3]/10">
+                <TrendingUp className="w-4 h-4 text-[#00FFA3]" />
               </div>
               Quick Summary
             </h3>
@@ -255,15 +255,15 @@ export default function PurchasesPage() {
           </div>
 
           {/* Upload Receipt Card */}
-          <Link href="/purchases/new" className="bg-[#121c17] border border-dashed border-[#00ea77]/30 rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-[#00ea77]/5 transition group block">
-            <div className="w-10 h-10 rounded-xl bg-[#00ea77]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform mx-auto">
-              <UploadCloud className="w-5 h-5 text-[#00ea77]" />
+          <Link href="/purchases/new" className="bg-[#121c17] border border-dashed border-[#00FFA3]/30 rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-[#00FFA3]/5 transition group block">
+            <div className="w-10 h-10 rounded-xl bg-[#00FFA3]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform mx-auto">
+              <UploadCloud className="w-5 h-5 text-[#00FFA3]" />
             </div>
             <h4 className="font-bold text-white text-sm mb-1.5">Upload Receipt</h4>
             <p className="text-[11px] font-medium text-slate-500 mb-5 px-2">
               Drag & drop or click to scan invoice
             </p>
-            <div className="flex items-center justify-center gap-1.5 text-[9px] font-bold tracking-widest uppercase text-[#00ea77]">
+            <div className="flex items-center justify-center gap-1.5 text-[9px] font-bold tracking-widest uppercase text-[#00FFA3]">
               <Zap className="w-3 h-3 fill-current" />
               AUTO-SCAN ENABLED
             </div>

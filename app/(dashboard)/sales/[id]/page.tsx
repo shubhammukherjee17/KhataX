@@ -122,7 +122,7 @@ export default function InvoiceViewPage() {
           <button 
             onClick={handleDownload}
             disabled={isGenerating}
-            className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-[#00ea77] hover:bg-[#00c563] text-black px-4 py-2.5 rounded-lg transition-colors text-sm font-bold shadow-[0_0_15px_rgba(0,234,119,0.2)] disabled:opacity-50"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-[#00FFA3] hover:bg-[#00ffa3]/90 text-black px-4 py-2.5 rounded-lg transition-colors text-sm font-bold shadow-[0_0_15px_rgba(0,234,119,0.2)] disabled:opacity-50"
           >
             {isGenerating ? (
               <span className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin flex-shrink-0"></span>
@@ -150,7 +150,7 @@ export default function InvoiceViewPage() {
                 <p className="text-slate-500 text-sm font-medium">123 Business Avenue, Tech Park</p>
               </div>
               <div className="text-right">
-                <h1 className="text-4xl font-black text-[#00ea77] tracking-tighter uppercase mb-4">Invoice</h1>
+                <h1 className="text-4xl font-black text-[#00FFA3] tracking-tighter uppercase mb-4">Invoice</h1>
                 <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-right">
                   <span className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">Invoice No</span>
                   <span className="font-bold">{invoice.number}</span>
@@ -168,7 +168,7 @@ export default function InvoiceViewPage() {
 
             {/* Bill To */}
             <div className="mb-10">
-              <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Bill To</h3>
+              <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] font-mono mb-3">Bill To</h3>
               <p className="text-lg font-bold text-slate-900">{invoice.partyName}</p>
               {/* If we had party details populated, we would show them here */}
             </div>
@@ -239,12 +239,12 @@ export default function InvoiceViewPage() {
           <div className="bg-[#121c17] border border-[#1a231f] rounded-xl p-6 shadow-sm">
             <h3 className="text-sm font-bold text-white mb-4">Invoice Status</h3>
             <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-bold uppercase tracking-wider
-              ${invoice.status === 'paid' ? 'bg-[#00ea77]/10 text-[#00ea77]' : 
+              ${invoice.status === 'paid' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' : 
                 invoice.status === 'partially_paid' ? 'bg-yellow-500/10 text-yellow-500' : 
                 'bg-red-500/10 text-red-500'}
             `}>
               <div className={`w-2 h-2 rounded-full 
-                ${invoice.status === 'paid' ? 'bg-[#00ea77]' : 
+                ${invoice.status === 'paid' ? 'bg-[#00FFA3]' : 
                   invoice.status === 'partially_paid' ? 'bg-yellow-500' : 
                   'bg-red-500'}
               `}></div>
@@ -258,7 +258,7 @@ export default function InvoiceViewPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-slate-400">Amount Paid</span>
-                <span className="text-sm font-bold text-[#00ea77]">₹{invoice.amountPaid.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
+                <span className="text-sm font-bold text-[#00FFA3]">₹{invoice.amountPaid.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-slate-400">Balance Due</span>
@@ -269,7 +269,7 @@ export default function InvoiceViewPage() {
             <button 
               onClick={handleRecordPayment}
               disabled={balanceDue <= 0}
-              className="w-full mt-6 bg-[#0b2217] text-[#00ea77] border border-[#00ea77]/20 hover:bg-[#00ea77]/10 py-2.5 rounded-lg text-sm font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full mt-6 bg-[#0b2217] text-[#00FFA3] border border-[#00FFA3]/20 hover:bg-[#00FFA3]/10 py-2.5 rounded-lg text-sm font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {balanceDue <= 0 ? 'Fully Paid' : 'Record Payment'}
             </button>
@@ -279,7 +279,7 @@ export default function InvoiceViewPage() {
           {business?.upiId && balanceDue > 0 && (
             <div className="bg-[#121c17] border border-[#1a231f] rounded-xl p-6 shadow-sm flex flex-col items-center text-center">
               <h3 className="text-sm font-bold text-white mb-1 w-full text-left flex items-center gap-2">
-                <QrCode className="w-4 h-4 text-[#00ea77]" /> Scan to Pay
+                <QrCode className="w-4 h-4 text-[#00FFA3]" /> Scan to Pay
               </h3>
               <p className="text-xs text-slate-400 font-medium mb-6 w-full text-left">
                 Pay instantly via any UPI App

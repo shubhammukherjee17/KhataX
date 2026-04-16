@@ -26,7 +26,7 @@ export default function PurchaseOrdersPage() {
         </div>
         <Link
           href="/purchases/orders/new"
-          className="flex items-center gap-2 bg-[#00ea77] text-black font-bold px-5 py-2.5 rounded-xl hover:bg-[#00c563] transition-colors shadow-[0_0_15px_rgba(0,234,119,0.2)]"
+          className="flex items-center gap-2 bg-[#00FFA3] text-black font-bold px-5 py-2.5 rounded-xl hover:bg-[#00ffa3]/90 transition-colors shadow-[0_0_15px_rgba(0,234,119,0.2)]"
         >
           <Plus className="h-4 w-4 stroke-[3]" /> Create PO
         </Link>
@@ -41,7 +41,7 @@ export default function PurchaseOrdersPage() {
               placeholder="Search by PO # or Vendor Name..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-11 pr-4 py-2.5 bg-[#111] border border-white/5 rounded-xl text-sm font-medium text-white placeholder:text-slate-600 focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 transition-colors"
+              className="w-full pl-11 pr-4 py-2.5 bg-[#111] border border-white/5 rounded-xl text-sm font-medium text-white placeholder:text-slate-600 focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 transition-colors"
             />
           </div>
         </div>
@@ -51,7 +51,7 @@ export default function PurchaseOrdersPage() {
         ) : filteredOrders.length === 0 ? (
           <div className="p-16 text-center text-slate-400 font-medium">
             <p className="mb-2">No purchase orders found.</p>
-            <Link href="/purchases/orders/new" className="text-[#00ea77] font-bold hover:text-[#00c563] inline-block border-b border-[#00ea77]/30 pb-0.5">
+            <Link href="/purchases/orders/new" className="text-[#00FFA3] font-bold hover:text-[#00c563] inline-block border-b border-[#00FFA3]/30 pb-0.5">
               Create your first PO
             </Link>
           </div>
@@ -84,8 +84,8 @@ export default function PurchaseOrdersPage() {
                       <div className="font-bold text-white">₹{order.grandTotal.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</div>
                     </td>
                     <td className="px-6 py-4 text-center">
-                      <span className={`inline-flex py-1.5 px-3 rounded-md text-[10px] font-bold uppercase tracking-widest border
-                        ${order.status === 'fully_billed' ? 'bg-[#00ea77]/10 text-[#00ea77] border-[#00ea77]/20' :
+                      <span className={`inline-flex py-1.5 px-3 rounded-md text-[10px] font-bold uppercase tracking-[0.2em] font-mono border
+                        ${order.status === 'fully_billed' ? 'bg-[#00FFA3]/10 text-[#00FFA3] border-[#00FFA3]/20' :
                           order.status === 'partially_billed' ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' :
                             order.status === 'cancelled' ? 'bg-red-500/10 text-red-500 border-red-500/20' :
                               'bg-blue-500/10 text-blue-400 border-blue-500/20'}
@@ -98,7 +98,7 @@ export default function PurchaseOrdersPage() {
                         {order.status !== 'fully_billed' && order.status !== 'cancelled' && (
                           <Link
                             href={`/purchases/new?fromPo=${order.id}`}
-                            className="text-[#00ea77] hover:text-[#00c563] inline-flex items-center gap-1 border border-[#00ea77]/20 bg-[#00ea77]/5 px-2.5 py-1 rounded-md uppercase text-[10px] font-bold tracking-widest transition-colors hover:bg-[#00ea77]/10"
+                            className="text-[#00FFA3] hover:text-[#00c563] inline-flex items-center gap-1 border border-[#00FFA3]/20 bg-[#00FFA3]/5 px-2.5 py-1 rounded-md uppercase text-[10px] font-bold tracking-widest transition-colors hover:bg-[#00FFA3]/10"
                             title="Convert to Bill"
                           >
                             <FileDiff className="h-3 w-3" /> Convert

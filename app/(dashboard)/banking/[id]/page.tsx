@@ -70,14 +70,14 @@ export default function EditBankAccountPage() {
 
       <form id="acct-form" onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="bg-[#111] p-6 sm:p-8 rounded-2xl shadow-sm border border-white/10 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#00ea77]/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#00FFA3]/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
             <div className="space-y-2">
               <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Account Type <span className="text-red-500">*</span></label>
               <select 
                 {...register("type", { required: true })}
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium shadow-inner"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium shadow-inner"
               >
                 <option value="bank">Bank Account</option>
                 <option value="cash">Cash Register</option>
@@ -89,7 +89,7 @@ export default function EditBankAccountPage() {
               <input 
                 {...register("name", { required: true })}
                 placeholder="e.g. HDFC Current A/C"
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
               />
             </div>
             
@@ -98,7 +98,7 @@ export default function EditBankAccountPage() {
               <input 
                 {...register("accountNumber")}
                 placeholder="e.g. 5010023XXXX"
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
               />
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mt-1">Required only for Banks</p>
             </div>
@@ -108,7 +108,7 @@ export default function EditBankAccountPage() {
               <input 
                 {...register("ifscCode")}
                 placeholder="e.g. HDFC0001234"
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 uppercase shadow-inner"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 uppercase shadow-inner"
               />
             </div>
 
@@ -121,7 +121,7 @@ export default function EditBankAccountPage() {
                   step="0.01"
                   {...register("openingBalance", { valueAsNumber: true })}
                   placeholder="0.00"
-                  className="w-full pl-10 pr-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
+                  className="w-full pl-10 pr-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
                 />
               </div>
             </div>
@@ -141,7 +141,7 @@ export default function EditBankAccountPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2.5 flex items-center gap-2 text-sm font-bold text-black bg-[#00ea77] rounded-xl hover:bg-[#00c563] disabled:opacity-50 transition-colors shadow-[0_0_15px_rgba(0,234,119,0.2)]"
+              className="px-6 py-2.5 flex items-center gap-2 text-sm font-bold text-black bg-[#00FFA3] rounded-xl hover:bg-[#00ffa3]/90 disabled:opacity-50 transition-colors shadow-[0_0_15px_rgba(0,234,119,0.2)]"
             >
               <Save className="h-4 w-4" />
               {isSubmitting ? 'Saving...' : 'Update Account'}

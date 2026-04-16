@@ -147,14 +147,14 @@ export default function NewPurchaseOrderPage() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="bg-[#111] p-6 rounded-2xl shadow-sm border border-white/10 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#00ea77]/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#00FFA3]/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 relative z-10">
             <div className="space-y-2 col-span-1 md:col-span-2">
               <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Vendor *</label>
               <select
                 {...register("partyId", { required: true })}
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium"
               >
                 <option value="">Select Vendor</option>
                 <option value="walk-in">--- Walk-in / Custom Vendor ---</option>
@@ -168,7 +168,7 @@ export default function NewPurchaseOrderPage() {
               <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">PO No *</label>
               <input
                 {...register("number", { required: true })}
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600"
               />
             </div>
 
@@ -177,7 +177,7 @@ export default function NewPurchaseOrderPage() {
               <input
                 type="date"
                 {...register("date", { required: true })}
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium pl-3 [color-scheme:dark]"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium pl-3 [color-scheme:dark]"
               />
             </div>
           </div>
@@ -189,7 +189,7 @@ export default function NewPurchaseOrderPage() {
                 <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Vendor Name</label>
                 <input
                   {...register("vendorName", { required: true })}
-                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600"
                   placeholder="e.g. ABC Suppliers"
                 />
               </div>
@@ -198,7 +198,7 @@ export default function NewPurchaseOrderPage() {
                 <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Phone Number</label>
                 <input
                   {...register("vendorPhone")}
-                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600"
                   placeholder="+91 9876543210"
                 />
               </div>
@@ -208,7 +208,7 @@ export default function NewPurchaseOrderPage() {
                 <textarea
                   {...register("vendorAddress")}
                   rows={1}
-                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 resize-none"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 resize-none"
                   placeholder="Street, City, PIN"
                 />
               </div>
@@ -245,7 +245,7 @@ export default function NewPurchaseOrderPage() {
                           register(`items.${index}.itemId`).onChange(e); // Trigger RHF
                           handleItemSelect(index, e.target.value);
                         }}
-                        className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium min-w-[150px]"
+                        className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium min-w-[150px]"
                       >
                         <option value="">Select Item</option>
                         {inventoryItems.map(item => (
@@ -258,27 +258,27 @@ export default function NewPurchaseOrderPage() {
                       <input
                         type="number" step="0.01" min="1"
                         {...register(`items.${index}.quantity`, { valueAsNumber: true })}
-                        className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium min-w-[80px]"
+                        className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium min-w-[80px]"
                       />
                     </td>
                     <td className="px-5 py-3">
                       <input
                         type="number" step="0.01"
                         {...register(`items.${index}.rate`, { valueAsNumber: true })}
-                        className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium min-w-[100px]"
+                        className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium min-w-[100px]"
                       />
                     </td>
                     <td className="px-5 py-3">
                       <input
                         type="number" step="0.01"
                         {...register(`items.${index}.discount`, { valueAsNumber: true })}
-                        className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium min-w-[80px]"
+                        className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium min-w-[80px]"
                       />
                     </td>
                     <td className="px-5 py-3">
                       <select
                         {...register(`items.${index}.taxRate`, { valueAsNumber: true })}
-                        className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium min-w-[80px]"
+                        className="w-full px-3 py-2.5 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium min-w-[80px]"
                       >
                         <option value={0}>0%</option>
                         <option value={5}>5%</option>
@@ -325,7 +325,7 @@ export default function NewPurchaseOrderPage() {
             <button
               type="button"
               onClick={() => append({ itemId: '', name: '', quantity: 1, rate: 0, discount: 0, taxRate: 18, taxAmount: 0, totalAmount: 0, netAmount: 0 })}
-              className="flex items-center gap-2 text-sm font-bold text-[#00ea77] bg-[#00ea77]/10 hover:bg-[#00ea77]/20 px-4 py-2.5 rounded-xl transition-colors border border-[#00ea77]/20"
+              className="flex items-center gap-2 text-sm font-bold text-[#00FFA3] bg-[#00FFA3]/10 hover:bg-[#00FFA3]/20 px-4 py-2.5 rounded-xl transition-colors border border-[#00FFA3]/20"
             >
               <Plus className="h-4 w-4 stroke-[3]" /> Add Line Item
             </button>
@@ -336,7 +336,7 @@ export default function NewPurchaseOrderPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="hidden md:block"></div>
           <div className="bg-[#111] p-6 rounded-2xl shadow-sm border border-white/10 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#00ea77]/5 rounded-full blur-[40px] pointer-events-none"></div>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#00FFA3]/5 rounded-full blur-[40px] pointer-events-none"></div>
 
             <div className="space-y-4 text-sm relative z-10">
               <div className="flex justify-between text-slate-400 font-medium">
@@ -372,7 +372,7 @@ export default function NewPurchaseOrderPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2.5 flex items-center gap-2 text-sm font-bold text-black bg-[#00ea77] rounded-xl hover:bg-[#00c563] disabled:opacity-50 transition-colors shadow-[0_0_15px_rgba(0,234,119,0.2)]"
+              className="px-6 py-2.5 flex items-center gap-2 text-sm font-bold text-black bg-[#00FFA3] rounded-xl hover:bg-[#00ffa3]/90 disabled:opacity-50 transition-colors shadow-[0_0_15px_rgba(0,234,119,0.2)]"
             >
               <Send className="h-4 w-4" />
               {isSubmitting ? 'Saving...' : 'Send PO'}

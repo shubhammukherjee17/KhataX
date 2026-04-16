@@ -38,27 +38,27 @@ export default function BankingPage() {
         </div>
         <button 
           onClick={() => router.push('/banking/new')}
-          className="flex items-center gap-2 bg-[#00ea77] text-black font-bold px-4 py-2 rounded-xl hover:bg-[#00c563] transition shadow-[0_0_15px_rgba(0,234,119,0.2)]"
+          className="flex items-center gap-2 bg-[#00FFA3] text-black font-bold px-4 py-2 rounded-xl hover:bg-[#00ffa3]/90 transition shadow-[0_0_15px_rgba(0,234,119,0.2)]"
         >
           <Plus className="h-4 w-4 stroke-[3]" /> Add Account
         </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="bg-[#111] border border-white/10 rounded-2xl p-6 text-white shadow-sm relative overflow-hidden group hover:border-[#00ea77]/30 transition-all">
+        <div className="bg-[#111] border border-white/10 rounded-2xl p-6 text-white shadow-sm relative overflow-hidden group hover:border-[#00FFA3]/30 transition-all">
           <div className="flex items-center gap-3 mb-4 opacity-80 text-blue-400">
             <Building2 className="h-5 w-5" />
             <h3 className="text-[10px] font-bold tracking-wider uppercase">Total Bank Balance</h3>
           </div>
-          <p className="text-3xl font-extrabold">₹{totalBankBalance.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
+          <p className="text-3xl font-heading font-bold">₹{totalBankBalance.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
         </div>
 
-        <div className="bg-[#111] border border-white/10 rounded-2xl p-6 text-white shadow-sm relative overflow-hidden group hover:border-[#00ea77]/30 transition-all">
-          <div className="flex items-center gap-3 mb-4 opacity-80 text-[#00ea77]">
+        <div className="bg-[#111] border border-white/10 rounded-2xl p-6 text-white shadow-sm relative overflow-hidden group hover:border-[#00FFA3]/30 transition-all">
+          <div className="flex items-center gap-3 mb-4 opacity-80 text-[#00FFA3]">
             <Wallet className="h-5 w-5" />
             <h3 className="text-[10px] font-bold tracking-wider uppercase">Cash in Hand</h3>
           </div>
-          <p className="text-3xl font-extrabold">₹{totalCashBalance.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
+          <p className="text-3xl font-heading font-bold">₹{totalCashBalance.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
         </div>
       </div>
 
@@ -72,7 +72,7 @@ export default function BankingPage() {
         ) : accounts.length === 0 ? (
           <div className="p-16 text-center text-slate-500">
             <p className="font-medium">No accounts found.</p>
-            <button onClick={() => router.push('/banking/new')} className="text-[#00ea77] font-bold hover:text-[#00c563] mt-2 inline-block">
+            <button onClick={() => router.push('/banking/new')} className="text-[#00FFA3] font-bold hover:text-[#00c563] mt-2 inline-block">
               Add your first bank account or cash register
             </button>
           </div>
@@ -94,7 +94,7 @@ export default function BankingPage() {
                       {account.type === 'bank' ? (
                         <div className="p-2 bg-blue-500/10 text-blue-500 rounded-lg"><Building2 className="h-4 w-4" /></div>
                       ) : (
-                        <div className="p-2 bg-[#00ea77]/10 text-[#00ea77] rounded-lg"><Wallet className="h-4 w-4" /></div>
+                        <div className="p-2 bg-[#00FFA3]/10 text-[#00FFA3] rounded-lg"><Wallet className="h-4 w-4" /></div>
                       )}
                       {account.name}
                     </td>
@@ -109,12 +109,12 @@ export default function BankingPage() {
                       )}
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <span className={`font-bold text-base ${account.currentBalance < 0 ? 'text-red-500' : 'text-[#00ea77]'}`}>
+                      <span className={`font-bold text-base ${account.currentBalance < 0 ? 'text-red-500' : 'text-[#00FFA3]'}`}>
                         ₹{account.currentBalance.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <button onClick={() => router.push(`/banking/${account.id}`)} className="text-slate-500 hover:text-[#00ea77] p-2 transition-colors rounded-lg hover:bg-[#00ea77]/10">
+                      <button onClick={() => router.push(`/banking/${account.id}`)} className="text-slate-500 hover:text-[#00FFA3] p-2 transition-colors rounded-lg hover:bg-[#00FFA3]/10">
                         <Edit className="h-4 w-4" />
                       </button>
                       <button onClick={() => handleDelete(account.id, account.name)} className="text-slate-500 hover:text-red-500 p-2 ml-1 transition-colors rounded-lg hover:bg-red-500/10">

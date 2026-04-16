@@ -69,7 +69,7 @@ export default function AIInsightsPage() {
     }
   }, [businessId, transactions]);
 
-  const COLORS = ['#00ea77', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6'];
+  const COLORS = ['#00FFA3', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6'];
   const breakdownData = insights?.breakdown 
     ? Object.entries(insights.breakdown).map(([name, value]) => ({ name, value }))
     : [];
@@ -79,7 +79,7 @@ export default function AIInsightsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-            <Brain className="w-8 h-8 text-[#00ea77]" />
+            <Brain className="w-8 h-8 text-[#00FFA3]" />
             AI Financial Insights
           </h1>
           <p className="text-slate-400 mt-1">Deep behavioral analysis of your business health.</p>
@@ -87,9 +87,9 @@ export default function AIInsightsPage() {
         <button
           onClick={generateInsights}
           disabled={isLoading}
-          className="flex items-center gap-2 bg-[#121c17] border border-[#1a231f] hover:border-[#00ea77]/50 text-white px-4 py-2 rounded-xl transition-all"
+          className="flex items-center gap-2 bg-[#121c17] border border-[#1a231f] hover:border-[#00FFA3]/50 text-white px-4 py-2 rounded-xl transition-all"
         >
-          <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-[#00ea77]' : 'text-slate-400'}`} />
+          <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-[#00FFA3]' : 'text-slate-400'}`} />
           {isLoading ? 'Analyzing...' : 'Refresh Insights'}
         </button>
       </div>
@@ -101,7 +101,7 @@ export default function AIInsightsPage() {
         </div>
       ) : !insights ? (
         <div className="bg-[#121c17] border border-[#1a231f] rounded-2xl p-12 text-center animate-pulse">
-          <Brain className="w-16 h-16 text-[#00ea77]/30 mx-auto mb-4" />
+          <Brain className="w-16 h-16 text-[#00FFA3]/30 mx-auto mb-4" />
           <p className="text-slate-400 font-medium">Analyzing transaction patterns...</p>
         </div>
       ) : (
@@ -113,7 +113,7 @@ export default function AIInsightsPage() {
                 <circle cx="50" cy="50" r="45" fill="none" stroke="#1a231f" strokeWidth="10" />
                 <circle
                   cx="50" cy="50" r="45" fill="none"
-                  stroke={insights.health_score > 75 ? "#00ea77" : insights.health_score > 50 ? "#f59e0b" : "#ef4444"}
+                  stroke={insights.health_score > 75 ? "#00FFA3" : insights.health_score > 50 ? "#f59e0b" : "#ef4444"}
                   strokeWidth="10"
                   strokeDasharray={`${insights.health_score * 2.827} 282.7`}
                   className="transition-all duration-1000 ease-out"
@@ -185,11 +185,11 @@ export default function AIInsightsPage() {
           {/* Recommendations */}
           <div className="bg-[#121c17] border border-[#1a231f] rounded-2xl p-6">
             <h3 className="font-bold text-white flex items-center gap-2 mb-4">
-              <CheckCircle2 className="w-5 h-5 text-[#00ea77]" /> Smart Recommendations
+              <CheckCircle2 className="w-5 h-5 text-[#00FFA3]" /> Smart Recommendations
             </h3>
             <div className="space-y-4 shadow-inner mt-4">
               {insights.recommendations.map((r, i) => (
-                <div key={i} className="bg-white/5 rounded-xl p-4 border border-white/5 hover:border-[#00ea77]/30 transition-colors">
+                <div key={i} className="bg-white/5 rounded-xl p-4 border border-white/5 hover:border-[#00FFA3]/30 transition-colors">
                   <p className="text-sm text-slate-200">{r}</p>
                 </div>
               ))}

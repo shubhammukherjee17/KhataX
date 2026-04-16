@@ -77,17 +77,17 @@ export default function EditInventoryItemPage() {
 
       <form id="item-form" onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="bg-[#111] p-6 sm:p-8 rounded-2xl shadow-sm border border-white/10 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#00ea77]/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#00FFA3]/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
             <div className="space-y-2">
               <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Item Type *</label>
               <div className="flex bg-[#0a0a0a] border border-white/5 p-1 rounded-xl">
-                <label className={`flex-1 text-center py-2 text-sm font-bold rounded-lg cursor-pointer transition-all ${itemType === 'product' ? 'bg-[#00ea77]/10 text-[#00ea77] shadow-sm' : 'text-slate-500 hover:text-white'}`}>
+                <label className={`flex-1 text-center py-2 text-sm font-bold rounded-lg cursor-pointer transition-all ${itemType === 'product' ? 'bg-[#00FFA3]/10 text-[#00FFA3] shadow-sm' : 'text-slate-500 hover:text-white'}`}>
                   <input type="radio" value="product" {...register("type")} className="sr-only" />
                   Product
                 </label>
-                <label className={`flex-1 text-center py-2 text-sm font-bold rounded-lg cursor-pointer transition-all ${itemType === 'service' ? 'bg-[#00ea77]/10 text-[#00ea77] shadow-sm' : 'text-slate-500 hover:text-white'}`}>
+                <label className={`flex-1 text-center py-2 text-sm font-bold rounded-lg cursor-pointer transition-all ${itemType === 'service' ? 'bg-[#00FFA3]/10 text-[#00FFA3] shadow-sm' : 'text-slate-500 hover:text-white'}`}>
                   <input type="radio" value="service" {...register("type")} className="sr-only" />
                   Service
                 </label>
@@ -99,7 +99,7 @@ export default function EditInventoryItemPage() {
               <input
                 {...register("name", { required: true })}
                 placeholder="e.g. Dell Monitor 24 inch"
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
               />
             </div>
 
@@ -108,7 +108,7 @@ export default function EditInventoryItemPage() {
               <textarea
                 {...register("description")}
                 rows={2}
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 resize-none shadow-inner"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 resize-none shadow-inner"
               />
             </div>
 
@@ -116,7 +116,7 @@ export default function EditInventoryItemPage() {
               <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Unit</label>
               <select
                 {...register("unit")}
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium shadow-inner"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium shadow-inner"
               >
                 <option value="PCS">Pieces (PCS)</option>
                 <option value="KG">Kilograms (KG)</option>
@@ -131,7 +131,7 @@ export default function EditInventoryItemPage() {
               <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Tax Rate (GST %)</label>
               <select
                 {...register("taxRate", { valueAsNumber: true })}
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium shadow-inner"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium shadow-inner"
               >
                 <option value={0}>Exempt (0%)</option>
                 <option value={5}>5%</option>
@@ -150,7 +150,7 @@ export default function EditInventoryItemPage() {
                   step="0.01"
                   {...register("salePrice", { required: true, valueAsNumber: true })}
                   placeholder="0.00"
-                  className="w-full pl-10 pr-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
+                  className="w-full pl-10 pr-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
                 />
               </div>
             </div>
@@ -164,7 +164,7 @@ export default function EditInventoryItemPage() {
                   step="0.01"
                   {...register("purchasePrice", { required: true, valueAsNumber: true })}
                   placeholder="0.00"
-                  className="w-full pl-10 pr-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
+                  className="w-full pl-10 pr-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
                 />
               </div>
             </div>
@@ -178,7 +178,7 @@ export default function EditInventoryItemPage() {
                     {...register("openingStock", { valueAsNumber: true })}
                     placeholder="0"
                     disabled={true}
-                    className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 shadow-inner opacity-50 cursor-not-allowed"
+                    className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 shadow-inner opacity-50 cursor-not-allowed"
                     title="Stock can only be adjusted via Stock Adjustment tools."
                   />
                 </div>
@@ -189,7 +189,7 @@ export default function EditInventoryItemPage() {
                     type="number"
                     {...register("lowStockAlertLimit", { valueAsNumber: true })}
                     placeholder="5"
-                    className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
+                    className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
                   />
                 </div>
               </>
@@ -210,7 +210,7 @@ export default function EditInventoryItemPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2.5 flex items-center gap-2 text-sm font-bold text-black bg-[#00ea77] rounded-xl hover:bg-[#00c563] disabled:opacity-50 transition-colors shadow-[0_0_15px_rgba(0,234,119,0.2)]"
+              className="px-6 py-2.5 flex items-center gap-2 text-sm font-bold text-black bg-[#00FFA3] rounded-xl hover:bg-[#00ffa3]/90 disabled:opacity-50 transition-colors shadow-[0_0_15px_rgba(0,234,119,0.2)]"
             >
               <Save className="h-4 w-4" />
               {isSubmitting ? 'Saving...' : 'Update Item'}

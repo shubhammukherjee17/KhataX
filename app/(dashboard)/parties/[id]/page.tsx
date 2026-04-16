@@ -76,14 +76,14 @@ export default function EditPartyPage() {
 
       <form id="party-form" onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="bg-[#111] p-6 sm:p-8 rounded-2xl shadow-sm border border-white/10 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#00ea77]/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#00FFA3]/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
             <div className="space-y-2">
               <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Party Type *</label>
               <select
                 {...register("type", { required: true })}
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium shadow-inner"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium shadow-inner"
               >
                 <option value="customer">Customer</option>
                 <option value="vendor">Vendor</option>
@@ -95,7 +95,7 @@ export default function EditPartyPage() {
               <input
                 {...register("name", { required: true })}
                 placeholder="e.g. Acme Corp"
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
               />
             </div>
 
@@ -104,7 +104,7 @@ export default function EditPartyPage() {
               <input
                 {...register("gstin")}
                 placeholder="e.g. 29ABCDE1234F1Z5"
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 uppercase shadow-inner"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 uppercase shadow-inner"
               />
             </div>
 
@@ -113,7 +113,7 @@ export default function EditPartyPage() {
               <input
                 {...register("phone", { required: true })}
                 placeholder="10-digit mobile"
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
               />
             </div>
 
@@ -123,7 +123,7 @@ export default function EditPartyPage() {
                 type="email"
                 {...register("email")}
                 placeholder="email@example.com"
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
               />
             </div>
 
@@ -136,7 +136,7 @@ export default function EditPartyPage() {
                   step="0.01"
                   {...register("openingBalance", { valueAsNumber: true })}
                   placeholder="0.00"
-                  className="w-full pl-10 pr-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
+                  className="w-full pl-10 pr-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
                 />
               </div>
               <p className="text-[10px] font-bold tracking-wider text-slate-500 uppercase mt-1">+ve for Payable, -ve for Receivable</p>
@@ -151,7 +151,7 @@ export default function EditPartyPage() {
                   step="0.01"
                   {...register("creditLimit", { valueAsNumber: true })}
                   placeholder="10000.00"
-                  className="w-full pl-10 pr-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
+                  className="w-full pl-10 pr-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 shadow-inner"
                 />
               </div>
             </div>
@@ -160,7 +160,7 @@ export default function EditPartyPage() {
               <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Payment Terms</label>
               <select
                 {...register("creditDays", { valueAsNumber: true })}
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium shadow-inner"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium shadow-inner"
               >
                 <option value="0">Advance (0 Days)</option>
                 <option value="7">7 Days</option>
@@ -181,7 +181,7 @@ export default function EditPartyPage() {
               <textarea
                 {...register("billingAddress")}
                 rows={3}
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 resize-none shadow-inner"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 resize-none shadow-inner"
               />
             </div>
             <div className="space-y-2">
@@ -189,7 +189,7 @@ export default function EditPartyPage() {
               <textarea
                 {...register("shippingAddress")}
                 rows={3}
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 resize-none shadow-inner"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 resize-none shadow-inner"
               />
             </div>
           </div>
@@ -208,7 +208,7 @@ export default function EditPartyPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2.5 flex items-center gap-2 text-sm font-bold text-black bg-[#00ea77] rounded-xl hover:bg-[#00c563] disabled:opacity-50 transition-colors shadow-[0_0_15px_rgba(0,234,119,0.2)]"
+              className="px-6 py-2.5 flex items-center gap-2 text-sm font-bold text-black bg-[#00FFA3] rounded-xl hover:bg-[#00ffa3]/90 disabled:opacity-50 transition-colors shadow-[0_0_15px_rgba(0,234,119,0.2)]"
             >
               <Save className="h-4 w-4" />
               {isSubmitting ? 'Saving...' : 'Update Party'}

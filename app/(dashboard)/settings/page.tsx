@@ -121,7 +121,7 @@ export default function SettingsPage() {
                       type="file" 
                       accept="image/*"
                       onChange={handleLogoUpload}
-                      className="block w-full text-sm text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-[#00ea77]/10 file:text-[#00ea77] hover:file:bg-[#00ea77]/20 file:transition-colors file:cursor-pointer cursor-pointer"
+                      className="block w-full text-sm text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-[#00FFA3]/10 file:text-[#00FFA3] hover:file:bg-[#00FFA3]/20 file:transition-colors file:cursor-pointer cursor-pointer"
                     />
                     <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Recommended size: 200x200px. PNG or JPG.</p>
                   </div>
@@ -143,7 +143,7 @@ export default function SettingsPage() {
                   value={business?.name || ''}
                   onChange={e => setBusiness(prev => ({ ...(prev || {}), name: e.target.value } as Business))}
                   placeholder="My Business"
-                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600"
                 />
               </div>
 
@@ -153,7 +153,7 @@ export default function SettingsPage() {
                   value={business?.gstin || ''}
                   onChange={e => setBusiness(prev => ({ ...(prev || {}), gstin: e.target.value } as Business))}
                   placeholder="Your GSTIN"
-                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 uppercase"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 uppercase"
                 />
               </div>
 
@@ -164,20 +164,20 @@ export default function SettingsPage() {
                   value={business?.address || ''}
                   onChange={e => setBusiness(prev => ({ ...(prev || {}), address: e.target.value } as Business))}
                   placeholder="123 Business Park, Tech City"
-                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 resize-none"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 resize-none"
                 />
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <label className="text-xs font-bold tracking-wider text-[#00ea77] uppercase flex items-center gap-2">
+                <label className="text-xs font-bold tracking-wider text-[#00FFA3] uppercase flex items-center gap-2">
                    UPI ID (VPA) for Payments
-                   <span className="bg-[#00ea77]/20 text-[#00ea77] px-2 py-0.5 rounded text-[10px] tracking-widest">NEW</span>
+                   <span className="bg-[#00FFA3]/20 text-[#00FFA3] px-2 py-0.5 rounded text-[10px] tracking-widest">NEW</span>
                 </label>
                 <input 
                   value={business?.upiId || ''}
                   onChange={e => setBusiness(prev => ({ ...(prev || {}), upiId: e.target.value } as Business))}
                   placeholder="merchant@sbi / 9876543210@ybl"
-                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-[#00ea77]/20 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-bold placeholder:text-slate-600 placeholder:font-medium"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-[#00FFA3]/20 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-bold placeholder:text-slate-600 placeholder:font-medium"
                 />
                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wide mt-1">If provided, invoices will automatically include a dynamic Scan-to-Pay QR Code.</p>
               </div>
@@ -187,7 +187,7 @@ export default function SettingsPage() {
               <button 
                 type="submit" 
                 disabled={isSaving}
-                className="flex items-center gap-2 bg-[#00ea77] text-black font-bold px-6 py-2.5 rounded-xl hover:bg-[#00c563] transition shadow-[0_0_15px_rgba(0,234,119,0.2)] disabled:opacity-70"
+                className="flex items-center gap-2 bg-[#00FFA3] text-black font-bold px-6 py-2.5 rounded-xl hover:bg-[#00ffa3]/90 transition shadow-[0_0_15px_rgba(0,234,119,0.2)] disabled:opacity-70"
               >
                 {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />} 
                 {isSaving ? 'Saving...' : 'Save Profile'}

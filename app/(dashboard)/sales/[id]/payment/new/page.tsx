@@ -92,7 +92,7 @@ export default function RecordPaymentPage() {
 
       <form id="payment-form" onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="bg-[#111] p-6 sm:p-8 rounded-2xl shadow-sm border border-white/10 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#00ea77]/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#00FFA3]/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
           <div className="mb-8 p-4 bg-[#0a0a0a] border border-white/5 rounded-xl flex items-center justify-between">
             <div>
@@ -116,7 +116,7 @@ export default function RecordPaymentPage() {
                   max={balanceDue}
                   {...register("amount", { required: true, valueAsNumber: true, min: 0.01, max: balanceDue })}
                   placeholder="0.00"
-                  className="w-full pl-10 pr-4 py-4 text-xl bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00ea77]/50 focus:border-transparent text-white font-bold placeholder:text-slate-600 shadow-inner"
+                  className="w-full pl-10 pr-4 py-4 text-xl bg-[#0a0a0a] border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00FFA3]/50 focus:border-transparent text-white font-bold placeholder:text-slate-600 shadow-inner"
                 />
               </div>
               <div className="flex justify-between items-center mt-2 px-1">
@@ -126,7 +126,7 @@ export default function RecordPaymentPage() {
                 <button
                   type="button"
                   onClick={() => reset({ amount: balanceDue })}
-                  className="text-[10px] font-bold text-[#00ea77] hover:text-white uppercase tracking-wider transition-colors"
+                  className="text-[10px] font-bold text-[#00FFA3] hover:text-white uppercase tracking-wider transition-colors"
                 >
                   Set to Max
                 </button>
@@ -148,7 +148,7 @@ export default function RecordPaymentPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2.5 flex items-center gap-2 text-sm font-bold text-black bg-[#00ea77] rounded-xl hover:bg-[#00c563] disabled:opacity-50 transition-colors shadow-[0_0_15px_rgba(0,234,119,0.2)]"
+              className="px-6 py-2.5 flex items-center gap-2 text-sm font-bold text-black bg-[#00FFA3] rounded-xl hover:bg-[#00ffa3]/90 disabled:opacity-50 transition-colors shadow-[0_0_15px_rgba(0,234,119,0.2)]"
             >
               <CheckCircle2 className="h-4 w-4" />
               {isSubmitting ? 'Recording...' : 'Record Payment'}

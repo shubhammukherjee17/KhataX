@@ -14,15 +14,15 @@ interface ChatMessage {
 
 function MetricCard({ title, val, subtext, icon, positive }: { title: string, val: React.ReactNode, subtext: string, icon: React.ReactNode, positive?: boolean }) {
   return (
-    <div className="rounded-2xl bg-[#121c17] border border-[#1a231f] p-6 shadow-sm relative overflow-hidden flex flex-col justify-between hover:border-[#00ea77]/30 transition-all group">
+    <div className="rounded-2xl bg-[#121c17] border border-[#1a231f] p-6 shadow-sm relative overflow-hidden flex flex-col justify-between hover:border-[#00FFA3]/30 transition-all group">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-400">{title}</h3>
-        <div className="p-2 rounded-lg bg-white/5 border border-white/5 group-hover:bg-[#00ea77]/10 group-hover:border-[#00ea77]/20 transition-colors">
+        <div className="p-2 rounded-lg bg-white/5 border border-white/5 group-hover:bg-[#00FFA3]/10 group-hover:border-[#00FFA3]/20 transition-colors">
           {icon}
         </div>
       </div>
       <div>
-        <div className={`text-3xl font-bold tracking-tight ${positive ? 'text-[#00ea77]' : 'text-white'}`}>{val}</div>
+        <div className={`text-3xl font-bold tracking-tight ${positive ? 'text-[#00FFA3]' : 'text-white'}`}>{val}</div>
         <p className="text-xs text-slate-500 mt-2 font-medium">{subtext}</p>
       </div>
     </div>
@@ -121,7 +121,7 @@ export default function TaxAssistantPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-            <Landmark className="w-8 h-8 text-[#00ea77]" />
+            <Landmark className="w-8 h-8 text-[#00FFA3]" />
             AI Tax Assistant
           </h1>
           <p className="text-sm text-slate-400 mt-1">Smart GST analysis and automated liability calculations</p>
@@ -146,7 +146,7 @@ export default function TaxAssistantPage() {
           title="Estimated Net Liability" 
           val={<AnimatedNumber value={netLiability} format="currency" />} 
           subtext="Output GST minus ITC. Base payable to Gov." 
-          icon={<Sparkles className="w-5 h-5 text-[#00ea77]" />} 
+          icon={<Sparkles className="w-5 h-5 text-[#00FFA3]" />} 
           positive={netLiability === 0}
         />
       </div>
@@ -161,13 +161,13 @@ export default function TaxAssistantPage() {
               
               {/* Avatar for Model */}
               {msg.role === 'model' && (
-                <div className="w-8 h-8 rounded-full bg-[#00ea77]/20 border border-[#00ea77]/40 flex items-center justify-center mr-3 mt-1 shrink-0 shadow-[0_0_10px_rgba(0,234,119,0.1)]">
-                  <Landmark className="w-4 h-4 text-[#00ea77]" />
+                <div className="w-8 h-8 rounded-full bg-[#00FFA3]/20 border border-[#00FFA3]/40 flex items-center justify-center mr-3 mt-1 shrink-0 shadow-[0_0_10px_rgba(0,234,119,0.1)]">
+                  <Landmark className="w-4 h-4 text-[#00FFA3]" />
                 </div>
               )}
 
               <div 
-                className={`max-w-[75%] rounded-2xl px-5 py-4 text-[13px] leading-relaxed \${msg.role === 'user' ? 'bg-[#00ea77] text-black font-semibold rounded-tr-sm shadow-md' : 'bg-[#1a231f] text-slate-200 border border-white/5 rounded-tl-sm shadow-inner'}`}
+                className={`max-w-[75%] rounded-2xl px-5 py-4 text-[13px] leading-relaxed \${msg.role === 'user' ? 'bg-[#00FFA3] text-black font-semibold rounded-tr-sm shadow-md' : 'bg-[#1a231f] text-slate-200 border border-white/5 rounded-tl-sm shadow-inner'}`}
                 style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
               >
                 {msg.parts[0].text}
@@ -177,12 +177,12 @@ export default function TaxAssistantPage() {
           
           {isLoading && (
             <div className="flex justify-start">
-               <div className="w-8 h-8 rounded-full bg-[#00ea77]/20 border border-[#00ea77]/40 flex items-center justify-center mr-3 mt-1 shrink-0">
-                  <Landmark className="w-4 h-4 text-[#00ea77]" />
+               <div className="w-8 h-8 rounded-full bg-[#00FFA3]/20 border border-[#00FFA3]/40 flex items-center justify-center mr-3 mt-1 shrink-0">
+                  <Landmark className="w-4 h-4 text-[#00FFA3]" />
                </div>
               <div className="bg-[#1a231f] border border-white/5 rounded-2xl rounded-tl-sm px-5 py-4 flex items-center gap-3">
-                <Loader2 className="w-4 h-4 text-[#00ea77] animate-spin" />
-                <span className="text-xs text-[#00ea77] font-semibold tracking-wide">Analyzing tax Ledgers...</span>
+                <Loader2 className="w-4 h-4 text-[#00FFA3] animate-spin" />
+                <span className="text-xs text-[#00FFA3] font-semibold tracking-wide">Analyzing tax Ledgers...</span>
               </div>
             </div>
           )}
@@ -197,12 +197,12 @@ export default function TaxAssistantPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about GSTR-1, outstanding ITC, or your total tax liability..."
-              className="w-full bg-[#121c17] text-white text-sm border border-white/5 rounded-xl pl-5 pr-14 py-4 focus:outline-none focus:border-[#00ea77]/50 focus:ring-1 focus:ring-[#00ea77]/50 placeholder:text-slate-500 font-medium transition-all shadow-inner"
+              className="w-full bg-[#121c17] text-white text-sm border border-white/5 rounded-xl pl-5 pr-14 py-4 focus:outline-none focus:border-[#00FFA3]/50 focus:ring-1 focus:ring-[#00FFA3]/50 placeholder:text-slate-500 font-medium transition-all shadow-inner"
             />
             <button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="absolute right-3 p-2.5 bg-[#00ea77] hover:bg-[#00c563] text-black rounded-lg transition-colors disabled:opacity-50 disabled:hover:bg-[#00ea77] flex items-center justify-center shadow-lg"
+              className="absolute right-3 p-2.5 bg-[#00FFA3] hover:bg-[#00ffa3]/90 text-black rounded-lg transition-colors disabled:opacity-50 disabled:hover:bg-[#00FFA3] flex items-center justify-center shadow-lg"
             >
               <ArrowRight className="w-4 h-4" />
             </button>

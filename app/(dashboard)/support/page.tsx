@@ -52,11 +52,11 @@ export default function SupportPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-white tracking-tight leading-tight flex items-center gap-3">
-            <Headset className="w-8 h-8 text-[#00ea77]" />
+          <h1 className="text-3xl font-heading font-bold text-white tracking-tight leading-tight flex items-center gap-3">
+            <Headset className="w-8 h-8 text-[#00FFA3]" />
             Enterprise Support
           </h1>
-          <p className="text-[#a1a1aa] font-medium text-sm mt-1">Get priority assistance from the KhataX Pro engineering team.</p>
+          <p className="text-zinc-400 font-medium text-sm mt-1">Get priority assistance from the KhataX Pro engineering team.</p>
         </div>
       </div>
 
@@ -64,20 +64,20 @@ export default function SupportPage() {
         {/* Left Column: Form & Direct Contact */}
         <div className="lg:col-span-2 space-y-8">
           
-          <div className="bg-[#18181b] rounded-2xl p-8 border border-[#27272a] shadow-lg relative overflow-hidden">
-            <h2 className="text-lg font-extrabold text-white mb-6">Open a Support Ticket</h2>
+          <div className="bg-[#111] rounded-2xl p-8 border border-white/[0.05] shadow-lg relative overflow-hidden">
+            <h2 className="text-lg font-heading font-bold text-white mb-6">Open a Support Ticket</h2>
             
             {isSuccess ? (
-              <div className="bg-[#00ea77]/10 border border-[#00ea77]/30 rounded-xl p-8 flex flex-col items-center justify-center text-center animate-in fade-in zoom-in duration-300">
-                <div className="w-16 h-16 rounded-full bg-[#00ea77]/20 flex items-center justify-center mb-4">
-                  <CheckCircle2 className="w-8 h-8 text-[#00ea77]" />
+              <div className="bg-[#00FFA3]/10 border border-[#00FFA3]/30 rounded-xl p-8 flex flex-col items-center justify-center text-center animate-in fade-in zoom-in duration-300">
+                <div className="w-16 h-16 rounded-full bg-[#00FFA3]/20 flex items-center justify-center mb-4">
+                  <CheckCircle2 className="w-8 h-8 text-[#00FFA3]" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">Ticket Submitted Successfully</h3>
                 {/* eslint-disable-next-line react-hooks/purity */}
-                <p className="text-[#a1a1aa] text-sm">Our enterprise support team will review your request and get back to you within 2 hours. Ticket ID: #KX-{Math.floor(Math.random() * 90000) + 10000}</p>
+                <p className="text-zinc-400 text-sm">Our enterprise support team will review your request and get back to you within 2 hours. Ticket ID: #KX-{Math.floor(Math.random() * 90000) + 10000}</p>
                 <button 
                   onClick={() => setIsSuccess(false)}
-                  className="mt-6 text-[#00ea77] text-sm font-bold hover:text-white transition-colors"
+                  className="mt-6 text-[#00FFA3] text-sm font-bold hover:text-white transition-colors"
                 >
                   Open another ticket
                 </button>
@@ -85,11 +85,11 @@ export default function SupportPage() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-xs font-bold text-[#a1a1aa] uppercase tracking-wider mb-2">Subject Context</label>
+                  <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">Subject Context</label>
                   <select 
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
-                    className="w-full bg-[#0a0a0a] border border-[#27272a] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#00ea77]/50 focus:ring-1 focus:ring-[#00ea77]/50 appearance-none transition-colors"
+                    className="w-full bg-[#0a0a0a] border border-white/[0.05] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#00FFA3]/50 focus:ring-1 focus:ring-[#00FFA3]/50 appearance-none transition-colors"
                     required
                   >
                     <option value="" disabled>Select an issue category...</option>
@@ -102,13 +102,13 @@ export default function SupportPage() {
                 </div>
                 
                 <div>
-                  <label className="block text-xs font-bold text-[#a1a1aa] uppercase tracking-wider mb-2">Detailed Description</label>
+                  <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">Detailed Description</label>
                   <textarea 
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     rows={5}
                     placeholder="Please provide steps to reproduce, relevant invoice numbers, or expected outcomes..."
-                    className="w-full bg-[#0a0a0a] border border-[#27272a] rounded-xl px-4 py-3 text-white placeholder-[#52525b] focus:outline-none focus:border-[#00ea77]/50 focus:ring-1 focus:ring-[#00ea77]/50 transition-colors resize-none"
+                    className="w-full bg-[#0a0a0a] border border-white/[0.05] rounded-xl px-4 py-3 text-white placeholder-[#52525b] focus:outline-none focus:border-[#00FFA3]/50 focus:ring-1 focus:ring-[#00FFA3]/50 transition-colors resize-none"
                     required
                   />
                 </div>
@@ -117,7 +117,7 @@ export default function SupportPage() {
                   <button 
                     type="submit"
                     disabled={isSubmitting || !subject || !message}
-                    className="flex items-center gap-2 bg-[#00ea77] text-black font-extrabold px-8 py-3 rounded-xl hover:bg-[#00c563] transition-all shadow-[0_0_15px_rgba(0,234,119,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center gap-2 bg-[#00FFA3] text-black font-heading font-bold px-8 py-3 rounded-xl hover:bg-[#00ffa3]/90 transition-all shadow-[0_0_15px_rgba(0,234,119,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? (
                       <span className="animate-pulse">Submitting...</span>
@@ -133,43 +133,43 @@ export default function SupportPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <a href="mailto:support@khatax.com" className="bg-[#18181b] border border-[#27272a] rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:border-[#00ea77]/50 transition-colors group">
+            <a href="mailto:support@khatax.com" className="bg-[#111] border border-white/[0.05] rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:border-[#00FFA3]/50 transition-colors group">
               <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                 <Mail className="w-6 h-6 text-blue-400" />
               </div>
               <h3 className="font-bold text-white mb-1">Email Support</h3>
-              <p className="text-sm text-[#a1a1aa]">support@khatax.com</p>
+              <p className="text-sm text-zinc-400">support@khatax.com</p>
             </a>
-            <div className="bg-[#18181b] border border-[#27272a] rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:border-[#00ea77]/50 transition-colors group cursor-not-allowed">
-              <div className="w-12 h-12 rounded-full bg-[#00ea77]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <PhoneCall className="w-6 h-6 text-[#00ea77]" />
+            <div className="bg-[#111] border border-white/[0.05] rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:border-[#00FFA3]/50 transition-colors group cursor-not-allowed">
+              <div className="w-12 h-12 rounded-full bg-[#00FFA3]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <PhoneCall className="w-6 h-6 text-[#00FFA3]" />
               </div>
               <h3 className="font-bold text-white mb-1">Priority Hotline</h3>
-              <p className="text-sm text-[#a1a1aa]">1-800-KHATAX <br/><span className="text-[10px] text-[#00ea77] uppercase font-bold tracking-widest">Available 24/7</span></p>
+              <p className="text-sm text-zinc-400">1-800-KHATAX <br/><span className="text-[10px] text-[#00FFA3] uppercase font-bold tracking-widest">Available 24/7</span></p>
             </div>
           </div>
         </div>
 
         {/* Right Column: FAQ */}
         <div className="col-span-1">
-          <div className="bg-[#18181b] rounded-2xl border border-[#27272a] overflow-hidden shadow-lg sticky top-6">
-            <div className="px-6 py-5 border-b border-[#27272a] flex items-center gap-2 bg-[#121214]">
-              <MessageSquare className="w-4 h-4 text-[#a1a1aa]" />
-              <h2 className="text-sm font-extrabold text-white uppercase tracking-wider">Common Questions</h2>
+          <div className="bg-[#111] rounded-2xl border border-white/[0.05] overflow-hidden shadow-lg sticky top-6">
+            <div className="px-6 py-5 border-b border-white/[0.05] flex items-center gap-2 bg-[#121214]">
+              <MessageSquare className="w-4 h-4 text-zinc-400" />
+              <h2 className="text-sm font-heading font-bold text-white uppercase tracking-wider">Common Questions</h2>
             </div>
             <div className="divide-y divide-[#27272a]">
               {faqs.map((faq, idx) => (
-                <div key={idx} className="bg-[#18181b]">
+                <div key={idx} className="bg-[#111]">
                   <button 
                     onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
-                    className="w-full text-left px-6 py-4 flex items-center justify-between hover:bg-[#27272a]/30 transition-colors"
+                    className="w-full text-left px-6 py-4 flex items-center justify-between hover:bg-[#1a1a1a]/30 transition-colors"
                   >
                     <span className="font-bold text-sm text-white pr-4">{faq.q}</span>
-                    <ChevronDown className={`w-4 h-4 text-[#a1a1aa] transition-transform ${activeFaq === idx ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-4 h-4 text-zinc-400 transition-transform ${activeFaq === idx ? 'rotate-180' : ''}`} />
                   </button>
                   {activeFaq === idx && (
                     <div className="px-6 pb-4 pt-1 animate-in slide-in-from-top-2 duration-200">
-                      <p className="text-sm text-[#a1a1aa] leading-relaxed border-l-2 border-[#00ea77]/50 pl-3 py-1">
+                      <p className="text-sm text-zinc-400 leading-relaxed border-l-2 border-[#00FFA3]/50 pl-3 py-1">
                         {faq.a}
                       </p>
                     </div>

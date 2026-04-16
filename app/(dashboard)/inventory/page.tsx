@@ -83,7 +83,7 @@ export default function InventoryPage() {
         {activeTab === 'items' && (
           <button
             onClick={() => router.push('/inventory/new')}
-            className="flex items-center gap-2 bg-[#00ea77] text-black font-bold px-4 py-2 rounded-xl hover:bg-[#00c563] transition shadow-[0_0_15px_rgba(0,234,119,0.2)]"
+            className="flex items-center gap-2 bg-[#00FFA3] text-black font-bold px-4 py-2 rounded-xl hover:bg-[#00ffa3]/90 transition shadow-[0_0_15px_rgba(0,234,119,0.2)]"
           >
             <Plus className="h-4 w-4 stroke-[3]" /> Add Item
           </button>
@@ -94,21 +94,21 @@ export default function InventoryPage() {
       <div className="flex border-b border-white/10">
         <button
           onClick={() => setActiveTab('items')}
-          className={`px-4 py-3 font-bold text-sm border-b-2 transition-colors ${activeTab === 'items' ? 'border-[#00ea77] text-[#00ea77]' : 'border-transparent text-slate-500 hover:text-white hover:border-white/20'
+          className={`px-4 py-3 font-bold text-sm border-b-2 transition-colors ${activeTab === 'items' ? 'border-[#00FFA3] text-[#00FFA3]' : 'border-transparent text-slate-500 hover:text-white hover:border-white/20'
             }`}
         >
           Items & Stock
         </button>
         <button
           onClick={() => setActiveTab('godowns')}
-          className={`px-4 py-3 font-bold text-sm border-b-2 transition-colors ${activeTab === 'godowns' ? 'border-[#00ea77] text-[#00ea77]' : 'border-transparent text-slate-500 hover:text-white hover:border-white/20'
+          className={`px-4 py-3 font-bold text-sm border-b-2 transition-colors ${activeTab === 'godowns' ? 'border-[#00FFA3] text-[#00FFA3]' : 'border-transparent text-slate-500 hover:text-white hover:border-white/20'
             }`}
         >
           Godowns
         </button>
         <button
           onClick={() => setActiveTab('transfers')}
-          className={`px-4 py-3 font-bold text-sm border-b-2 transition-colors ${activeTab === 'transfers' ? 'border-[#00ea77] text-[#00ea77]' : 'border-transparent text-slate-500 hover:text-white hover:border-white/20'
+          className={`px-4 py-3 font-bold text-sm border-b-2 transition-colors ${activeTab === 'transfers' ? 'border-[#00FFA3] text-[#00FFA3]' : 'border-transparent text-slate-500 hover:text-white hover:border-white/20'
             }`}
         >
           Stock Transfers
@@ -133,7 +133,7 @@ export default function InventoryPage() {
                 placeholder="Search by product/service name..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-11 pr-4 py-2.5 bg-[#0a0a0a] border border-white/5 rounded-full text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 font-medium"
+                className="w-full pl-11 pr-4 py-2.5 bg-[#0a0a0a] border border-white/5 rounded-full text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 font-medium"
               />
             </div>
           </div>
@@ -143,7 +143,7 @@ export default function InventoryPage() {
           ) : filteredItems.length === 0 ? (
             <div className="p-16 text-center text-slate-500">
               <p className="font-medium">No inventory items found.</p>
-              <button onClick={() => router.push('/inventory/new')} className="text-[#00ea77] font-bold hover:text-[#00c563] mt-2 inline-block">
+              <button onClick={() => router.push('/inventory/new')} className="text-[#00FFA3] font-bold hover:text-[#00c563] mt-2 inline-block">
                 Add your first product or service
               </button>
             </div>
@@ -168,7 +168,7 @@ export default function InventoryPage() {
                         <span className="block text-[10px] font-bold tracking-wider text-slate-500 uppercase mt-1">GST: {item.taxRate}%</span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`inline-flex items-center px-2.5 py-1 rounded text-[10px] uppercase tracking-wider font-bold ${item.type === 'product' ? 'bg-[#00ea77]/10 text-[#00ea77]' : 'bg-purple-500/10 text-purple-500'}`}>
+                        <span className={`inline-flex items-center px-2.5 py-1 rounded text-[10px] uppercase tracking-wider font-bold ${item.type === 'product' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' : 'bg-purple-500/10 text-purple-500'}`}>
                           {item.type}
                         </span>
                       </td>
@@ -204,11 +204,11 @@ export default function InventoryPage() {
                       </td>
                       <td className="px-6 py-4 text-right">
                         {item.type === 'product' && (
-                          <button onClick={() => openAdjModal(item)} className="text-slate-500 hover:text-[#00ea77] p-2 transition-colors rounded-lg hover:bg-[#00ea77]/10 mr-1" title="Adjust Stock">
+                          <button onClick={() => openAdjModal(item)} className="text-slate-500 hover:text-[#00FFA3] p-2 transition-colors rounded-lg hover:bg-[#00FFA3]/10 mr-1" title="Adjust Stock">
                             <ArrowRightLeft className="h-4 w-4" />
                           </button>
                         )}
-                        <button onClick={() => router.push(`/inventory/${item.id}`)} className="text-slate-500 hover:text-[#00ea77] p-2 transition-colors rounded-lg hover:bg-[#00ea77]/10">
+                        <button onClick={() => router.push(`/inventory/${item.id}`)} className="text-slate-500 hover:text-[#00FFA3] p-2 transition-colors rounded-lg hover:bg-[#00FFA3]/10">
                           <Edit className="h-4 w-4" />
                         </button>
                         <button onClick={() => handleDelete(item.id, item.name)} className="text-slate-500 hover:text-red-500 p-2 ml-1 transition-colors rounded-lg hover:bg-red-500/10">
@@ -241,7 +241,7 @@ export default function InventoryPage() {
               <div className="mb-6 flex gap-3 p-4 bg-[#0a0a0a] rounded-xl border border-white/5 items-center">
                 <div className="flex-1">
                   <p className="text-sm font-bold text-white mb-1">{adjustingItem.name}</p>
-                  <p className="text-[10px] font-bold tracking-wider text-slate-500 uppercase">Current Stock: <span className="text-[#00ea77]">{adjustingItem.currentStock} {adjustingItem.unit}</span></p>
+                  <p className="text-[10px] font-bold tracking-wider text-slate-500 uppercase">Current Stock: <span className="text-[#00FFA3]">{adjustingItem.currentStock} {adjustingItem.unit}</span></p>
                 </div>
               </div>
 
@@ -249,7 +249,7 @@ export default function InventoryPage() {
                 <div className="space-y-2">
                   <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Type</label>
                   <div className="flex gap-4 p-1 bg-[#0a0a0a] border border-white/5 rounded-xl">
-                    <label className={`flex-1 flex items-center justify-center gap-2 py-2 cursor-pointer rounded-lg text-sm font-bold transition-colors ${adjType === 'add' ? 'bg-[#00ea77]/10 text-[#00ea77] shadow-sm' : 'text-slate-500 hover:text-white'}`}>
+                    <label className={`flex-1 flex items-center justify-center gap-2 py-2 cursor-pointer rounded-lg text-sm font-bold transition-colors ${adjType === 'add' ? 'bg-[#00FFA3]/10 text-[#00FFA3] shadow-sm' : 'text-slate-500 hover:text-white'}`}>
                       <input type="radio" checked={adjType === 'add'} onChange={() => setAdjType('add')} className="sr-only" />
                       <span>Add (+)</span>
                     </label>
@@ -269,7 +269,7 @@ export default function InventoryPage() {
                     required
                     value={adjQty}
                     onChange={e => setAdjQty(parseInt(e.target.value) || 0)}
-                    className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
+                    className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium"
                   />
                   {adjType === 'reduce' && adjQty > adjustingItem.currentStock && (
                     <p className="text-[10px] font-bold tracking-wider uppercase text-orange-500 mt-2">Warning: This will drop stock below zero globally.</p>
@@ -282,7 +282,7 @@ export default function InventoryPage() {
                     <select
                       value={adjGodownId}
                       onChange={e => setAdjGodownId(e.target.value)}
-                      className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
+                      className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium"
                     >
                       <option value="">-- Global Pool --</option>
                       {godowns.map(g => (
@@ -297,7 +297,7 @@ export default function InventoryPage() {
                   <select
                     value={adjReason}
                     onChange={e => setAdjReason(e.target.value)}
-                    className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
+                    className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium"
                   >
                     <option value="Stock Check">Stock Check (Audit)</option>
                     <option value="Damage">Damage/Spoilage</option>
@@ -313,7 +313,7 @@ export default function InventoryPage() {
                     type="text"
                     value={adjNotes}
                     onChange={e => setAdjNotes(e.target.value)}
-                    className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
+                    className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600"
                     placeholder="E.g. Found extra box..."
                   />
                 </div>
@@ -333,7 +333,7 @@ export default function InventoryPage() {
                 type="submit"
                 form="adj-form"
                 disabled={isAdjusting || adjQty <= 0}
-                className="px-6 py-2.5 text-sm font-bold text-black bg-[#00ea77] rounded-xl hover:bg-[#00c563] disabled:opacity-50 transition-colors shadow-[0_0_15px_rgba(0,234,119,0.2)]"
+                className="px-6 py-2.5 text-sm font-bold text-black bg-[#00FFA3] rounded-xl hover:bg-[#00ffa3]/90 disabled:opacity-50 transition-colors shadow-[0_0_15px_rgba(0,234,119,0.2)]"
               >
                 {isAdjusting ? 'Saving...' : 'Confirm'}
               </button>

@@ -18,14 +18,14 @@ export default function ReportsPage() {
   if (!isPremium) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-        <div className="w-16 h-16 rounded-full bg-[#00ea77]/10 flex items-center justify-center mb-6">
-          <Lock className="w-8 h-8 text-[#00ea77]" />
+        <div className="w-16 h-16 rounded-full bg-[#00FFA3]/10 flex items-center justify-center mb-6">
+          <Lock className="w-8 h-8 text-[#00FFA3]" />
         </div>
         <h2 className="text-2xl font-bold text-white mb-2">Premium Feature Locked</h2>
         <p className="text-slate-400 max-w-md mb-8">
           Detailed business reporting, GST reconciliation, and stock analytics are available exclusively for Premium subscribers.
         </p>
-        <Link href="/#pricing" className="bg-[#00ea77] text-black px-8 py-3 rounded-full font-bold hover:bg-[#00c563] transition shadow-[0_0_20px_rgba(0,234,119,0.2)]">
+        <Link href="/#pricing" className="bg-[#00FFA3] text-black px-8 py-3 rounded-full font-bold hover:bg-[#00ffa3]/90 transition shadow-[0_0_20px_rgba(0,234,119,0.2)]">
           Upgrade to Professional
         </Link>
       </div>
@@ -128,7 +128,7 @@ export default function ReportsPage() {
           <p className="text-sm font-semibold text-slate-400">View performance, compliance, and stock reports.</p>
         </div>
         <button
-          className="flex items-center gap-2 bg-[#111] border border-white/10 text-white font-bold px-4 py-2 rounded-xl hover:bg-white/5 hover:border-[#00ea77]/50 transition shadow-sm"
+          className="flex items-center gap-2 bg-[#111] border border-white/10 text-white font-bold px-4 py-2 rounded-xl hover:bg-white/5 hover:border-[#00FFA3]/50 transition shadow-sm"
         >
           <Download className="h-4 w-4" /> Export PDF
         </button>
@@ -137,43 +137,43 @@ export default function ReportsPage() {
       <div className="flex bg-[#111] rounded-2xl p-1.5 border border-white/10 w-fit shadow-sm overflow-x-auto max-w-full">
         <button
           onClick={() => setActiveTab('pnl')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'pnl' ? 'bg-[#00ea77]/10 text-[#00ea77]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'pnl' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
         >
           <TrendingUp className="h-4 w-4" /> Profit & Loss
         </button>
         <button
           onClick={() => setActiveTab('outstanding')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'outstanding' ? 'bg-[#00ea77]/10 text-[#00ea77]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'outstanding' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
         >
           <FileText className="h-4 w-4" /> Outstanding
         </button>
         <button
           onClick={() => setActiveTab('gst')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'gst' ? 'bg-[#00ea77]/10 text-[#00ea77]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'gst' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
         >
           <FileText className="h-4 w-4" /> GST (GSTR-3B)
         </button>
         <button
           onClick={() => setActiveTab('stock')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'stock' ? 'bg-[#00ea77]/10 text-[#00ea77]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'stock' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
         >
           <PieChart className="h-4 w-4" /> Stock Summary
         </button>
         <button
           onClick={() => setActiveTab('dead_stock')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'dead_stock' ? 'bg-[#00ea77]/10 text-[#00ea77]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'dead_stock' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
         >
           <TrendingUp className="h-4 w-4" /> Dead Stock
         </button>
         <button
           onClick={() => setActiveTab('sales_party')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'sales_party' ? 'bg-[#00ea77]/10 text-[#00ea77]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'sales_party' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
         >
           <Users className="h-4 w-4" /> Party Sales
         </button>
         <button
           onClick={() => setActiveTab('sales_item')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'sales_item' ? 'bg-[#00ea77]/10 text-[#00ea77]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition whitespace-nowrap ${activeTab === 'sales_item' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
         >
           <Package className="h-4 w-4" /> Item Sales
         </button>
@@ -196,15 +196,15 @@ export default function ReportsPage() {
                 <div className="space-y-4">
                   <div className="flex justify-between items-center py-2 border-b border-white/5">
                     <span className="text-slate-400 font-bold text-sm">Total Sales Revenue</span>
-                    <span className="font-extrabold text-white text-base">₹{sales.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
+                    <span className="font-heading font-bold text-white text-base">₹{sales.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-white/5">
                     <span className="text-slate-400 font-bold text-sm">Cost of Goods (Purchases)</span>
-                    <span className="font-extrabold text-white text-base">₹{purchases.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
+                    <span className="font-heading font-bold text-white text-base">₹{purchases.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                   </div>
                   <div className="flex justify-between items-center py-4 border-t-2 border-white/10">
-                    <span className="font-extrabold text-white text-lg tracking-wider uppercase">Gross Profit</span>
-                    <span className={`font-extrabold text-lg ${grossProfit >= 0 ? 'text-[#00ea77]' : 'text-red-500'}`}>
+                    <span className="font-heading font-bold text-white text-lg tracking-wider uppercase">Gross Profit</span>
+                    <span className={`font-heading font-bold text-lg ${grossProfit >= 0 ? 'text-[#00FFA3]' : 'text-red-500'}`}>
                       ₹{grossProfit.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                     </span>
                   </div>
@@ -238,26 +238,26 @@ export default function ReportsPage() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-5 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
                   <p className="text-[10px] text-blue-400 font-bold uppercase tracking-wider">Outward Supplies (Sales)</p>
-                  <p className="text-2xl font-extrabold text-blue-500 mt-1">₹{sales.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
+                  <p className="text-2xl font-heading font-bold text-blue-500 mt-1">₹{sales.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
                   <p className="text-xs font-bold text-blue-400/80 mt-2">Output Tax: ₹{outputGST.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
                 </div>
                 <div className="p-5 bg-orange-500/10 border border-orange-500/20 rounded-2xl">
                   <p className="text-[10px] text-orange-400 font-bold uppercase tracking-wider">Inward Supplies (Purchases)</p>
-                  <p className="text-2xl font-extrabold text-orange-500 mt-1">₹{purchases.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
+                  <p className="text-2xl font-heading font-bold text-orange-500 mt-1">₹{purchases.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
                   <p className="text-xs font-bold text-orange-400/80 mt-2">Input Tax Credit (ITC): ₹{inputGST.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
                 </div>
               </div>
 
-              <div className={`p-5 rounded-2xl border flex justify-between items-center ${gstLiability > 0 ? 'bg-orange-500/10 border-orange-500/20' : 'bg-[#00ea77]/10 border-[#00ea77]/20'}`}>
+              <div className={`p-5 rounded-2xl border flex justify-between items-center ${gstLiability > 0 ? 'bg-orange-500/10 border-orange-500/20' : 'bg-[#00FFA3]/10 border-[#00FFA3]/20'}`}>
                 <div>
-                  <p className={`text-[10px] font-bold uppercase tracking-wider ${gstLiability > 0 ? 'text-orange-400' : 'text-[#00ea77]'}`}>
+                  <p className={`text-[10px] font-bold uppercase tracking-wider ${gstLiability > 0 ? 'text-orange-400' : 'text-[#00FFA3]'}`}>
                     {gstLiability > 0 ? 'Net GST Payable' : 'Net ITC Available'}
                   </p>
-                  <p className={`text-2xl font-extrabold mt-1 ${gstLiability > 0 ? 'text-orange-500' : 'text-[#00ea77]'}`}>
+                  <p className={`text-2xl font-heading font-bold mt-1 ${gstLiability > 0 ? 'text-orange-500' : 'text-[#00FFA3]'}`}>
                     ₹{Math.abs(gstLiability).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                   </p>
                 </div>
-                <FileText className={`h-8 w-8 opacity-50 ${gstLiability > 0 ? 'text-orange-500' : 'text-[#00ea77]'}`} />
+                <FileText className={`h-8 w-8 opacity-50 ${gstLiability > 0 ? 'text-orange-500' : 'text-[#00FFA3]'}`} />
               </div>
             </div>
           )}
@@ -271,7 +271,7 @@ export default function ReportsPage() {
                 </div>
                 <div className="text-right">
                   <p className="text-[10px] uppercase tracking-wider font-bold text-slate-500">Total Valuation</p>
-                  <p className="text-2xl font-extrabold text-[#00ea77]">
+                  <p className="text-2xl font-heading font-bold text-[#00FFA3]">
                     ₹{items.filter(i => i.type === 'product').reduce((sum, i) => sum + (i.currentStock * i.purchasePrice), 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                   </p>
                 </div>
@@ -295,7 +295,7 @@ export default function ReportsPage() {
                           {item.currentStock} {item.unit}
                         </td>
                         <td className="px-6 py-4 text-right text-slate-300 font-bold text-sm">₹{item.purchasePrice.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</td>
-                        <td className="px-6 py-4 text-right font-extrabold text-[#00ea77] text-sm">
+                        <td className="px-6 py-4 text-right font-heading font-bold text-[#00FFA3] text-sm">
                           ₹{(item.currentStock * item.purchasePrice).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                         </td>
                       </tr>
@@ -318,12 +318,12 @@ export default function ReportsPage() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-5 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
                   <p className="text-[10px] text-blue-400 font-bold tracking-wider uppercase">Total Receivables</p>
-                  <p className="text-2xl font-extrabold text-blue-500 mt-1">₹{totalReceivables.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
+                  <p className="text-2xl font-heading font-bold text-blue-500 mt-1">₹{totalReceivables.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
                   <p className="text-xs font-bold text-blue-400/80 mt-2">Money you will get from Customers</p>
                 </div>
                 <div className="p-5 bg-orange-500/10 border border-orange-500/20 rounded-2xl">
                   <p className="text-[10px] text-orange-400 font-bold tracking-wider uppercase">Total Payables</p>
-                  <p className="text-2xl font-extrabold text-orange-500 mt-1">₹{totalPayables.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
+                  <p className="text-2xl font-heading font-bold text-orange-500 mt-1">₹{totalPayables.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
                   <p className="text-xs font-bold text-orange-400/80 mt-2">Money you owe to Suppliers</p>
                 </div>
               </div>
@@ -338,7 +338,7 @@ export default function ReportsPage() {
                       .map(p => (
                         <div key={p.id} className="flex justify-between items-center text-sm">
                           <span className="font-bold text-slate-300">{p.name}</span>
-                          <span className="font-extrabold text-blue-500">₹{Math.abs(p.currentBalance).toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
+                          <span className="font-heading font-bold text-blue-500">₹{Math.abs(p.currentBalance).toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                         </div>
                       ))}
                     {parties.filter(p => p.type === 'customer' && p.currentBalance < 0).length === 0 && (
@@ -355,7 +355,7 @@ export default function ReportsPage() {
                       .map(p => (
                         <div key={p.id} className="flex justify-between items-center text-sm">
                           <span className="font-bold text-slate-300">{p.name}</span>
-                          <span className="font-extrabold text-orange-500">₹{p.currentBalance.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
+                          <span className="font-heading font-bold text-orange-500">₹{p.currentBalance.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
                         </div>
                       ))}
                     {parties.filter(p => p.type === 'vendor' && p.currentBalance > 0).length === 0 && (
@@ -376,7 +376,7 @@ export default function ReportsPage() {
                 </div>
                 <div className="text-right">
                   <p className="text-[10px] uppercase font-bold tracking-wider text-slate-500">Capital Blocked</p>
-                  <p className="text-2xl font-extrabold text-red-500">
+                  <p className="text-2xl font-heading font-bold text-red-500">
                     ₹{deadStockValue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                   </p>
                 </div>
@@ -401,11 +401,11 @@ export default function ReportsPage() {
                       deadStockItems.map((item) => (
                         <tr key={item.id} className="hover:bg-white/5 transition-colors group">
                           <td className="px-6 py-4 font-bold text-white text-sm">{item.name}</td>
-                          <td className="px-6 py-4 text-right text-orange-500 font-extrabold text-sm">
+                          <td className="px-6 py-4 text-right text-orange-500 font-heading font-bold text-sm">
                             {item.currentStock} {item.unit}
                           </td>
                           <td className="px-6 py-4 text-right text-slate-300 font-bold text-sm">₹{item.purchasePrice.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</td>
-                          <td className="px-6 py-4 text-right font-extrabold text-red-500 text-sm">
+                          <td className="px-6 py-4 text-right font-heading font-bold text-red-500 text-sm">
                             ₹{(item.currentStock * item.purchasePrice).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                           </td>
                         </tr>
@@ -426,7 +426,7 @@ export default function ReportsPage() {
                 </div>
                 <div className="text-right">
                   <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Total B2B Sales</p>
-                  <p className="text-2xl font-extrabold text-blue-500">
+                  <p className="text-2xl font-heading font-bold text-blue-500">
                     ₹{sales.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                   </p>
                 </div>
@@ -453,7 +453,7 @@ export default function ReportsPage() {
                           <td className="px-6 py-4 text-center text-slate-400 font-bold text-sm">
                             {party.invoices}
                           </td>
-                          <td className="px-6 py-4 text-right font-extrabold text-white text-sm">
+                          <td className="px-6 py-4 text-right font-heading font-bold text-white text-sm">
                             ₹{party.total.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                           </td>
                         </tr>
@@ -495,7 +495,7 @@ export default function ReportsPage() {
                           <td className="px-6 py-4 text-center text-slate-400 font-bold text-sm">
                             {item.quantity}
                           </td>
-                          <td className="px-6 py-4 text-right font-extrabold text-white text-sm">
+                          <td className="px-6 py-4 text-right font-heading font-bold text-white text-sm">
                             ₹{item.revenue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                           </td>
                         </tr>

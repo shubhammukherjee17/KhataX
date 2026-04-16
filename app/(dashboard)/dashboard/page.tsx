@@ -205,19 +205,19 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-white tracking-tight leading-tight">Financial Intelligence</h1>
-          <p className="text-[#a1a1aa] font-medium text-sm mt-1">Overview for Global Vault #{businessId ? businessId.substring(0, 4) : '4920'}</p>
+          <h1 className="text-3xl font-heading font-bold text-white tracking-tight leading-tight">Financial Intelligence</h1>
+          <p className="text-zinc-400 font-medium text-sm mt-1">Overview for Global Vault #{businessId ? businessId.substring(0, 4) : '4920'}</p>
         </div>
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 bg-[#18181b] border border-[#27272a] px-3 py-1.5 rounded-full">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#00ea77] animate-pulse"></div>
-            <span className="text-[10px] uppercase font-bold tracking-widest text-[#a1a1aa]">Systems Nominal</span>
+          <div className="flex items-center gap-2 bg-[#111] border border-white/[0.05] px-3 py-1.5 rounded-full">
+            <div className="w-1.5 h-1.5 rounded-full bg-[#00FFA3] animate-pulse"></div>
+            <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-400">Systems Nominal</span>
           </div>
-          <div className="w-10 h-10 rounded-full border border-[#27272a] overflow-hidden bg-[#18181b] flex flex-shrink-0 items-center justify-center">
+          <div className="w-10 h-10 rounded-full border border-white/[0.05] overflow-hidden bg-[#111] flex flex-shrink-0 items-center justify-center">
             {user?.photoURL ? (
               <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
             ) : (
-              <span className="text-[#00ea77] font-bold text-sm uppercase">
+              <span className="text-[#00FFA3] font-bold text-sm uppercase">
                 {(profile?.name || user?.displayName || user?.email || 'A').charAt(0)}
               </span>
             )}
@@ -229,16 +229,16 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {/* Left: Net Liquidity Card (Span 2) */}
-        <div className="lg:col-span-2 bg-[#18181b] rounded-2xl p-8 border border-[#27272a] shadow-lg relative overflow-hidden group">
+        <div className="lg:col-span-2 bg-[#111] rounded-2xl p-8 border border-white/[0.05] shadow-lg relative overflow-hidden group">
           <div className="flex justify-between items-start">
             <div className="space-y-1 z-10">
-              <p className="text-[10px] uppercase tracking-[0.2em] font-extrabold text-[#00ea77]">Net Liquidity</p>
+              <p className="text-[10px] uppercase tracking-[0.2em] font-heading font-bold text-[#00FFA3]">Net Liquidity</p>
               <h2 className="text-5xl font-black tracking-tighter text-white">
                 ₹{totalLiquidity.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
               </h2>
             </div>
-            <div className="w-10 h-10 rounded-xl bg-[#27272a] flex items-center justify-center z-10">
-              <TrendingUp className="w-5 h-5 text-[#a1a1aa]" />
+            <div className="w-10 h-10 rounded-xl bg-[#1a1a1a] flex items-center justify-center z-10">
+              <TrendingUp className="w-5 h-5 text-zinc-400" />
             </div>
           </div>
 
@@ -248,8 +248,8 @@ export default function DashboardPage() {
               <AreaChart data={chartData} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#00ea77" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#00ea77" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#00FFA3" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#00FFA3" stopOpacity={0}/>
                   </linearGradient>
                   <linearGradient id="colorExpenses" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3}/>
@@ -263,35 +263,35 @@ export default function DashboardPage() {
                 />
                 <XAxis dataKey="name" hide />
                 <YAxis hide domain={[0, 'auto']} />
-                <Area type="monotone" dataKey="Revenue" stroke="#00ea77" strokeWidth={3} fillOpacity={1} fill="url(#colorRevenue)" />
+                <Area type="monotone" dataKey="Revenue" stroke="#00FFA3" strokeWidth={3} fillOpacity={1} fill="url(#colorRevenue)" />
                 <Area type="monotone" dataKey="Expenses" stroke="#ef4444" strokeWidth={3} fillOpacity={1} fill="url(#colorExpenses)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
 
           {/* Subtle Background glow */}
-          <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#00ea77]/5 rounded-full blur-[80px] pointer-events-none"></div>
+          <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#00FFA3]/5 rounded-full blur-[80px] pointer-events-none"></div>
         </div>
 
         {/* Right: Predictive Analysis Card */}
-        <div className="col-span-1 bg-[#18181b] rounded-2xl p-8 border border-[#27272a] shadow-lg flex flex-col relative overflow-hidden">
+        <div className="col-span-1 bg-[#111] rounded-2xl p-8 border border-white/[0.05] shadow-lg flex flex-col relative overflow-hidden">
           <div className="flex items-center gap-2 mb-6">
-            <Sparkles className="w-5 h-5 text-[#00ea77]" />
-            <h3 className="text-sm font-extrabold text-white">Predictive Analysis</h3>
+            <Sparkles className="w-5 h-5 text-[#00FFA3]" />
+            <h3 className="text-sm font-heading font-bold text-white">Predictive Analysis</h3>
           </div>
 
-          <p className="text-[#a1a1aa] text-sm leading-relaxed mb-auto">
+          <p className="text-zinc-400 text-sm leading-relaxed mb-auto">
             Cash flow optimization detected.<br />
-            Reducing inventory lag could yield <span className="text-[#00ea77] font-bold">+12.4%</span> margin by Q4.
+            Reducing inventory lag could yield <span className="text-[#00FFA3] font-bold">+12.4%</span> margin by Q4.
           </p>
 
-          <div className="mt-8 border border-[#27272a] p-4 rounded-xl bg-[#0a0a0a]">
+          <div className="mt-8 border border-white/[0.05] p-4 rounded-xl bg-[#0a0a0a]">
             <div className="flex justify-between items-center mb-3">
-              <span className="text-[9px] uppercase tracking-widest font-extrabold text-[#a1a1aa]">Confidence Level</span>
-              <span className="text-[10px] font-black text-[#00ea77]">94%</span>
+              <span className="text-[9px] uppercase tracking-[0.2em] font-mono font-heading font-bold text-zinc-400">Confidence Level</span>
+              <span className="text-[10px] font-black text-[#00FFA3]">94%</span>
             </div>
-            <div className="h-1.5 w-full bg-[#18181b] rounded-full overflow-hidden">
-              <div className="h-full bg-[#00ea77] rounded-full w-[94%] shadow-[0_0_10px_rgba(0,234,119,0.5)]"></div>
+            <div className="h-1.5 w-full bg-[#111] rounded-full overflow-hidden">
+              <div className="h-full bg-[#00FFA3] rounded-full w-[94%] shadow-[0_0_10px_rgba(0,234,119,0.5)]"></div>
             </div>
           </div>
         </div>
@@ -302,12 +302,12 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
         {/* Daily Revenue */}
-        <div className="bg-[#18181b] rounded-2xl p-6 border border-[#27272a] flex items-center gap-5 shadow-sm hover:border-[#3f3f46] transition-colors">
-          <div className="w-12 h-12 rounded-xl bg-[#00ea77]/10 flex flex-shrink-0 items-center justify-center">
-            <TrendingUp className="w-6 h-6 text-[#00ea77]" />
+        <div className="bg-[#111] rounded-2xl p-6 border border-white/[0.05] flex items-center gap-5 shadow-sm hover:border-[#3f3f46] transition-colors">
+          <div className="w-12 h-12 rounded-xl bg-[#00FFA3]/10 flex flex-shrink-0 items-center justify-center">
+            <TrendingUp className="w-6 h-6 text-[#00FFA3]" />
           </div>
           <div>
-            <p className="text-[10px] uppercase font-bold text-[#a1a1aa] tracking-widest">Daily Revenue</p>
+            <p className="text-[10px] uppercase font-bold text-zinc-400 tracking-widest">Daily Revenue</p>
             <p className="text-2xl font-black text-white mt-0.5">
               ₹{todayRevenue.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
             </p>
@@ -315,25 +315,25 @@ export default function DashboardPage() {
         </div>
 
         {/* Open Invoices */}
-        <div className="bg-[#18181b] rounded-2xl p-6 border border-[#27272a] flex items-center gap-5 shadow-sm hover:border-[#3f3f46] transition-colors">
+        <div className="bg-[#111] rounded-2xl p-6 border border-white/[0.05] flex items-center gap-5 shadow-sm hover:border-[#3f3f46] transition-colors">
           <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex flex-shrink-0 items-center justify-center">
             <ShoppingBag className="w-5 h-5 text-blue-400" />
           </div>
           <div>
-            <p className="text-[10px] uppercase font-bold text-[#a1a1aa] tracking-widest">Open Invoices</p>
+            <p className="text-[10px] uppercase font-bold text-zinc-400 tracking-widest">Open Invoices</p>
             <p className="text-2xl font-black text-white mt-0.5">
-              {openInvoicesCount} <span className="text-sm font-semibold text-[#a1a1aa]">Pending</span>
+              {openInvoicesCount} <span className="text-sm font-semibold text-zinc-400">Pending</span>
             </p>
           </div>
         </div>
 
         {/* Total Expenses */}
-        <div className="bg-[#18181b] rounded-2xl p-6 border border-[#27272a] flex items-center gap-5 shadow-sm hover:border-[#3f3f46] transition-colors">
-          <div className="w-12 h-12 rounded-xl bg-[#00ea77]/10 flex flex-shrink-0 items-center justify-center">
-            <Wallet className="w-5 h-5 text-[#00ea77]" />
+        <div className="bg-[#111] rounded-2xl p-6 border border-white/[0.05] flex items-center gap-5 shadow-sm hover:border-[#3f3f46] transition-colors">
+          <div className="w-12 h-12 rounded-xl bg-[#00FFA3]/10 flex flex-shrink-0 items-center justify-center">
+            <Wallet className="w-5 h-5 text-[#00FFA3]" />
           </div>
           <div>
-            <p className="text-[10px] uppercase font-bold text-[#a1a1aa] tracking-widest">Total Expenses</p>
+            <p className="text-[10px] uppercase font-bold text-zinc-400 tracking-widest">Total Expenses</p>
             <p className="text-2xl font-black text-white mt-0.5">
               ₹{totalExpenseMonth.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
             </p>
@@ -345,12 +345,12 @@ export default function DashboardPage() {
       {/* Row 3: Advanced Visuals */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Transaction Distribution */}
-        <div className="bg-[#18181b] rounded-2xl p-6 border border-[#27272a] shadow-sm flex flex-col">
-          <h3 className="text-lg font-extrabold text-white mb-2">Cash Distribution</h3>
-          <p className="text-[11px] uppercase font-bold text-[#a1a1aa] tracking-widest mb-6">Income vs Expenses (All time)</p>
+        <div className="bg-[#111] rounded-2xl p-6 border border-white/[0.05] shadow-sm flex flex-col">
+          <h3 className="text-lg font-heading font-bold text-white mb-2">Cash Distribution</h3>
+          <p className="text-[11px] uppercase font-bold text-zinc-400 tracking-widest mb-6">Income vs Expenses (All time)</p>
           <div className="flex-1 min-h-[250px] w-full relative">
             {distributionData[0].value === 0 && distributionData[1].value === 0 ? (
-               <div className="absolute inset-0 flex items-center justify-center text-sm font-medium text-[#a1a1aa]">No data available</div>
+               <div className="absolute inset-0 flex items-center justify-center text-sm font-medium text-zinc-400">No data available</div>
             ) : (
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -364,7 +364,7 @@ export default function DashboardPage() {
                       dataKey="value"
                       stroke="none"
                     >
-                      <Cell fill="#00ea77" />
+                      <Cell fill="#00FFA3" />
                       <Cell fill="#ef4444" />
                     </Pie>
                     <Tooltip 
@@ -380,12 +380,12 @@ export default function DashboardPage() {
         </div>
 
         {/* Top Parties */}
-        <div className="bg-[#18181b] rounded-2xl p-6 border border-[#27272a] shadow-sm flex flex-col">
-          <h3 className="text-lg font-extrabold text-white mb-2">Top Parties</h3>
-          <p className="text-[11px] uppercase font-bold text-[#a1a1aa] tracking-widest mb-6">By Total Transaction Volume</p>
+        <div className="bg-[#111] rounded-2xl p-6 border border-white/[0.05] shadow-sm flex flex-col">
+          <h3 className="text-lg font-heading font-bold text-white mb-2">Top Parties</h3>
+          <p className="text-[11px] uppercase font-bold text-zinc-400 tracking-widest mb-6">By Total Transaction Volume</p>
           <div className="flex-1 min-h-[250px] w-full relative">
             {topPartiesData.length === 0 ? (
-               <div className="absolute inset-0 flex items-center justify-center text-sm font-medium text-[#a1a1aa]">No data available</div>
+               <div className="absolute inset-0 flex items-center justify-center text-sm font-medium text-zinc-400">No data available</div>
             ) : (
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={topPartiesData} layout="vertical" margin={{ top: 0, right: 20, left: 20, bottom: 0 }}>
@@ -396,10 +396,10 @@ export default function DashboardPage() {
                       contentStyle={{ backgroundColor: '#18181b', borderColor: '#27272a', borderRadius: '8px', color: '#fff', fontSize: '12px', fontWeight: 'bold' }}
                       formatter={(value: any) => [`₹${Number(value).toLocaleString('en-IN')}`, 'Volume']}
                     />
-                    <Bar dataKey="volume" fill="#00ea77" radius={[0, 4, 4, 0]} barSize={20}>
+                    <Bar dataKey="volume" fill="#00FFA3" radius={[0, 4, 4, 0]} barSize={20}>
                        {
                          topPartiesData.map((entry, index) => (
-                           <Cell key={`cell-${index}`} fill={index % 2 === 0 ? '#00ea77' : '#00c563'} />
+                           <Cell key={`cell-${index}`} fill={index % 2 === 0 ? '#00FFA3' : '#00c563'} />
                          ))
                        }
                     </Bar>
@@ -411,38 +411,38 @@ export default function DashboardPage() {
       </div>
 
       {/* Row 4: Recent Transactions */}
-      <div className="bg-[#18181b] rounded-2xl border border-[#27272a] overflow-hidden shadow-sm">
-        <div className="px-8 py-6 flex items-center justify-between border-b border-[#27272a]">
-          <h2 className="text-lg font-extrabold text-white">Recent Transactions</h2>
-          <Link href="/reports" className="text-[10px] font-extrabold tracking-widest uppercase text-[#00ea77] hover:text-[#00c563] transition-colors">
+      <div className="bg-[#111] rounded-2xl border border-white/[0.05] overflow-hidden shadow-sm">
+        <div className="px-8 py-6 flex items-center justify-between border-b border-white/[0.05]">
+          <h2 className="text-lg font-heading font-bold text-white">Recent Transactions</h2>
+          <Link href="/reports" className="text-[10px] font-heading font-bold tracking-widest uppercase text-[#00FFA3] hover:text-[#00c563] transition-colors">
             View Archive
           </Link>
         </div>
 
         <div className="divide-y divide-[#27272a]">
           {recentTransactions.length === 0 ? (
-            <div className="p-8 text-center text-[#a1a1aa] text-sm font-medium">No recent transactions.</div>
+            <div className="p-8 text-center text-zinc-400 text-sm font-medium">No recent transactions.</div>
           ) : (
             recentTransactions.map((tx, idx) => (
-              <div key={idx} className="flex items-center justify-between px-8 py-5 hover:bg-[#27272a]/30 transition-colors group">
+              <div key={idx} className="flex items-center justify-between px-8 py-5 hover:bg-[#1a1a1a]/30 transition-colors group">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-[#27272a] flex flex-shrink-0 items-center justify-center group-hover:bg-[#3f3f46] transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-[#1a1a1a] flex flex-shrink-0 items-center justify-center group-hover:bg-[#3f3f46] transition-colors">
                     {/* Alternate icons based on party name first letter to look nice dynamically */}
-                    <span className="text-[#a1a1aa] font-bold text-sm uppercase">
+                    <span className="text-zinc-400 font-bold text-sm uppercase">
                       {tx.title.charAt(0)}
                     </span>
                   </div>
                   <div>
-                    <p className="text-sm font-extrabold text-white">{tx.title}</p>
-                    <p className="text-xs font-medium text-[#a1a1aa] mt-0.5">{tx.subtitle}</p>
+                    <p className="text-sm font-heading font-bold text-white">{tx.title}</p>
+                    <p className="text-xs font-medium text-zinc-400 mt-0.5">{tx.subtitle}</p>
                   </div>
                 </div>
 
                 <div className="text-right flex flex-col items-end gap-1">
-                  <p className={`text-sm font-black ${tx.isDebit ? 'text-red-500' : 'text-[#00ea77]'}`}>
+                  <p className={`text-sm font-black ${tx.isDebit ? 'text-red-500' : 'text-[#00FFA3]'}`}>
                     {tx.isDebit ? '-' : '+'}₹{tx.amount.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}
                   </p>
-                  <span className={`text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded ${tx.isDebit ? 'bg-red-500/10 text-red-500' : 'bg-[#00ea77]/10 text-[#00ea77]'
+                  <span className={`text-[8px] font-black uppercase tracking-[0.2em] font-mono px-2 py-0.5 rounded ${tx.isDebit ? 'bg-red-500/10 text-red-500' : 'bg-[#00FFA3]/10 text-[#00FFA3]'
                     }`}>
                     {tx.statusBadge}
                   </span>

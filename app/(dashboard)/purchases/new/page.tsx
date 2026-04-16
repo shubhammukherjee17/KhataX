@@ -224,15 +224,15 @@ export default function NewPurchasePage() {
         </button>
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-3">
-            <span className="w-8 h-8 rounded-lg bg-[#00ea77]/10 flex items-center justify-center">
-              <span className="w-3 h-3 bg-[#00ea77] rounded-sm"></span>
+            <span className="w-8 h-8 rounded-lg bg-[#00FFA3]/10 flex items-center justify-center">
+              <span className="w-3 h-3 bg-[#00FFA3] rounded-sm"></span>
             </span>
             Record Purchase Bill
           </h1>
         </div>
         
         <div className="ml-auto flex items-center">
-          <label className={`cursor-pointer flex items-center justify-center gap-2 bg-[#00ea77]/10 border border-[#00ea77]/30 text-[#00ea77] hover:bg-[#00ea77]/20 px-4 py-2.5 rounded-lg transition-colors text-sm font-bold shadow-[0_0_15px_rgba(0,234,119,0.1)] ${isScanning ? 'opacity-50 pointer-events-none' : ''}`}>
+          <label className={`cursor-pointer flex items-center justify-center gap-2 bg-[#00FFA3]/10 border border-[#00FFA3]/30 text-[#00FFA3] hover:bg-[#00FFA3]/20 px-4 py-2.5 rounded-lg transition-colors text-sm font-bold shadow-[0_0_15px_rgba(0,234,119,0.1)] ${isScanning ? 'opacity-50 pointer-events-none' : ''}`}>
             {isScanning ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
             {isScanning ? 'Scanning Receipt...' : 'AI Auto-Fill'}
             <input type="file" accept="image/*" onChange={handleReceiptScan} className="hidden" />
@@ -242,13 +242,13 @@ export default function NewPurchasePage() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="bg-[#111] p-6 rounded-2xl shadow-sm border border-white/10 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-[#00ea77]/5 rounded-full blur-[40px] pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-32 h-32 bg-[#00FFA3]/5 rounded-full blur-[40px] pointer-events-none"></div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
             <div className="space-y-2">
               <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Vendor *</label>
               <select
                 {...register("partyId", { required: true })}
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium"
               >
                 <option value="">Select Vendor</option>
                 <option value="walk-in">--- Walk-in / Custom Vendor ---</option>
@@ -262,7 +262,7 @@ export default function NewPurchasePage() {
               <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Bill No *</label>
               <input
                 {...register("number", { required: true })}
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600"
               />
             </div>
 
@@ -271,7 +271,7 @@ export default function NewPurchasePage() {
               <input
                 type="date"
                 {...register("date", { required: true })}
-                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium [color-scheme:dark]"
+                className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium [color-scheme:dark]"
               />
             </div>
           </div>
@@ -283,7 +283,7 @@ export default function NewPurchasePage() {
                 <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Vendor Name</label>
                 <input
                   {...register("vendorName", { required: true })}
-                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600"
                   placeholder="e.g. ABC Suppliers"
                 />
               </div>
@@ -292,7 +292,7 @@ export default function NewPurchasePage() {
                 <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Phone Number</label>
                 <input
                   {...register("vendorPhone")}
-                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600"
                   placeholder="+91 9876543210"
                 />
               </div>
@@ -302,7 +302,7 @@ export default function NewPurchasePage() {
                 <textarea
                   {...register("vendorAddress")}
                   rows={1}
-                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white font-medium placeholder:text-slate-600 resize-none"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 resize-none"
                   placeholder="Street, City, PIN"
                 />
               </div>
@@ -339,7 +339,7 @@ export default function NewPurchasePage() {
                           register(`items.${index}.itemId`).onChange(e); // Trigger RHF
                           handleItemSelect(index, e.target.value);
                         }}
-                        className="w-full min-w-[80px] px-3 py-2.5 text-[15px] font-semibold tracking-wide bg-[#0a0a0a] border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white transition-colors"
+                        className="w-full min-w-[80px] px-3 py-2.5 text-[15px] font-semibold tracking-wide bg-[#0a0a0a] border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white transition-colors"
                       >
                         <option value="">Select Item</option>
                         <option value="walk-in">-- Custom Item --</option>
@@ -351,7 +351,7 @@ export default function NewPurchasePage() {
                          <input 
                            {...register(`items.${index}.name`)} 
                            placeholder="Type custom name"
-                           className="w-full mt-2 px-3 py-2 text-xs font-medium tracking-wide bg-[#1a1a1a] border border-white/5 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 text-slate-300"
+                           className="w-full mt-2 px-3 py-2 text-xs font-medium tracking-wide bg-[#1a1a1a] border border-white/5 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 text-slate-300"
                          />
                       ) : (
                          <input type="hidden" {...register(`items.${index}.name`)} />
@@ -361,27 +361,27 @@ export default function NewPurchasePage() {
                       <input
                         type="number" step="0.01" min="1"
                         {...register(`items.${index}.quantity`, { valueAsNumber: true })}
-                        className="w-full min-w-[80px] px-3 py-2.5 text-[15px] font-semibold tracking-wide bg-[#0a0a0a] border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white transition-colors"
+                        className="w-full min-w-[80px] px-3 py-2.5 text-[15px] font-semibold tracking-wide bg-[#0a0a0a] border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white transition-colors"
                       />
                     </td>
                     <td className="px-4 py-3">
                       <input
                         type="number" step="0.01"
                         {...register(`items.${index}.rate`, { valueAsNumber: true })}
-                        className="w-full min-w-[80px] px-3 py-2.5 text-[15px] font-semibold tracking-wide bg-[#0a0a0a] border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white transition-colors"
+                        className="w-full min-w-[80px] px-3 py-2.5 text-[15px] font-semibold tracking-wide bg-[#0a0a0a] border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white transition-colors"
                       />
                     </td>
                     <td className="px-4 py-3">
                       <input
                         type="number" step="0.01"
                         {...register(`items.${index}.discount`, { valueAsNumber: true })}
-                        className="w-full min-w-[80px] px-3 py-2.5 text-[15px] font-semibold tracking-wide bg-[#0a0a0a] border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white transition-colors"
+                        className="w-full min-w-[80px] px-3 py-2.5 text-[15px] font-semibold tracking-wide bg-[#0a0a0a] border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white transition-colors"
                       />
                     </td>
                     <td className="px-4 py-3">
                       <select
                         {...register(`items.${index}.taxRate`, { valueAsNumber: true })}
-                        className="w-full min-w-[80px] px-3 py-2.5 text-[15px] font-semibold tracking-wide bg-[#0a0a0a] border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 text-white transition-colors"
+                        className="w-full min-w-[80px] px-3 py-2.5 text-[15px] font-semibold tracking-wide bg-[#0a0a0a] border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white transition-colors"
                       >
                         <option value={0}>0%</option>
                         <option value={5}>5%</option>
@@ -428,7 +428,7 @@ export default function NewPurchasePage() {
             <button
               type="button"
               onClick={() => append({ itemId: '', name: '', quantity: 1, rate: 0, discount: 0, taxRate: 18, taxAmount: 0, totalAmount: 0, netAmount: 0 })}
-              className="flex items-center gap-2 text-sm font-bold text-[#00ea77] hover:text-[#00c563] bg-[#00ea77]/10 px-4 py-2 rounded-lg transition-colors border border-[#00ea77]/20"
+              className="flex items-center gap-2 text-sm font-bold text-[#00FFA3] hover:text-[#00c563] bg-[#00FFA3]/10 px-4 py-2 rounded-lg transition-colors border border-[#00FFA3]/20"
             >
               <Plus className="h-4 w-4" /> Add Line Item
             </button>
@@ -446,7 +446,7 @@ export default function NewPurchasePage() {
                 <input
                   type="number" step="0.01"
                   {...register("amountPaid", { valueAsNumber: true })}
-                  className="w-full px-4 py-4 pl-8 bg-[#0a0a0a] border border-[#00ea77]/50 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00ea77] focus:border-[#00ea77] text-2xl font-bold text-[#00ea77]"
+                  className="w-full px-4 py-4 pl-8 bg-[#0a0a0a] border border-[#00FFA3]/50 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3] focus:border-[#00FFA3] text-2xl font-bold text-[#00FFA3]"
                 />
               </div>
             </div>
@@ -493,7 +493,7 @@ export default function NewPurchasePage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 md:flex-none px-8 py-3 flex items-center justify-center gap-2 text-sm font-bold text-black bg-[#00ea77] rounded-xl hover:bg-[#00c563] disabled:opacity-50 transition-all shadow-[0_0_20px_rgba(0,234,119,0.2)] hover:shadow-[0_0_25px_rgba(0,234,119,0.4)]"
+              className="flex-1 md:flex-none px-8 py-3 flex items-center justify-center gap-2 text-sm font-bold text-black bg-[#00FFA3] rounded-xl hover:bg-[#00ffa3]/90 disabled:opacity-50 transition-all shadow-[0_0_20px_rgba(0,234,119,0.2)] hover:shadow-[0_0_25px_rgba(0,234,119,0.4)]"
             >
               <Save className="h-4 w-4" />
               {isSubmitting ? 'Saving...' : 'Save Purchase Bill'}

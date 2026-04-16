@@ -34,7 +34,7 @@ export default function PartiesPage() {
         </div>
         <button
           onClick={() => router.push('/parties/new')}
-          className="flex items-center gap-2 bg-[#00ea77] text-black font-bold px-4 py-2 rounded-xl hover:bg-[#00c563] transition shadow-[0_0_15px_rgba(0,234,119,0.2)]"
+          className="flex items-center gap-2 bg-[#00FFA3] text-black font-bold px-4 py-2 rounded-xl hover:bg-[#00ffa3]/90 transition shadow-[0_0_15px_rgba(0,234,119,0.2)]"
         >
           <Plus className="h-4 w-4 stroke-[3]" /> Add Party
         </button>
@@ -49,7 +49,7 @@ export default function PartiesPage() {
               placeholder="Search by name or phone..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-11 pr-4 py-2.5 bg-[#0a0a0a] border border-white/5 rounded-full text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00ea77]/50 focus:border-[#00ea77]/50 font-medium"
+              className="w-full pl-11 pr-4 py-2.5 bg-[#0a0a0a] border border-white/5 rounded-full text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 font-medium"
             />
           </div>
         </div>
@@ -59,7 +59,7 @@ export default function PartiesPage() {
         ) : filteredParties.length === 0 ? (
           <div className="p-16 text-center text-slate-500">
             <p className="font-medium">No parties found.</p>
-            <button onClick={() => router.push('/parties/new')} className="text-[#00ea77] font-bold hover:text-[#00c563] mt-2 inline-block">
+            <button onClick={() => router.push('/parties/new')} className="text-[#00FFA3] font-bold hover:text-[#00c563] mt-2 inline-block">
               Add your first party
             </button>
           </div>
@@ -83,7 +83,7 @@ export default function PartiesPage() {
                       {party.gstin && <span className="block text-[10px] font-bold tracking-wider text-slate-500 uppercase mt-1">GST: {party.gstin}</span>}
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`inline-flex items-center px-2.5 py-1 rounded text-[10px] uppercase tracking-wider font-bold ${party.type === 'customer' ? 'bg-[#00ea77]/10 text-[#00ea77]' : 'bg-orange-500/10 text-orange-500'}`}>
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded text-[10px] uppercase tracking-wider font-bold ${party.type === 'customer' ? 'bg-[#00FFA3]/10 text-[#00FFA3]' : 'bg-orange-500/10 text-orange-500'}`}>
                         {party.type}
                       </span>
                     </td>
@@ -92,7 +92,7 @@ export default function PartiesPage() {
                       <div className="text-xs text-slate-500 mt-0.5">{party.email}</div>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <div className={`font-bold text-base ${party.currentBalance > 0 ? 'text-[#00ea77]' : party.currentBalance < 0 ? 'text-red-500' : 'text-slate-400'}`}>
+                      <div className={`font-bold text-base ${party.currentBalance > 0 ? 'text-[#00FFA3]' : party.currentBalance < 0 ? 'text-red-500' : 'text-slate-400'}`}>
                         ₹{Math.abs(party.currentBalance).toLocaleString('en-IN', { maximumFractionDigits: 2 })}
                       </div>
                       <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mt-0.5 block">
@@ -100,7 +100,7 @@ export default function PartiesPage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <button onClick={() => router.push(`/parties/${party.id}`)} className="text-slate-500 hover:text-[#00ea77] p-2 transition-colors rounded-lg hover:bg-[#00ea77]/10">
+                      <button onClick={() => router.push(`/parties/${party.id}`)} className="text-slate-500 hover:text-[#00FFA3] p-2 transition-colors rounded-lg hover:bg-[#00FFA3]/10">
                         <Edit className="h-4 w-4" />
                       </button>
                       <button onClick={() => handleDelete(party.id, party.name)} className="text-slate-500 hover:text-red-500 p-2 ml-1 transition-colors rounded-lg hover:bg-red-500/10">
