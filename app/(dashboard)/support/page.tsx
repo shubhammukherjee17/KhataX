@@ -52,11 +52,11 @@ export default function SupportPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-heading font-bold text-white tracking-tight leading-tight flex items-center gap-3">
-            <Headset className="w-8 h-8 text-[#00FFA3]" />
+          <h1 className="text-3xl font-heading font-semibold text-white tracking-tight flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-brand-primary/10 border border-brand-primary/20"><Headset className="w-8 h-8 text-brand-primary" /></div>
             Enterprise Support
           </h1>
-          <p className="text-zinc-400 font-medium text-sm mt-1">Get priority assistance from the KhataX Pro engineering team.</p>
+          <p className="text-[12px] font-mono tracking-widest uppercase font-semibold text-zinc-500 mt-3">Get priority assistance from the KhataX Pro engineering team.</p>
         </div>
       </div>
 
@@ -64,20 +64,20 @@ export default function SupportPage() {
         {/* Left Column: Form & Direct Contact */}
         <div className="lg:col-span-2 space-y-8">
           
-          <div className="bg-[#111] rounded-2xl p-8 border border-white/[0.05] shadow-lg relative overflow-hidden">
-            <h2 className="text-lg font-heading font-bold text-white mb-6">Open a Support Ticket</h2>
+          <div className="bg-[#0A0A0A] rounded-2xl p-8 border border-white/[0.04] shadow-sm relative overflow-hidden">
+            <h2 className="text-lg font-heading font-semibold text-white mb-6">Open a Support Ticket</h2>
             
             {isSuccess ? (
-              <div className="bg-[#00FFA3]/10 border border-[#00FFA3]/30 rounded-xl p-8 flex flex-col items-center justify-center text-center animate-in fade-in zoom-in duration-300">
-                <div className="w-16 h-16 rounded-full bg-[#00FFA3]/20 flex items-center justify-center mb-4">
-                  <CheckCircle2 className="w-8 h-8 text-[#00FFA3]" />
+              <div className="bg-brand-primary/5 border border-brand-primary/20 rounded-2xl p-8 flex flex-col items-center justify-center text-center animate-in fade-in zoom-in duration-300 shadow-sm">
+                <div className="w-16 h-16 rounded-full bg-brand-primary/10 flex items-center justify-center mb-4">
+                  <CheckCircle2 className="w-8 h-8 text-brand-primary" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Ticket Submitted Successfully</h3>
+                <h3 className="text-xl font-heading font-semibold text-white mb-2">Ticket Submitted Successfully</h3>
                 {/* eslint-disable-next-line react-hooks/purity */}
-                <p className="text-zinc-400 text-sm">Our enterprise support team will review your request and get back to you within 2 hours. Ticket ID: #KX-{Math.floor(Math.random() * 90000) + 10000}</p>
+                <p className="text-zinc-400 font-medium text-sm">Our enterprise support team will review your request and get back to you within 2 hours. Ticket ID: #KX-{Math.floor(Math.random() * 90000) + 10000}</p>
                 <button 
                   onClick={() => setIsSuccess(false)}
-                  className="mt-6 text-[#00FFA3] text-sm font-bold hover:text-white transition-colors"
+                  className="mt-6 text-[11px] font-mono tracking-[0.2em] uppercase text-brand-primary font-semibold hover:text-white transition-colors"
                 >
                   Open another ticket
                 </button>
@@ -85,45 +85,45 @@ export default function SupportPage() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">Subject Context</label>
+                  <label className="block text-[10px] font-mono tracking-[0.2em] font-semibold text-zinc-500 uppercase mb-2">Subject Context</label>
                   <select 
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
-                    className="w-full bg-[#0a0a0a] border border-white/[0.05] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#00FFA3]/50 focus:ring-1 focus:ring-[#00FFA3]/50 appearance-none transition-colors"
+                    className="w-full bg-white/[0.02] border border-white/[0.04] rounded-xl px-4 py-3 text-white font-medium focus:outline-none focus:border-brand-primary/30 focus:ring-1 focus:ring-brand-primary/30 appearance-none transition-all shadow-sm"
                     required
                   >
-                    <option value="" disabled>Select an issue category...</option>
-                    <option value="billing">Billing & Subscriptions</option>
-                    <option value="data">Data Synchronization Issue</option>
-                    <option value="feature">Feature Request / Feedback</option>
-                    <option value="technical">Technical Bug Report</option>
-                    <option value="other">Other Inquiry</option>
+                    <option value="" disabled className="bg-[#0A0A0A]">Select an issue category...</option>
+                    <option value="billing" className="bg-[#0A0A0A]">Billing & Subscriptions</option>
+                    <option value="data" className="bg-[#0A0A0A]">Data Synchronization Issue</option>
+                    <option value="feature" className="bg-[#0A0A0A]">Feature Request / Feedback</option>
+                    <option value="technical" className="bg-[#0A0A0A]">Technical Bug Report</option>
+                    <option value="other" className="bg-[#0A0A0A]">Other Inquiry</option>
                   </select>
                 </div>
                 
                 <div>
-                  <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">Detailed Description</label>
+                  <label className="block text-[10px] font-mono tracking-[0.2em] font-semibold text-zinc-500 uppercase mb-2">Detailed Description</label>
                   <textarea 
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     rows={5}
                     placeholder="Please provide steps to reproduce, relevant invoice numbers, or expected outcomes..."
-                    className="w-full bg-[#0a0a0a] border border-white/[0.05] rounded-xl px-4 py-3 text-white placeholder-[#52525b] focus:outline-none focus:border-[#00FFA3]/50 focus:ring-1 focus:ring-[#00FFA3]/50 transition-colors resize-none"
+                    className="w-full bg-white/[0.02] border border-white/[0.04] rounded-xl px-4 py-3 text-white font-medium placeholder:text-zinc-600 focus:outline-none focus:border-brand-primary/30 focus:ring-1 focus:ring-brand-primary/30 transition-all resize-none shadow-sm"
                     required
                   />
                 </div>
 
-                <div className="flex justify-end">
+                <div className="flex justify-end pt-2">
                   <button 
                     type="submit"
                     disabled={isSubmitting || !subject || !message}
-                    className="flex items-center gap-2 bg-[#00FFA3] text-black font-heading font-bold px-8 py-3 rounded-xl hover:bg-[#00ffa3]/90 transition-all shadow-[0_0_15px_rgba(0,234,119,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center gap-2 bg-brand-primary text-black font-semibold px-8 py-3 rounded-xl hover:bg-brand-primary/90 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed active:scale-95"
                   >
                     {isSubmitting ? (
                       <span className="animate-pulse">Submitting...</span>
                     ) : (
                       <>
-                        <Send className="w-4 h-4" strokeWidth={3} /> Dispatch Ticket
+                        <Send className="w-4 h-4" strokeWidth={2} /> Dispatch Ticket
                       </>
                     )}
                   </button>
@@ -133,43 +133,44 @@ export default function SupportPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <a href="mailto:support@khatax.com" className="bg-[#111] border border-white/[0.05] rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:border-[#00FFA3]/50 transition-colors group">
-              <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <Mail className="w-6 h-6 text-blue-400" />
+            <a href="mailto:support@khatax.com" className="bg-[#0A0A0A] border border-white/[0.04] rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:bg-white/[0.02] transition-colors group shadow-sm">
+              <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform shadow-sm">
+                <Mail className="w-5 h-5 text-blue-500" />
               </div>
-              <h3 className="font-bold text-white mb-1">Email Support</h3>
-              <p className="text-sm text-zinc-400">support@khatax.com</p>
+              <h3 className="font-semibold text-white mb-1">Email Support</h3>
+              <p className="text-xs text-zinc-400 font-medium">support@khatax.com</p>
             </a>
-            <div className="bg-[#111] border border-white/[0.05] rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:border-[#00FFA3]/50 transition-colors group cursor-not-allowed">
-              <div className="w-12 h-12 rounded-full bg-[#00FFA3]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <PhoneCall className="w-6 h-6 text-[#00FFA3]" />
+            <div className="bg-[#0A0A0A] border border-white/[0.04] rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:bg-white/[0.02] transition-colors group shadow-sm cursor-not-allowed opacity-80">
+              <div className="w-12 h-12 rounded-xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform shadow-sm">
+                <PhoneCall className="w-5 h-5 text-brand-primary" />
               </div>
-              <h3 className="font-bold text-white mb-1">Priority Hotline</h3>
-              <p className="text-sm text-zinc-400">1-800-KHATAX <br/><span className="text-[10px] text-[#00FFA3] uppercase font-bold tracking-widest">Available 24/7</span></p>
+              <h3 className="font-semibold text-white mb-1">Priority Hotline</h3>
+              <p className="text-xs text-zinc-400 font-medium mb-1">1-800-KHATAX</p>
+              <span className="text-[9px] text-brand-primary uppercase font-mono font-semibold tracking-widest bg-brand-primary/10 px-2 py-0.5 rounded border border-brand-primary/20">Available 24/7</span>
             </div>
           </div>
         </div>
 
         {/* Right Column: FAQ */}
         <div className="col-span-1">
-          <div className="bg-[#111] rounded-2xl border border-white/[0.05] overflow-hidden shadow-lg sticky top-6">
-            <div className="px-6 py-5 border-b border-white/[0.05] flex items-center gap-2 bg-[#121214]">
-              <MessageSquare className="w-4 h-4 text-zinc-400" />
-              <h2 className="text-sm font-heading font-bold text-white uppercase tracking-wider">Common Questions</h2>
+          <div className="bg-[#0A0A0A] rounded-2xl border border-white/[0.04] overflow-hidden shadow-sm sticky top-6">
+            <div className="px-6 py-5 border-b border-white/[0.04] flex items-center gap-3 bg-white/[0.02]">
+              <MessageSquare className="w-4 h-4 text-brand-primary" />
+              <h2 className="text-[11px] font-mono font-semibold text-white uppercase tracking-[0.2em]">Common Questions</h2>
             </div>
-            <div className="divide-y divide-[#27272a]">
+            <div className="divide-y divide-white/[0.04]">
               {faqs.map((faq, idx) => (
-                <div key={idx} className="bg-[#111]">
+                <div key={idx} className="bg-transparent">
                   <button 
                     onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
-                    className="w-full text-left px-6 py-4 flex items-center justify-between hover:bg-[#1a1a1a]/30 transition-colors"
+                    className="w-full text-left px-6 py-5 flex items-start justify-between hover:bg-white/[0.02] transition-colors group"
                   >
-                    <span className="font-bold text-sm text-white pr-4">{faq.q}</span>
-                    <ChevronDown className={`w-4 h-4 text-zinc-400 transition-transform ${activeFaq === idx ? 'rotate-180' : ''}`} />
+                    <span className="font-semibold text-[13px] text-zinc-200 pr-4 leading-relaxed group-hover:text-brand-primary transition-colors">{faq.q}</span>
+                    <ChevronDown className={`w-4 h-4 text-zinc-500 shrink-0 mt-0.5 transition-transform ${activeFaq === idx ? 'rotate-180' : ''}`} />
                   </button>
                   {activeFaq === idx && (
-                    <div className="px-6 pb-4 pt-1 animate-in slide-in-from-top-2 duration-200">
-                      <p className="text-sm text-zinc-400 leading-relaxed border-l-2 border-[#00FFA3]/50 pl-3 py-1">
+                    <div className="px-6 pb-6 pt-1 animate-in slide-in-from-top-2 duration-200">
+                      <p className="text-[13px] text-zinc-400 font-medium leading-relaxed border-l-2 border-brand-primary/50 pl-4 py-1 bg-white/[0.02] rounded-r-xl pr-4">
                         {faq.a}
                       </p>
                     </div>

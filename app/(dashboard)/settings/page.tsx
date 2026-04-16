@@ -93,27 +93,27 @@ export default function SettingsPage() {
   return (
     <div className="max-w-4xl space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-white">Settings</h1>
-        <p className="text-sm font-semibold text-slate-400">Manage your business profile and preferences.</p>
+        <h1 className="text-2xl font-heading font-semibold tracking-tight text-white">Settings</h1>
+        <p className="text-[12px] font-mono tracking-widest uppercase font-semibold text-zinc-500 mt-2">Manage your business profile and preferences.</p>
       </div>
 
-      <div className="bg-[#111] rounded-2xl shadow-sm border border-white/10 overflow-hidden">
-        <div className="p-6 border-b border-white/5">
-          <h2 className="text-lg font-bold text-white">Business Profile</h2>
-          <p className="text-sm text-slate-500 mb-6">Update your company details and GST information.</p>
+      <div className="bg-[#0A0A0A] rounded-2xl shadow-sm border border-white/[0.04] overflow-hidden">
+        <div className="p-6 border-b border-white/[0.04] bg-white/[0.02]">
+          <h2 className="text-lg font-heading font-semibold text-white">Business Profile</h2>
+          <p className="text-xs font-medium text-zinc-500 mt-1 mb-6">Update your company details and GST information.</p>
 
           <form className="space-y-6 max-w-2xl" onSubmit={handleSave}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               
               {/* Logo Upload */}
-              <div className="space-y-3 md:col-span-2 border-b border-white/5 pb-6 mb-2">
-                <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Business Logo</label>
+              <div className="space-y-4 md:col-span-2 border-b border-white/[0.04] pb-6 mb-2">
+                <label className="text-[10px] font-mono tracking-[0.2em] font-semibold text-zinc-500 uppercase">Business Logo</label>
                 <div className="flex items-center gap-6">
-                  <div className="w-20 h-20 rounded-xl bg-[#0a0a0a] border border-white/10 flex items-center justify-center overflow-hidden shrink-0">
+                  <div className="w-20 h-20 rounded-xl bg-white/[0.02] border border-white/[0.04] flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
                     {business?.logoBase64 ? (
                       <img src={business.logoBase64} alt="Logo" className="w-full h-full object-contain" />
                     ) : (
-                      <span className="text-xs font-bold text-slate-600">No Logo</span>
+                      <span className="text-[10px] font-mono tracking-widest uppercase text-zinc-600 font-semibold">No Logo</span>
                     )}
                   </div>
                   <div className="space-y-2">
@@ -121,15 +121,15 @@ export default function SettingsPage() {
                       type="file" 
                       accept="image/*"
                       onChange={handleLogoUpload}
-                      className="block w-full text-sm text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-[#00FFA3]/10 file:text-[#00FFA3] hover:file:bg-[#00FFA3]/20 file:transition-colors file:cursor-pointer cursor-pointer"
+                      className="block w-full text-sm text-zinc-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-[11px] file:font-semibold file:uppercase file:tracking-widest file:bg-brand-primary/10 file:text-brand-primary hover:file:bg-brand-primary/20 file:transition-colors file:cursor-pointer cursor-pointer"
                     />
-                    <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Recommended size: 200x200px. PNG or JPG.</p>
+                    <p className="text-[9px] text-zinc-600 font-semibold uppercase tracking-widest">Recommended size: 200x200px. PNG or JPG.</p>
                   </div>
                   {business?.logoBase64 && (
                     <button 
                       type="button" 
                       onClick={() => setBusiness(prev => ({ ...(prev || {}), logoBase64: undefined } as Business))}
-                      className="text-xs font-bold text-red-500 hover:text-red-400 px-3 py-2 bg-red-500/10 rounded-lg transition-colors ml-auto"
+                      className="text-[11px] font-semibold uppercase tracking-widest text-red-500 hover:text-red-400 px-4 py-2.5 bg-red-500/10 rounded-xl transition-colors ml-auto shadow-sm"
                     >
                       Remove
                     </button>
@@ -138,56 +138,56 @@ export default function SettingsPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Business Name</label>
+                <label className="text-[10px] font-mono tracking-[0.2em] font-semibold text-zinc-500 uppercase">Business Name</label>
                 <input 
                   value={business?.name || ''}
                   onChange={e => setBusiness(prev => ({ ...(prev || {}), name: e.target.value } as Business))}
                   placeholder="My Business"
-                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600"
+                  className="w-full px-4 py-3 bg-white/[0.02] border border-white/[0.04] rounded-xl focus:outline-none focus:ring-1 focus:ring-brand-primary/50 focus:border-brand-primary/50 text-white font-medium placeholder:text-zinc-600 transition-all shadow-sm"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">GSTIN / Tax ID</label>
+                <label className="text-[10px] font-mono tracking-[0.2em] font-semibold text-zinc-500 uppercase">GSTIN / Tax ID</label>
                 <input 
                   value={business?.gstin || ''}
                   onChange={e => setBusiness(prev => ({ ...(prev || {}), gstin: e.target.value } as Business))}
                   placeholder="Your GSTIN"
-                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 uppercase"
+                  className="w-full px-4 py-3 bg-white/[0.02] border border-white/[0.04] rounded-xl focus:outline-none focus:ring-1 focus:ring-brand-primary/50 focus:border-brand-primary/50 text-white font-medium placeholder:text-zinc-600 uppercase transition-all shadow-sm"
                 />
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <label className="text-xs font-bold tracking-wider text-slate-400 uppercase">Registered Address</label>
+                <label className="text-[10px] font-mono tracking-[0.2em] font-semibold text-zinc-500 uppercase">Registered Address</label>
                 <textarea 
                   rows={3}
                   value={business?.address || ''}
                   onChange={e => setBusiness(prev => ({ ...(prev || {}), address: e.target.value } as Business))}
                   placeholder="123 Business Park, Tech City"
-                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-medium placeholder:text-slate-600 resize-none"
+                  className="w-full px-4 py-3 bg-white/[0.02] border border-white/[0.04] rounded-xl focus:outline-none focus:ring-1 focus:ring-brand-primary/50 focus:border-brand-primary/50 text-white font-medium placeholder:text-zinc-600 resize-none transition-all shadow-sm"
                 />
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <label className="text-xs font-bold tracking-wider text-[#00FFA3] uppercase flex items-center gap-2">
+                <label className="text-[10px] font-mono tracking-[0.2em] font-semibold text-brand-primary uppercase flex items-center gap-2">
                    UPI ID (VPA) for Payments
-                   <span className="bg-[#00FFA3]/20 text-[#00FFA3] px-2 py-0.5 rounded text-[10px] tracking-widest">NEW</span>
+                   <span className="bg-brand-primary/20 text-brand-primary px-2 py-0.5 rounded text-[9px] tracking-widest font-bold">NEW</span>
                 </label>
                 <input 
                   value={business?.upiId || ''}
                   onChange={e => setBusiness(prev => ({ ...(prev || {}), upiId: e.target.value } as Business))}
                   placeholder="merchant@sbi / 9876543210@ybl"
-                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-[#00FFA3]/20 rounded-xl focus:outline-none focus:ring-1 focus:ring-[#00FFA3]/50 focus:border-[#00FFA3]/50 text-white font-bold placeholder:text-slate-600 placeholder:font-medium"
+                  className="w-full px-4 py-3 bg-brand-primary/5 border border-brand-primary/20 rounded-xl focus:outline-none focus:ring-1 focus:ring-brand-primary focus:border-brand-primary text-brand-primary font-semibold placeholder:text-brand-primary/30 transition-all shadow-sm"
                 />
-                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wide mt-1">If provided, invoices will automatically include a dynamic Scan-to-Pay QR Code.</p>
+                <p className="text-[9px] font-medium text-brand-primary/60 uppercase tracking-widest mt-2">If provided, invoices will automatically include a dynamic Scan-to-Pay QR Code.</p>
               </div>
             </div>
 
-            <div className="pt-4 border-t border-white/5 flex justify-end">
+            <div className="pt-6 border-t border-white/[0.04] flex justify-end">
               <button 
                 type="submit" 
                 disabled={isSaving}
-                className="flex items-center gap-2 bg-[#00FFA3] text-black font-bold px-6 py-2.5 rounded-xl hover:bg-[#00ffa3]/90 transition shadow-[0_0_15px_rgba(0,234,119,0.2)] disabled:opacity-70"
+                className="flex items-center gap-2 bg-brand-primary text-black font-semibold px-6 py-2.5 rounded-xl hover:bg-brand-primary/90 transition-all shadow-sm disabled:opacity-70 active:scale-95"
               >
                 {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />} 
                 {isSaving ? 'Saving...' : 'Save Profile'}
@@ -197,20 +197,20 @@ export default function SettingsPage() {
         </div>
 
         <div className="p-6">
-          <h2 className="text-lg font-bold text-white">User Account</h2>
-          <p className="text-sm text-slate-500 mb-6">Your personal account details.</p>
+          <h2 className="text-lg font-heading font-semibold text-white">User Account</h2>
+          <p className="text-xs font-medium text-zinc-500 mt-1 mb-6">Your personal account details.</p>
 
-          <div className="max-w-2xl space-y-4">
-            <div className="flex justify-between items-center py-3 border-b border-white/5">
+          <div className="max-w-2xl space-y-2">
+            <div className="flex justify-between items-center py-4 border-b border-white/[0.04]">
               <div>
-                <p className="font-bold text-white text-sm">Name</p>
-                <p className="text-sm text-slate-400 font-medium">{profile?.name || 'User'}</p>
+                <p className="font-semibold text-white text-sm">Name</p>
+                <p className="text-xs text-zinc-400 font-medium mt-1">{profile?.name || 'User'}</p>
               </div>
             </div>
-            <div className="flex justify-between items-center py-3 border-b border-white/5">
+            <div className="flex justify-between items-center py-4 border-b border-white/[0.04]">
               <div>
-                <p className="font-bold text-white text-sm">Email Address</p>
-                <p className="text-sm text-slate-400 font-medium">{profile?.email || 'email@example.com'}</p>
+                <p className="font-semibold text-white text-sm">Email Address</p>
+                <p className="text-xs text-zinc-400 font-medium mt-1">{profile?.email || 'email@example.com'}</p>
               </div>
             </div>
           </div>
