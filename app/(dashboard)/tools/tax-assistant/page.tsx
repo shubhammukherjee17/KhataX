@@ -5,7 +5,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useMasterDataStore } from '@/store/useMasterDataStore';
 import { useTransactionStore } from '@/store/useTransactionStore';
 import { Landmark, Sparkles, Send, Loader2, ArrowRight, ShieldCheck, Calculator } from 'lucide-react';
-import { AnimatedNumber } from '@/components/ui/AnimatedNumber';
+import NumberFlow from '@number-flow/react';
 
 interface ChatMessage {
   role: 'user' | 'model';
@@ -14,16 +14,16 @@ interface ChatMessage {
 
 function MetricCard({ title, val, subtext, icon, positive }: { title: string, val: React.ReactNode, subtext: string, icon: React.ReactNode, positive?: boolean }) {
   return (
-    <div className="rounded-2xl bg-[#121c17] border border-[#1a231f] p-6 shadow-sm relative overflow-hidden flex flex-col justify-between hover:border-[#00FFA3]/30 transition-all group">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-400">{title}</h3>
-        <div className="p-2 rounded-lg bg-white/5 border border-white/5 group-hover:bg-[#00FFA3]/10 group-hover:border-[#00FFA3]/20 transition-colors">
+    <div className="rounded-2xl bg-[#0A0A0A] border border-white/[0.04] p-6 shadow-sm relative overflow-hidden flex flex-col justify-between hover:bg-white/[0.02] transition-all group">
+      <div className="flex items-center justify-between mb-4 border-b border-white/[0.04] pb-4">
+        <h3 className="text-[10px] font-mono font-semibold uppercase tracking-[0.2em] text-zinc-500">{title}</h3>
+        <div className="p-2 rounded-xl bg-white/[0.02] border border-white/[0.04] group-hover:bg-brand-primary/10 group-hover:border-brand-primary/20 transition-colors shadow-sm">
           {icon}
         </div>
       </div>
       <div>
-        <div className={`text-3xl font-bold tracking-tight ${positive ? 'text-[#00FFA3]' : 'text-white'}`}>{val}</div>
-        <p className="text-xs text-slate-500 mt-2 font-medium">{subtext}</p>
+        <div className={`text-4xl font-heading font-semibold tracking-tight ${positive ? 'text-brand-primary' : 'text-white'}`}>{val}</div>
+        <p className="text-xs text-zinc-500 mt-3 font-medium">{subtext}</p>
       </div>
     </div>
   );
@@ -120,11 +120,13 @@ export default function TaxAssistantPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-            <Landmark className="w-8 h-8 text-[#00FFA3]" />
+          <h1 className="text-2xl font-heading font-semibold text-white flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-brand-primary/10 border border-brand-primary/20">
+              <Landmark className="w-6 h-6 text-brand-primary" />
+            </div>
             AI Tax Assistant
           </h1>
-          <p className="text-sm text-slate-400 mt-1">Smart GST analysis and automated liability calculations</p>
+          <p className="text-[12px] font-mono tracking-widest uppercase font-semibold text-zinc-500 mt-2">Smart GST analysis and automated liability calculations</p>
         </div>
       </div>
 
@@ -132,42 +134,42 @@ export default function TaxAssistantPage() {
       <div className="grid gap-4 md:grid-cols-3">
         <MetricCard 
           title="Total Output GST" 
-          val={<AnimatedNumber value={outputTax} format="currency" />} 
+          val={<div className="flex items-center"><span className="text-zinc-500 text-2xl mr-1 font-semibold">₹</span><NumberFlow value={outputTax} format={{ maximumFractionDigits: 2 }} /></div>} 
           subtext="Total Tax Collected from Sales (GSTR-1)" 
-          icon={<Calculator className="w-5 h-5 text-blue-400" />} 
+          icon={<Calculator className="w-4 h-4 text-blue-500" />} 
         />
         <MetricCard 
           title="Input Tax Credit (ITC)" 
-          val={<AnimatedNumber value={inputTax} format="currency" />} 
+          val={<div className="flex items-center"><span className="text-zinc-500 text-2xl mr-1 font-semibold">₹</span><NumberFlow value={inputTax} format={{ maximumFractionDigits: 2 }} /></div>}  
           subtext="Total Tax Paid on Purchases" 
-          icon={<ShieldCheck className="w-5 h-5 text-purple-400" />} 
+          icon={<ShieldCheck className="w-4 h-4 text-purple-500" />} 
         />
         <MetricCard 
           title="Estimated Net Liability" 
-          val={<AnimatedNumber value={netLiability} format="currency" />} 
+          val={<div className="flex items-center"><span className={`${netLiability === 0 ? 'text-brand-primary/50' : 'text-zinc-500'} text-2xl mr-1 font-semibold`}>₹</span><NumberFlow value={netLiability} format={{ maximumFractionDigits: 2 }} /></div>}  
           subtext="Output GST minus ITC. Base payable to Gov." 
-          icon={<Sparkles className="w-5 h-5 text-[#00FFA3]" />} 
+          icon={<Sparkles className="w-4 h-4 text-brand-primary" />} 
           positive={netLiability === 0}
         />
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 flex flex-col bg-[#121c17] border border-[#1a231f] rounded-2xl overflow-hidden shadow-sm shadow-[#0a0f0d]">
+      <div className="flex-1 flex flex-col bg-[#0A0A0A] border border-white/[0.04] rounded-2xl overflow-hidden shadow-sm">
         
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {messages.map((msg, idx) => (
-            <div key={idx} className={`flex \${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
               
               {/* Avatar for Model */}
               {msg.role === 'model' && (
-                <div className="w-8 h-8 rounded-full bg-[#00FFA3]/20 border border-[#00FFA3]/40 flex items-center justify-center mr-3 mt-1 shrink-0 shadow-[0_0_10px_rgba(0,234,119,0.1)]">
-                  <Landmark className="w-4 h-4 text-[#00FFA3]" />
+                <div className="w-8 h-8 rounded-full bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mr-3 mt-1 shrink-0 shadow-sm">
+                  <Sparkles className="w-4 h-4 text-brand-primary" />
                 </div>
               )}
 
               <div 
-                className={`max-w-[75%] rounded-2xl px-5 py-4 text-[13px] leading-relaxed \${msg.role === 'user' ? 'bg-[#00FFA3] text-black font-semibold rounded-tr-sm shadow-md' : 'bg-[#1a231f] text-slate-200 border border-white/5 rounded-tl-sm shadow-inner'}`}
+                className={`max-w-[75%] px-5 py-4 text-[13px] leading-relaxed ${msg.role === 'user' ? 'bg-white/[0.04] text-white border border-white/[0.04] font-medium rounded-2xl rounded-tr-sm shadow-sm' : 'bg-transparent border border-white/[0.04] text-zinc-300 font-medium rounded-2xl rounded-tl-sm shadow-sm'}`}
                 style={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
               >
                 {msg.parts[0].text}
@@ -177,12 +179,12 @@ export default function TaxAssistantPage() {
           
           {isLoading && (
             <div className="flex justify-start">
-               <div className="w-8 h-8 rounded-full bg-[#00FFA3]/20 border border-[#00FFA3]/40 flex items-center justify-center mr-3 mt-1 shrink-0">
-                  <Landmark className="w-4 h-4 text-[#00FFA3]" />
+               <div className="w-8 h-8 rounded-full bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mr-3 mt-1 shrink-0 shadow-sm">
+                  <Sparkles className="w-4 h-4 text-brand-primary" />
                </div>
-              <div className="bg-[#1a231f] border border-white/5 rounded-2xl rounded-tl-sm px-5 py-4 flex items-center gap-3">
-                <Loader2 className="w-4 h-4 text-[#00FFA3] animate-spin" />
-                <span className="text-xs text-[#00FFA3] font-semibold tracking-wide">Analyzing tax Ledgers...</span>
+              <div className="bg-transparent border border-white/[0.04] rounded-2xl rounded-tl-sm px-5 py-4 flex items-center gap-3">
+                <Loader2 className="w-4 h-4 text-brand-primary animate-spin" />
+                <span className="text-xs text-brand-primary font-semibold tracking-wide">Analyzing tax Ledgers...</span>
               </div>
             </div>
           )}
@@ -190,25 +192,25 @@ export default function TaxAssistantPage() {
         </div>
 
         {/* Input Area */}
-        <div className="p-4 bg-[#0a0f0d] border-t border-[#1a231f]">
+        <div className="p-4 bg-transparent border-t border-white/[0.04]">
           <form onSubmit={handleSend} className="relative flex items-center max-w-4xl mx-auto">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about GSTR-1, outstanding ITC, or your total tax liability..."
-              className="w-full bg-[#121c17] text-white text-sm border border-white/5 rounded-xl pl-5 pr-14 py-4 focus:outline-none focus:border-[#00FFA3]/50 focus:ring-1 focus:ring-[#00FFA3]/50 placeholder:text-slate-500 font-medium transition-all shadow-inner"
+              className="w-full bg-[#0A0A0A] text-white text-sm border border-white/[0.04] rounded-xl pl-5 pr-14 py-4 focus:outline-none focus:border-brand-primary/30 focus:ring-1 focus:ring-brand-primary/30 placeholder:text-zinc-600 font-medium transition-all shadow-sm"
             />
             <button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="absolute right-3 p-2.5 bg-[#00FFA3] hover:bg-[#00ffa3]/90 text-black rounded-lg transition-colors disabled:opacity-50 disabled:hover:bg-[#00FFA3] flex items-center justify-center shadow-lg"
+              className="absolute right-3 p-2.5 bg-brand-primary hover:bg-brand-primary/90 text-black rounded-lg transition-all disabled:opacity-50 disabled:hover:bg-brand-primary flex items-center justify-center shadow-lg active:scale-95"
             >
-              <ArrowRight className="w-4 h-4" />
+              <Send className="w-4 h-4" />
             </button>
           </form>
           <div className="mt-3 text-center">
-            <p className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">
+            <p className="text-[9px] text-zinc-600 font-mono font-semibold uppercase tracking-[0.2em]">
               Powered by KhataX Tax Intelligence Model. Always consult a CA before filing returns.
             </p>
           </div>
