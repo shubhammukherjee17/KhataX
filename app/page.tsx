@@ -528,7 +528,7 @@ function PricingSection() {
               className={`relative py-2 px-6 rounded-full font-heading font-semibold text-sm transition-colors duration-200 ml-1 ${isYearly ? 'text-black' : 'text-zinc-400 hover:text-white'}`}
             >
               {isYearly && <motion.div layoutId="pill-bg" className="absolute inset-0 bg-brand-primary rounded-full z-[-1]" transition={{ type: "spring", bounce: 0.2, duration: 0.6 }} />}
-              Yearly (Save up to 44%)
+              Yearly (Save up to 69%)
             </button>
           </div>
         </div>
@@ -539,14 +539,14 @@ function PricingSection() {
             <h3 className="font-heading text-2.5xl font-bold mb-4 text-white">Starter</h3>
             <div className="flex items-center gap-2 mb-4 h-10">
               <span className="font-heading text-4xl leading-none font-bold text-white">
-                <AnimatedNumber value={isYearly ? 1399 : 149} format="currency" />
+                <AnimatedNumber value={isYearly ? 899 : 149} format="currency" />
               </span>
               <div className="flex flex-col justify-end pb-1">
                 <span className="font-mono text-zinc-500 text-sm leading-none">{isYearly ? '/year' : '/month'}</span>
               </div>
               {isYearly && (
                 <span className="ml-1 bg-brand-primary/10 text-brand-primary px-2 py-1 rounded-md text-[10px] uppercase font-bold tracking-widest border border-brand-primary/20 self-end mb-1">
-                  Save 22%
+                  Save 50%
                 </span>
               )}
             </div>
@@ -571,7 +571,7 @@ function PricingSection() {
               </div>
             </div>
 
-            <button onClick={() => handleCheckout('Starter', isYearly ? 1399 : 149)} className="w-full py-3.5 rounded-xl border border-white/10 text-white font-heading font-semibold hover:bg-white/5 transition text-center inline-block">
+            <button onClick={() => handleCheckout('Starter', isYearly ? 899 : 149)} className="w-full py-3.5 rounded-xl border border-white/10 text-white font-heading font-semibold hover:bg-white/5 transition text-center inline-block">
               Get Started
             </button>
           </div>
@@ -584,14 +584,14 @@ function PricingSection() {
             <h3 className="font-heading text-2.5xl font-bold mb-4 text-white">Professional</h3>
             <div className="flex items-center gap-2 mb-4 h-10">
               <span className="font-heading text-4xl leading-none font-bold text-white">
-                <AnimatedNumber value={isYearly ? 1999 : 299} format="currency" />
+                <AnimatedNumber value={isYearly ? 1099 : 299} format="currency" />
               </span>
               <div className="flex flex-col justify-end pb-1">
                 <span className="font-mono text-zinc-500 text-sm leading-none">{isYearly ? '/year' : '/month'}</span>
               </div>
               {isYearly && (
                 <span className="ml-1 bg-brand-primary/10 text-brand-primary px-2 py-1 rounded-md text-[10px] uppercase font-bold tracking-widest border border-brand-primary/20 self-end mb-1">
-                  Save 44%
+                  Save 69%
                 </span>
               )}
             </div>
@@ -606,7 +606,7 @@ function PricingSection() {
               ))}
             </div>
 
-            <button onClick={() => handleCheckout('Professional', isYearly ? 1999 : 299)} className="w-full py-3.5 rounded-xl bg-brand-primary text-black font-heading font-bold hover:bg-[#00ea77] transition text-center inline-block">
+            <button onClick={() => handleCheckout('Professional', isYearly ? 1099 : 299)} className="w-full py-3.5 rounded-xl bg-brand-primary text-black font-heading font-bold hover:bg-[#00ea77] transition text-center inline-block">
               Go Professional
             </button>
           </div>
