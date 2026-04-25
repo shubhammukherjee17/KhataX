@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { ArrowLeft, CheckCircle2, FileText, AlertTriangle, HelpCircle } from 'lucide-react';
 
 export const metadata = {
-  title: 'GST Compliance Guide | KhataX',
-  description: 'Understand Indian GST mechanisms and how KhataX automates filing.',
+  title: 'GST Compliance Guide | GononaX',
+  description: 'Understand Indian GST mechanisms and how GononaX automates filing.',
 };
 
 export default function GSTGuidePage() {
@@ -14,7 +14,7 @@ export default function GSTGuidePage() {
           <div className="w-8 h-8 rounded bg-[#00ea77] flex items-center justify-center">
              <div className="w-2.5 h-2.5 bg-black rounded-sm"></div>
           </div>
-          <span className="font-bold text-xl tracking-tight">KhataX</span>
+          <span className="font-bold text-xl tracking-tight">GononaX</span>
         </Link>
         <Link href="/" className="text-sm font-semibold text-slate-400 hover:text-white flex items-center gap-2 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to Home
@@ -26,27 +26,27 @@ export default function GSTGuidePage() {
         
         <div className="max-w-4xl w-full relative z-10">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-6">GST Compliance Guide</h1>
-          <p className="text-xl text-[#00ea77] mb-12">Navigating the Indian Taxation System with KhataX.</p>
+          <p className="text-xl text-[#00ea77] mb-12">Navigating the Indian Taxation System with GononaX.</p>
           
           <div className="bg-[#111] border border-white/10 rounded-3xl p-8 md:p-12 mb-8">
             <h2 className="text-2xl font-bold flex items-center gap-3 mb-6"><FileText className="text-[#00ea77]" /> Automated GST Calculation</h2>
             <p className="text-slate-400 leading-relaxed mb-6">
-              Managing Goods and Services Tax can be complex for businesses with high invoice volumes. KhataX simplifies this by automatically applying the correct taxes based on your item <strong>HSN/SAC codes</strong> and customer state.
+              Managing Goods and Services Tax can be complex for businesses with high invoice volumes. GononaX simplifies this by automatically applying the correct taxes based on your item <strong>HSN/SAC codes</strong> and customer state.
             </p>
             
             <h3 className="text-lg font-bold text-white mb-4">How Tax Calculation Works:</h3>
             <ul className="space-y-4 text-slate-400 mb-8">
                <li className="flex gap-3">
                  <CheckCircle2 className="w-5 h-5 text-[#00ea77] shrink-0" />
-                 <span><strong>Intrastate Sales:</strong> If you're selling within the same state, KhataX automatically splits the applicable tax into CGST and SGST on your invoices.</span>
+                 <span><strong>Intrastate Sales:</strong> If you're selling within the same state, GononaX automatically splits the applicable tax into CGST and SGST on your invoices.</span>
                </li>
                <li className="flex gap-3">
                  <CheckCircle2 className="w-5 h-5 text-[#00ea77] shrink-0" />
-                 <span><strong>Interstate Sales:</strong> When generating invoices for customers outside your state, KhataX seamlessly applies the unified IGST.</span>
+                 <span><strong>Interstate Sales:</strong> When generating invoices for customers outside your state, GononaX seamlessly applies the unified IGST.</span>
                </li>
                <li className="flex gap-3">
                  <CheckCircle2 className="w-5 h-5 text-[#00ea77] shrink-0" />
-                 <span><strong>Input Tax Credit (ITC):</strong> By accurately tracking all your business expenses and purchases, KhataX helps ensure you claim your correct Input Tax Credit during filing.</span>
+                 <span><strong>Input Tax Credit (ITC):</strong> By accurately tracking all your business expenses and purchases, GononaX helps ensure you claim your correct Input Tax Credit during filing.</span>
                </li>
             </ul>
 

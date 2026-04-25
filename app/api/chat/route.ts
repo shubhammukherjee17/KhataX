@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
     // Secure the chat: Only allow processing for active logged-in sessions with a business
     if (!businessId) {
-      return NextResponse.json({ reply: "⚠️ Please select or create a business in KhataX to use the AI Assistant." });
+      return NextResponse.json({ reply: "⚠️ Please select or create a business in GononaX to use the AI Assistant." });
     }
 
     // Strictly strictly use the API Key given in the .env file as requested

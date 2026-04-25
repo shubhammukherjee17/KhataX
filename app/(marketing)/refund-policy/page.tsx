@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { ArrowLeft, RefreshCw, AlertCircle } from 'lucide-react';
 
 export const metadata = {
-  title: 'Refund Policy | KhataX',
-  description: 'Understand the KhataX cancellation and refund policies.',
+  title: 'Refund Policy | GononaX',
+  description: 'Understand the GononaX cancellation and refund policies.',
 };
 
 export default function RefundPolicyPage() {
@@ -14,7 +14,7 @@ export default function RefundPolicyPage() {
           <div className="w-8 h-8 rounded bg-[#00ea77] flex items-center justify-center">
              <div className="w-2.5 h-2.5 bg-black rounded-sm"></div>
           </div>
-          <span className="font-bold text-xl tracking-tight">KhataX</span>
+          <span className="font-bold text-xl tracking-tight">GononaX</span>
         </Link>
         <Link href="/" className="text-sm font-semibold text-slate-400 hover:text-white flex items-center gap-2 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to Home
@@ -34,7 +34,7 @@ export default function RefundPolicyPage() {
               <RefreshCw className="w-6 h-6 text-[#00ea77] shrink-0 mt-1" />
               <div>
                 <h3 className="text-xl font-bold text-white mb-2">1. 14-Day Money-Back Guarantee</h3>
-                <p>KhataX provides a 14-day refund window for all new <strong>Yearly</strong> subscriptions. If our platform doesn't meet your business needs, simply cancel within the first 14 days for a full refund, no questions asked.</p>
+                <p>GononaX provides a 14-day refund window for all new <strong>Yearly</strong> subscriptions. If our platform doesn't meet your business needs, simply cancel within the first 14 days for a full refund, no questions asked.</p>
               </div>
             </div>
 

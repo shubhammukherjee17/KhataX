@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ArrowLeft, Search, BookOpen, Clock, ShieldCheck } from 'lucide-react';
 
 export const metadata = {
-  title: 'Help Center | KhataX',
+  title: 'Help Center | GononaX',
   description: 'Search for articles, guides, and 24/7 technical support.',
 };
 
@@ -14,7 +14,7 @@ export default function HelpCenterPage() {
           <div className="w-8 h-8 rounded bg-[#00ea77] flex items-center justify-center">
              <div className="w-2.5 h-2.5 bg-black rounded-sm"></div>
           </div>
-          <span className="font-bold text-xl tracking-tight">KhataX</span>
+          <span className="font-bold text-xl tracking-tight">GononaX</span>
         </Link>
         <Link href="/" className="text-sm font-semibold text-slate-400 hover:text-white flex items-center gap-2 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to Home

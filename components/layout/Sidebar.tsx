@@ -66,10 +66,10 @@ export function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         <div className="flex h-24 items-center px-6 mt-2">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-[8px] flex items-center justify-center shadow-[0_0_20px_rgba(0,255,163,0.1)] overflow-hidden">
-               <Image src={logo} alt="KhataX" width={32} height={32} className="object-cover" />
+               <Image src={logo} alt="GononaX" width={32} height={32} className="object-cover" />
             </div>
             <div className="flex flex-col">
-              <span className="font-heading font-bold text-xl tracking-tight text-white leading-tight">KhataX Pro</span>
+              <span className="font-heading font-bold text-xl tracking-tight text-white leading-tight">GononaX Pro</span>
               <span className="font-mono text-[9px] uppercase tracking-widest text-[#00FFA3] font-bold mt-0.5">Enterprise Vault</span>
             </div>
           </div>

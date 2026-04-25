@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { ArrowLeft, Code, Database, Lock, Zap } from 'lucide-react';
 
 export const metadata = {
-  title: 'API Documentation | KhataX',
-  description: 'Build on top of KhataX with our robust headless APIs.',
+  title: 'API Documentation | GononaX',
+  description: 'Build on top of GononaX with our robust headless APIs.',
 };
 
 export default function ApiDocsPage() {
@@ -14,7 +14,7 @@ export default function ApiDocsPage() {
           <div className="w-8 h-8 rounded bg-[#00ea77] flex items-center justify-center">
             <div className="w-2.5 h-2.5 bg-black rounded-sm"></div>
           </div>
-          <span className="font-bold text-xl tracking-tight">KhataX</span>
+          <span className="font-bold text-xl tracking-tight">GononaX</span>
         </Link>
         <Link href="/" className="text-sm font-semibold text-slate-400 hover:text-white flex items-center gap-2 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to Home
@@ -27,7 +27,7 @@ export default function ApiDocsPage() {
         <div className="max-w-4xl w-full relative z-10">
           <div className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-[#00ea77] mb-6">REST API</div>
           <h1 className="text-4xl md:text-5xl font-extrabold mb-6">Developer API Docs</h1>
-          <p className="text-xl text-slate-400 mb-12">Connect KhataX with your existing software suite and build custom tools using our secure developer API.</p>
+          <p className="text-xl text-slate-400 mb-12">Connect GononaX with your existing software suite and build custom tools using our secure developer API.</p>
           
           <div className="bg-[#111] border border-white/10 rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl font-bold text-white mb-6">Core Capabilities</h2>
@@ -41,7 +41,7 @@ export default function ApiDocsPage() {
                <div className="p-6 rounded-2xl bg-[#18181b] border border-white/5">
                  <Database className="text-[#00ea77] w-6 h-6 mb-4" />
                  <h3 className="font-bold mb-2">Inventory Sync</h3>
-                 <p className="text-sm text-slate-400">Keep your stock numbers updated across all your platforms simultaneously by syncing directly with KhataX.</p>
+                 <p className="text-sm text-slate-400">Keep your stock numbers updated across all your platforms simultaneously by syncing directly with GononaX.</p>
                </div>
                <div className="p-6 rounded-2xl bg-[#18181b] border border-white/5">
                  <Lock className="text-[#00ea77] w-6 h-6 mb-4" />
@@ -51,13 +51,13 @@ export default function ApiDocsPage() {
                <div className="p-6 rounded-2xl bg-[#18181b] border border-white/5">
                  <Zap className="text-[#00ea77] w-6 h-6 mb-4" />
                  <h3 className="font-bold mb-2">Comprehensive Data Access</h3>
-                 <p className="text-sm text-slate-400">Easily export or query your financial data for running deep custom reports outside of the KhataX interface.</p>
+                 <p className="text-sm text-slate-400">Easily export or query your financial data for running deep custom reports outside of the GononaX interface.</p>
                </div>
             </div>
 
             <h2 className="text-2xl font-bold text-white mb-4">Authentication Example</h2>
             <div className="bg-black p-4 rounded-xl border border-white/10 mb-8 font-mono text-sm text-green-400 overflow-x-auto">
-              curl -X GET "https://api.khatax.com/v1/transactions" \<br />
+              curl -X GET "https://api.gononax.com/v1/transactions" \<br />
               -H "Authorization: Bearer YOUR_API_KEY" \<br />
               -H "Content-Type: application/json"
             </div>

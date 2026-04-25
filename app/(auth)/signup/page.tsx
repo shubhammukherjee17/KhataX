@@ -70,7 +70,7 @@ export default function SignUpPage() {
           <div className="w-6 h-6 rounded-md bg-[#00ea77] flex items-center justify-center">
             <div className="w-2 h-2 bg-black rounded-[2px]"></div>
           </div>
-          <span className="font-bold text-lg tracking-tight text-white">KhataX</span>
+          <span className="font-bold text-lg tracking-tight text-white">GononaX</span>
         </div>
         <Link href="/login" className="text-sm font-bold text-slate-400 hover:text-white transition-colors">Login</Link>
       </div>
@@ -81,7 +81,7 @@ export default function SignUpPage() {
           <div className="w-8 h-8 rounded-lg bg-[#00ea77] flex items-center justify-center">
             <div className="w-3 h-3 bg-black rounded-sm"></div>
           </div>
-          <span className="font-bold text-xl tracking-tight">KhataX</span>
+          <span className="font-bold text-xl tracking-tight">GononaX</span>
         </div>
 
         <div className="flex-1">
@@ -287,7 +287,7 @@ export default function SignUpPage() {
                   Secure Account
                 </h1>
                 <p className="text-slate-400 font-medium text-lg mb-10">
-                  Let&apos;s create your login credentials for KhataX.
+                  Let&apos;s create your login credentials for GononaX.
                 </p>
 
                 <form onSubmit={handleRegister} className="space-y-6">

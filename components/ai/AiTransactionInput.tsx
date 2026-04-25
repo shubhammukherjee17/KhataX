@@ -32,7 +32,7 @@ export function AiTransactionInput() {
       if (result.people && result.people.length > 0) partyName = result.people[0];
       else if (result.merchant_or_source) partyName = result.merchant_or_source;
 
-      // Map to KhataX transaction format
+      // Map to GononaX transaction format
       const ttype = result.type === 'expense' ? 'payment_out' : 'payment_in';
       
       await addTransaction({

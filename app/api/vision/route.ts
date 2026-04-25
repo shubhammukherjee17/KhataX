@@ -15,7 +15,7 @@ export async function POST(req: Request) {
 
     const payload = {
       systemInstruction: {
-        parts: [{ text: "You are KhataX AI. Extract details from the receipt. Respond STRICTLY in valid JSON matching this schema: {\"vendorName\":\"name\",\"date\":\"YYYY-MM-DD\",\"number\":\"invoice_num\",\"items\":[{\"name\":\"item\",\"quantity\":number,\"rate\":number,\"taxRate\":number}]} Do NOT wrap in markdown formatting." }]
+        parts: [{ text: "You are GononaX AI. Extract details from the receipt. Respond STRICTLY in valid JSON matching this schema: {\"vendorName\":\"name\",\"date\":\"YYYY-MM-DD\",\"number\":\"invoice_num\",\"items\":[{\"name\":\"item\",\"quantity\":number,\"rate\":number,\"taxRate\":number}]} Do NOT wrap in markdown formatting." }]
       },
       contents: [{
         parts: [

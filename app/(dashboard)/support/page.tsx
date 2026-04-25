@@ -18,7 +18,7 @@ export default function SupportPage() {
     },
     {
       q: 'Will my data be lost if I refresh the page?',
-      a: 'No. KhataX Pro uses highly resilient local syncing with Firebase. Your active Business Vault is preserved across hard reloads, immediately restoring your active context.'
+      a: 'No. GononaX Pro uses highly resilient local syncing with Firebase. Your active Business Vault is preserved across hard reloads, immediately restoring your active context.'
     },
     {
       q: 'How is the ITC Eligibility calculated on purchases?',
@@ -56,7 +56,7 @@ export default function SupportPage() {
             <div className="p-2 rounded-xl bg-brand-primary/10 border border-brand-primary/20"><Headset className="w-8 h-8 text-brand-primary" /></div>
             Enterprise Support
           </h1>
-          <p className="text-[12px] font-mono tracking-widest uppercase font-semibold text-zinc-500 mt-3">Get priority assistance from the KhataX Pro engineering team.</p>
+          <p className="text-[12px] font-mono tracking-widest uppercase font-semibold text-zinc-500 mt-3">Get priority assistance from the GononaX Pro engineering team.</p>
         </div>
       </div>
 
@@ -133,19 +133,19 @@ export default function SupportPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <a href="mailto:support@khatax.com" className="bg-[#0A0A0A] border border-white/[0.04] rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:bg-white/[0.02] transition-colors group shadow-sm">
+            <a href="mailto:support@gononax.com" className="bg-[#0A0A0A] border border-white/[0.04] rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:bg-white/[0.02] transition-colors group shadow-sm">
               <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform shadow-sm">
                 <Mail className="w-5 h-5 text-blue-500" />
               </div>
               <h3 className="font-semibold text-white mb-1">Email Support</h3>
-              <p className="text-xs text-zinc-400 font-medium">support@khatax.com</p>
+              <p className="text-xs text-zinc-400 font-medium">support@gononax.com</p>
             </a>
             <div className="bg-[#0A0A0A] border border-white/[0.04] rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:bg-white/[0.02] transition-colors group shadow-sm cursor-not-allowed opacity-80">
               <div className="w-12 h-12 rounded-xl bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform shadow-sm">
                 <PhoneCall className="w-5 h-5 text-brand-primary" />
               </div>
               <h3 className="font-semibold text-white mb-1">Priority Hotline</h3>
-              <p className="text-xs text-zinc-400 font-medium mb-1">1-800-KHATAX</p>
+              <p className="text-xs text-zinc-400 font-medium mb-1">1-800-GONONAX</p>
               <span className="text-[9px] text-brand-primary uppercase font-mono font-semibold tracking-widest bg-brand-primary/10 px-2 py-0.5 rounded border border-brand-primary/20">Available 24/7</span>
             </div>
           </div>

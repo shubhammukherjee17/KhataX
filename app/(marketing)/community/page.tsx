@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { ArrowLeft, Users, MessageSquare, Award, Globe } from 'lucide-react';
 
 export const metadata = {
-  title: 'Community | KhataX',
-  description: 'Connect with a thriving KhataX community of business owners.',
+  title: 'Community | GononaX',
+  description: 'Connect with a thriving GononaX community of business owners.',
 };
 
 export default function CommunityPage() {
@@ -14,7 +14,7 @@ export default function CommunityPage() {
           <div className="w-8 h-8 rounded bg-[#00ea77] flex items-center justify-center">
              <div className="w-2.5 h-2.5 bg-black rounded-sm"></div>
           </div>
-          <span className="font-bold text-xl tracking-tight">KhataX</span>
+          <span className="font-bold text-xl tracking-tight">GononaX</span>
         </Link>
         <Link href="/" className="text-sm font-semibold text-slate-400 hover:text-white flex items-center gap-2 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to Home
@@ -28,7 +28,7 @@ export default function CommunityPage() {
           <div className="mx-auto w-16 h-16 rounded-full bg-[#00ea77]/10 flex items-center justify-center mb-6">
             <Users className="w-8 h-8 text-[#00ea77]" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-6">The KhataX Community</h1>
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-6">The GononaX Community</h1>
           <p className="text-xl text-slate-400 mb-12 max-w-2xl mx-auto">Join India's fastest-growing ecosystem of wholesalers, distributors, and business owners who are scaling their businesses together.</p>
           
           <div className="grid md:grid-cols-3 gap-6 mb-12 text-left">
@@ -45,13 +45,13 @@ export default function CommunityPage() {
              <div className="bg-[#111] p-8 border border-white/10 rounded-3xl hover:border-[#00ea77]/30 transition">
                <Award className="w-8 h-8 text-[#00ea77] mb-4" />
                <h3 className="text-xl font-bold text-white mb-2">Local Meetups</h3>
-               <p className="text-sm text-slate-400">Attend community events in your city to network with other KhataX users and learn industry best practices.</p>
+               <p className="text-sm text-slate-400">Attend community events in your city to network with other GononaX users and learn industry best practices.</p>
              </div>
           </div>
 
           <div className="bg-gradient-to-r from-[#00ea77]/5 to-[#00ea77]/10 p-12 border border-white/10 rounded-3xl">
             <h2 className="text-2xl font-bold text-white mb-4">Ready to Join?</h2>
-            <p className="text-slate-300 mb-8 max-w-xl mx-auto">Active KhataX Pro subscribers receive a direct invitation to our exclusive community forum via email.</p>
+            <p className="text-slate-300 mb-8 max-w-xl mx-auto">Active GononaX Pro subscribers receive a direct invitation to our exclusive community forum via email.</p>
             <button className="px-8 py-3 bg-[#00ea77] text-black rounded-xl font-bold hover:bg-[#00c563] transition-colors">
               Join the Community
             </button>

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ArrowLeft, Shield, Lock, FileKey } from 'lucide-react';
 
 export const metadata = {
-  title: 'Security | KhataX',
+  title: 'Security | GononaX',
   description: 'Enterprise Vault Security & End-to-End Encryption specifications.',
 };
 
@@ -14,7 +14,7 @@ export default function SecurityPage() {
           <div className="w-8 h-8 rounded bg-[#00ea77] flex items-center justify-center">
              <div className="w-2.5 h-2.5 bg-black rounded-sm"></div>
           </div>
-          <span className="font-bold text-xl tracking-tight">KhataX</span>
+          <span className="font-bold text-xl tracking-tight">GononaX</span>
         </Link>
         <Link href="/" className="text-sm font-semibold text-slate-400 hover:text-white flex items-center gap-2 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to Home
@@ -44,7 +44,7 @@ export default function SecurityPage() {
 
           <div className="p-8 border-2 border-[#00ea77]/30 bg-[#00ea77]/5 rounded-3xl text-left">
              <h2 className="text-2xl font-bold text-white mb-4">Reliable Infrastructure</h2>
-             <p className="text-slate-300 leading-relaxed max-w-2xl">KhataX is hosted on robust cloud infrastructure, ensuring 99.99% uptime. To comply with data residency requirements, all Indian user data is securely backed up and stored in servers located within India.</p>
+             <p className="text-slate-300 leading-relaxed max-w-2xl">GononaX is hosted on robust cloud infrastructure, ensuring 99.99% uptime. To comply with data residency requirements, all Indian user data is securely backed up and stored in servers located within India.</p>
           </div>
         </div>
       </main>

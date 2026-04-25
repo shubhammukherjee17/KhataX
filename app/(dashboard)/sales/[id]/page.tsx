@@ -144,7 +144,7 @@ export default function InvoiceViewPage() {
             <div className="flex justify-between items-start border-b border-slate-200 pb-8 mb-8">
               <div>
                 <h2 className="text-3xl font-black tracking-tight text-slate-900 mb-2">
-                  {profile?.businesses?.[0] ? 'KhataX Business' : 'My Business'}
+                  {profile?.businesses?.[0] ? 'GononaX Business' : 'My Business'}
                 </h2>
                 <p className="text-slate-500 text-sm font-medium">GSTIN: 29XXXXX0000X1Z5</p>
                 <p className="text-slate-500 text-sm font-medium">123 Business Avenue, Tech Park</p>

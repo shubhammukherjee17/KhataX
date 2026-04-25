@@ -19,7 +19,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "KhataX - Business Management",
+  title: "GononaX - Business Management",
   description: "Comprehensive desktop-first business management web application.",
 };
 

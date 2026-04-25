@@ -14,7 +14,7 @@ export function ChatAssistant() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([{
     role: 'model', 
-    parts: [{ text: 'Namaste! I am your KhataX AI Assistant. How can I help you check your balances, analyze sales, or generate a payment reminder today?' }]
+    parts: [{ text: 'Namaste! I am your GononaX AI Assistant. How can I help you check your balances, analyze sales, or generate a payment reminder today?' }]
   }]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -106,7 +106,7 @@ export function ChatAssistant() {
               <Sparkles className="w-4 h-4 text-[#00ea77]" />
             </div>
             <div>
-              <h3 className="font-bold text-white text-sm">KhataX Assistant</h3>
+              <h3 className="font-bold text-white text-sm">GononaX Assistant</h3>
               <p className="text-[10px] text-[#00ea77] font-semibold uppercase tracking-wider flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#00ea77] animate-pulse"></span> Online
               </p>

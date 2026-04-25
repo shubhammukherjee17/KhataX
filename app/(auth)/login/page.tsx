@@ -54,7 +54,7 @@ export default function LoginPage() {
           <div className="w-8 h-8 rounded-lg bg-[#00ea77] flex items-center justify-center">
             <div className="w-3 h-3 bg-black rounded-sm"></div>
           </div>
-          <span className="font-bold text-xl tracking-tight">KhataX</span>
+          <span className="font-bold text-xl tracking-tight">GononaX</span>
         </div>
 
         <div className="relative z-10 max-w-lg">
@@ -90,7 +90,7 @@ export default function LoginPage() {
         </div>
 
         <div className="mt-auto relative z-10 pt-12">
-          <p className="text-slate-500 text-sm italic">&quot;The most intuitive financial platform we&apos;ve ever used.&quot; — CEO, KhataX</p>
+          <p className="text-slate-500 text-sm italic">&quot;The most intuitive financial platform we&apos;ve ever used.&quot; — CEO, GononaX</p>
         </div>
       </div>
 

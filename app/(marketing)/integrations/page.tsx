@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { ArrowLeft, Cpu, Smartphone, Database, Workflow } from 'lucide-react';
 
 export const metadata = {
-  title: 'Integrations | KhataX',
-  description: 'Connect KhataX with Banking endpoints and legacy ERP databases.',
+  title: 'Integrations | GononaX',
+  description: 'Connect GononaX with Banking endpoints and legacy ERP databases.',
 };
 
 export default function IntegrationsPage() {
@@ -14,7 +14,7 @@ export default function IntegrationsPage() {
           <div className="w-8 h-8 rounded bg-[#00ea77] flex items-center justify-center">
              <div className="w-2.5 h-2.5 bg-black rounded-sm"></div>
           </div>
-          <span className="font-bold text-xl tracking-tight">KhataX</span>
+          <span className="font-bold text-xl tracking-tight">GononaX</span>
         </Link>
         <Link href="/" className="text-sm font-semibold text-slate-400 hover:text-white flex items-center gap-2 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to Home
@@ -27,14 +27,14 @@ export default function IntegrationsPage() {
         <div className="max-w-5xl w-full relative z-10">
           <div className="text-center mb-16">
             <h1 className="text-5xl font-extrabold mb-6">Seamless Integrations</h1>
-            <p className="text-xl text-slate-400 max-w-2xl mx-auto">Connect KhataX with the tools you already use. Sync your data effortlessly with banks and other business software.</p>
+            <p className="text-xl text-slate-400 max-w-2xl mx-auto">Connect GononaX with the tools you already use. Sync your data effortlessly with banks and other business software.</p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
             <div className="bg-[#111] p-8 border border-white/10 rounded-2xl">
               <Cpu className="w-8 h-8 text-[#00ea77] mb-4" />
               <h3 className="text-xl font-bold mb-2">Tally ERP Migration</h3>
-              <p className="text-sm text-slate-400">Easily import your existing data, ledgers, and inventory settings from Tally so you can get started with KhataX in minutes.</p>
+              <p className="text-sm text-slate-400">Easily import your existing data, ledgers, and inventory settings from Tally so you can get started with GononaX in minutes.</p>
             </div>
             <div className="bg-[#111] p-8 border border-white/10 rounded-2xl">
               <Database className="w-8 h-8 text-[#00ea77] mb-4" />

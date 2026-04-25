@@ -211,7 +211,7 @@ export default function TaxAssistantPage() {
           </form>
           <div className="mt-3 text-center">
             <p className="text-[9px] text-zinc-600 font-mono font-semibold uppercase tracking-[0.2em]">
-              Powered by KhataX Tax Intelligence Model. Always consult a CA before filing returns.
+              Powered by GononaX Tax Intelligence Model. Always consult a CA before filing returns.
             </p>
           </div>
         </div>

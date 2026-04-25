@@ -22,8 +22,8 @@ export function LandingNavBar() {
     <nav className="sticky top-0 z-50 border-b border-white/5 bg-[#0a0a0a]/80 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Image src={logo} alt="KhataX Logo" width={32} height={32} className="rounded-lg object-contain" />
-          <span className="font-bold text-xl tracking-tight text-white">KhataX</span>
+          <Image src={logo} alt="GononaX Logo" width={32} height={32} className="rounded-lg object-contain" />
+          <span className="font-bold text-xl tracking-tight text-white">GononaX</span>
         </div>
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
-const SYSTEM_PROMPT = `You are an AI Tax Assistant designed for KhataX, a digital ledger application used by small business owners and shopkeepers in India.
+const SYSTEM_PROMPT = `You are an AI Tax Assistant designed for GononaX, a digital ledger application used by small business owners and shopkeepers in India.
 
 Your primary role is to help users understand their GST tax liability, Input Tax Credit (ITC), and clear up any tax-related confusions.
 
@@ -26,7 +26,7 @@ TONE:
 
 OUTPUT RULES:
 * Never hallucinate numbers. Strictly stick to the calculated metrics provided in the JSON Context.
-* If a question is outside the scope of taxation, kindly remind the user that you are specialized in Tax, and they should use the main KhataX Chat Assistant for general app queries.
+* If a question is outside the scope of taxation, kindly remind the user that you are specialized in Tax, and they should use the main GononaX Chat Assistant for general app queries.
 * End with clear, actionable advice (e.g., "Aapko GSTR-3B by 20th file karni hogi").
 
 IMPORTANT: Keep your response helpful, exact, and concise!`;
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
     const { message, context, history, businessId } = await req.json();
 
     if (!businessId) {
-      return NextResponse.json({ reply: "⚠️ Please create or select a business in KhataX to use the AI Tax Assistant." });
+      return NextResponse.json({ reply: "⚠️ Please create or select a business in GononaX to use the AI Tax Assistant." });
     }
 
     const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_FIREBASE_API_KEY;

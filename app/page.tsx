@@ -75,7 +75,7 @@ export default function LandingPage() {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/5 bg-[#18181a] font-mono text-sm text-zinc-300 mb-8"
             >
-              Introducing KhataX Copilot <ArrowRight className="w-3 h-3 text-zinc-500" />
+              Introducing GononaX Copilot <ArrowRight className="w-3 h-3 text-zinc-500" />
             </motion.div>
 
             <motion.h1
@@ -270,7 +270,7 @@ export default function LandingPage() {
                 Assisted by continuous intelligence.
               </h2>
               <p className="text-zinc-400 text-lg mb-8 font-light">
-                KhataX reviews your ledgers and generates straightforward insights. It detects anomalies, sets up follow-ups, and prevents cash flow bottlenecks subtly in the background.
+                GononaX reviews your ledgers and generates straightforward insights. It detects anomalies, sets up follow-ups, and prevents cash flow bottlenecks subtly in the background.
               </p>
 
               <div className="space-y-6">
@@ -370,15 +370,15 @@ export default function LandingPage() {
       <footer className="bg-brand-neutral pt-16 pb-8 border-t border-white/[0.05] px-6">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2">
-            <Image src={logo} alt="KhataX Logo" width={24} height={24} className="rounded object-contain" />
-            <span className="font-heading font-bold text-white text-lg">KhataX</span>
+            <Image src={logo} alt="GononaX Logo" width={24} height={24} className="rounded object-contain" />
+            <span className="font-heading font-bold text-white text-lg">GononaX</span>
           </div>
 
           <div className="flex gap-6 font-mono text-sm text-zinc-500">
             <Link href="/terms-of-service" className="hover:text-white transition">Terms</Link>
             <Link href="/privacy-policy" className="hover:text-white transition">Privacy</Link>
             <Link href="/security" className="hover:text-white transition">Security</Link>
-            <span>© 2026 KhataX</span>
+            <span>© 2026 GononaX</span>
           </div>
         </div>
       </footer>
@@ -477,10 +477,10 @@ function PricingSection() {
                   <QrCode className="w-8 h-8" />
                 </div>
                 <h4 className="font-heading text-base font-semibold text-white mb-2">Scan to start your subscription</h4>
-                <p className="text-sm font-medium text-zinc-400 mb-6">Complete your seamless, zero-fee UPI payment directly to KhataX Technologies.</p>
+                <p className="text-sm font-medium text-zinc-400 mb-6">Complete your seamless, zero-fee UPI payment directly to GononaX Technologies.</p>
                 <div className="bg-white p-4 rounded-xl shadow-[0_0_30px_rgba(0,255,163,0.1)] mb-6 inline-block border border-white/10">
                   <QRCodeSVG
-                    value={`upi://pay?pa=7067294951@ptsbi&pn=KhataX%20Pro&am=${checkoutPlan.price}.00&cu=INR&tn=${encodeURIComponent(`KhataX ${checkoutPlan.name} Sub`)}`}
+                    value={`upi://pay?pa=7067294951@ptsbi&pn=GononaX%20Pro&am=${checkoutPlan.price}.00&cu=INR&tn=${encodeURIComponent(`GononaX ${checkoutPlan.name} Sub`)}`}
                     size={200}
                     level="H"
                     includeMargin={false}
